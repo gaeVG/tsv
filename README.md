@@ -22,13 +22,13 @@ git config user.mail MAIL@ADRESSE.COM
 ### Création des nouveaux dossiers
 
 ```powershell
-mkdir EvilParadise
+mkdir MonServeur
 ```
 
 > _Cloner depuis le dossier racine_
 
 ```
-git clone https://git.cenne.xyz/evilparadise/base.git ./
+git clone https://git.cenne.xyz/fivem/base.git ./
 ```
 
 ## 📒 Installation de l'artefact
@@ -42,16 +42,16 @@ cd server
 
 ### ⤵️ Téléchargement de l'artefact
 
-> _Décompresser le fichier [téléchargé](https://runtime.fivem.net/artifacts/fivem/build_server_windows/master/5562-25984c7003de26d4a222e897a782bb1f22bebedd/server.7z) dans le dossier `server`_
+> _Décompresser le fichier [téléchargé](https://runtime.fivem.net/artifacts/fivem/build_server_windows/master/5878-a5c270439ddb3bbb1fc4e7d02cb5593be84a9b89/server.7z) dans le dossier `server`_
 
 ```powershell
-Invoke-WebRequest -Uri "https://runtime.fivem.net/artifacts/fivem/build_server_windows/master/5562-25984c7003de26d4a222e897a782bb1f22bebedd/server.7z" -OutFile "server.7z"
+Invoke-WebRequest -Uri "https://runtime.fivem.net/artifacts/fivem/build_server_windows/master/5878-a5c270439ddb3bbb1fc4e7d02cb5593be84a9b89/server.7z" -OutFile "server.7z"
 ```
 
 ## 🧰 Préparation du noyau
 
 ```powershell
-cd data\resources\ts_paradise\src
+cd data\resources\tsv\src
 npm i
 npm i -g yarn
 # Pour compiler la ressource sur le serveur de production :
@@ -65,18 +65,15 @@ yarn watch
 > 📘 _Créer le fichier d'environnement `.env` à la racine de la ressource et renseigner les informations correspondantes_
 
 ```
-NODE_ENV ["development"|"test"|"production"]
-SECRET_KEY=[string]
-IDENTIFIER_TYPE=[string]
-DEBUG_NODE_MODULES=[boolean]
-DEBUG_MODULES=[Array<string>]
-LOG_ERRORS=[boolean]
-SAFE_MODE=[boolean]
-DB_HOST=[string]
-DB_PORT=[number]
-DB_NAME=[string]
-DB_USER=[string]
-DB_PASSWORD=[string]
+EXECUTION_MODE="development"|"test"|"safemode"|"production"
+SECRET_KEY=string
+IDENTIFIER_TYPE=string
+DEBUG_MODULES=Array<string>
+DB_HOST=string
+DB_PORT=number
+DB_NAME=string
+DB_USER=string
+DB_PASSWORD=string
 ```
 
 ## 🎇 Premier lancement
@@ -93,8 +90,8 @@ Les instructions suivantes sont à compléter sur _txAdmin_ dans le champ **Adit
 
 ```
 +exec permissions.cfg +set sv_licenseKey LICENSE_FIVEM +set steam_webApiKey "STEAM_API"
-+set sv_maxclients 128 +set sv_hostname "😈 Evil (Dev) Paradise"
-+set sv_master="" +set svgui_disable true sets locale "QC-FR"
++set sv_maxclients 128 +set sv_hostname "Mon super serveur"
++set sv_master="" +set svgui_disable true sets locale "FR-FR"
 ```
 
 # 🖥️ Developpement
@@ -178,17 +175,7 @@ tsv.event.trigger({
 ```
 
 # 💡 Liens utilies
-
-### EvilParadise
-
-1. [Panneau d'administration](https://txa.evilparadise.com)
-2. [**Wiki** du serveur](https://evilparadise.nohost.me/project/evilparadise/base/-/wikis/Wiki-du-serveur)
-3. [Vêtements et cheveux de Evil Paradise](https://docs.google.com/spreadsheets/d/103Zc4YEipFxzcA0Jn4AckE-whrcEuI0JviPUNEA4Src/edit#gid=1209004457)
-
----
-
 ### FiveM
-
 1. [Game référence (FiveM Documentation)](https://docs.fivem.net/docs/game-references/)
 2. [FiveM Natives References](https://runtime.fivem.net/doc/natives/?n_CFX)
 3. [FiveM Wiki User](https://github.com/jorjic/fivem-docs/wiki)
@@ -198,11 +185,8 @@ tsv.event.trigger({
 7. [Online Interiors and locations](https://wiki.gtanet.work/index.php?title=Online_Interiors_and_locations)
 8. [Animations List](https://alexguirre.github.io/animations-list/)
 9. [Grand Theft Data](http://grandtheftdata.com)
-
 ## Outils
-
 ### 3D
-
 1. [Code Walker](https://github.com/dexyfex/CodeWalker)
 2. [OpenIV](https://openiv.com/)
 3. [Props vizualizer](https://mwojtasik.dev/tools/gtav/objects)
@@ -210,9 +194,6 @@ tsv.event.trigger({
 5. [GTA Handling](https://files.gta5-mods.com/uploads/gtav-handling-editor/ac2d6b-GTAV%20Handling%20Editor%201.7.zip)
 6. [Recherche de props par hash (Pleb Master)](https://plebmasters.de/?app=objects)
 7. [Cloth Tool](https://www.gta5-mods.com/tools/alt-v-cloth-tool-addon-clothes-dlc-generator)
-8. [3DSMax 2020 (torrent)](https://cdn.discordapp.com/attachments/530835585460469773/727829981232889881/Autodesk_3ds_Max_2020__Update_2020.3RePack.torrent)
-   - [GIMS Evo](https://files.gta5-mods.com/uploads/gims-evo-with-gta-v-support/76198a-Manual.install.rar)
-
+8. [GIMS Evo](https://files.gta5-mods.com/uploads/gims-evo-with-gta-v-support/76198a-Manual.install.rar)
 ### Développement
-
 1. [Lua Beautifer](https://goonlinetools.com/lua-beautifier/)
