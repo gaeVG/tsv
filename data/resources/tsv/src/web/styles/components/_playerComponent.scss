@@ -1,0 +1,65 @@
+.playerComponent-type {
+  display: flex;
+
+  &-clothe {
+    flex-direction: column;
+    align-self: center;
+    margin-right: 1em;
+
+    & > div {
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
+    }
+  }
+
+  &-container {
+    align-self: center;
+    flex-direction: column;
+    margin-top: 1em;
+    margin-left: 1em;
+  }
+
+  .playerComponent {
+    position: relative;
+    display: flex;
+    width: 3em;
+    height: 3em;
+    cursor: pointer;
+
+    &.remove-component {
+      &::after {
+        content: "❌";
+        z-index: 20;
+        position: absolute;
+        display: block;
+        top: -0.2em;
+        right: 0;
+        height: 1em;
+        opacity: 0.5;
+      }
+    }
+
+    & > svg {
+      color: $white;
+    }
+
+    &-glasses {
+    }
+    &-hat {
+    }
+    &-mask {
+    }
+    &-bag {
+    }
+    &-torso {
+    }
+    &-jacket {
+    }
+    &-hand {
+    }
+    &-jbib {
+    }
+    &-shoes {
+    }
+  }
+}

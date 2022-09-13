@@ -1,0 +1,1 @@
+export { ModuleManager } from './manager';

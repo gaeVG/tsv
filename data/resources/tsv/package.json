@@ -1,0 +1,19 @@
+{
+  "name": "ts-dependencies",
+  "version": "0.5.0-development",
+  "description": "JavaScript dependencies for compiled TypeScript files",
+  "author": "&Y",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@citizenfx/client": "^2.0.5828-1",
+    "@discordjs/rest": "^0.5.0",
+    "@reduxjs/toolkit": "^1.8.3",
+    "crypto-js": "^4.1.1",
+    "discord.js": "^13.8.1",
+    "i18next": "^21.8.8",
+    "mongodb": "^3.7.3",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.3.6"
+  }
+}

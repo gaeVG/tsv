@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "*": ["types/*"]
+    },
+    "outDir": "../../dist",
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "allowJs": true,
+    "module": "commonjs",
+    "target": "es6",
+    "allowSyntheticDefaultImports": true,
+    "lib": ["esnext", "es2017", "dom"],
+    "types": ["@types/node", "@citizenfx/server", "@citizenfx/client"],
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true
+  },
+  "include": ["./**/*", "../config/**/*"],
+  "exclude": ["**/node_modules", "**/__tests__/*"]
+}

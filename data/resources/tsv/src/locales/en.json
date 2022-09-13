@@ -1,0 +1,72 @@
+{
+  "translation": {
+    "global": {
+      "containers": {
+        "manager": "Manager",
+        "Class": "Class"
+      },
+      "location": {
+        "constructor": "constructor"
+      }
+    },
+    "core": {
+      "event": {
+        "namespace": "CoreEvent",
+        "constructor": {
+          "debug": {
+            "create": "Creation of the event manager",
+            "complete": "Initialization complete"
+          }
+        }
+      },
+      "thread": {
+        "manager": {
+          "constructor": {
+            "create": "Creation of the thread manager",
+            "complete": "Initialization complete"
+          }
+        },
+        "class": {
+          "constructor": {
+            "create": "Creating a new thread",
+            "complete": "Initialization complete"
+          },
+          "tick": {
+            "endOfThread": "End of thread (ID : {{threadIdentifier}})",
+            "isFull": "The thread is full (ID : {{threadIdentifier}}, Frequency : {{threadFrequency}})"
+          }
+        }
+      }
+    },
+    "module": {
+      "player": {
+        "onPlayerJoined": {
+          "title": "onPlayerJoined()",
+          "debug": {
+            "playerConnected": "The player has just logged in"
+          }
+        }
+      },
+      "inventory": {
+        "nui": {
+          "maxWeight": "Max weight"
+        },
+        "commands": {
+          "openInventory": {
+            "description": "Opens the character's inventory"
+          }
+        },
+        "containers": {
+          "pocket": "Pockets"
+        },
+        "items": {
+          "water": "Water",
+          "beer": "Beer",
+          "bread": "Bread",
+          "hamburger": "Hamburger",
+          "key": "Key"
+        }
+      }
+    }
+  }
+}

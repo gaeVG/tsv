@@ -1,0 +1,1 @@
+export { ISociety } from './society';

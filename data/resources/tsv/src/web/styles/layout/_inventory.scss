@@ -1,0 +1,108 @@
+#inventory {
+  position: relative;
+  display: flex;
+  height: 92vh;
+  width: 94vw;
+  margin: 0 auto;
+  flex-direction: row;
+
+  &.centered {
+    padding: 0 auto;
+    align-items: flex-start;
+
+    .inventory.player {
+      width: 60vw;
+      margin: 0 auto;
+    }
+  }
+  &.player-components {
+    justify-content: space-between;
+  }
+  &.target {
+    justify-content: space-around;
+  }
+
+  .inventory {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 2em 1em;
+    width: 100%;
+    height: 78vh;
+    background-color: #242f4350 !important;
+    box-shadow: inset 0px -24px 28px 25px rgba(36,47,67,0.39);
+    left: 2vh;
+    height: 78vh;
+
+    &.player {
+      &.split-for {
+        &-player-components {
+          width: 52vw;
+        }
+        &-target {
+          width: 55vw;
+        }
+      }
+
+      article {
+        height: 18vh;
+        margin-top: 1em;
+      }
+    }
+
+    &.target {
+      width: 38vw;
+
+      article {
+        height: 26vh;
+        margin-top: 1em;
+      }
+    }
+
+    #toggle-player-components {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      top: 2vh;
+      right: 1vw;
+      width: 2em;
+      height: 8em;
+
+      & > svg {
+        margin-bottom: 1em;
+        cursor: pointer;
+      }
+    }
+  }
+  #playerComponents {
+    display: flex;
+    padding: 0 !important;
+    justify-content: space-between;
+    width: 40vw;
+    height: 78vh;
+    background-color: #242f4350 !important;
+    box-shadow: inset 0px -24px 28px 25px rgba(36,47,67,0.39);
+    right: 2vh;
+  }
+  #playerItemShortcuts {
+    position: absolute;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 40vw;
+    height: 7em;
+    background-color: #242f4350 !important;
+    box-shadow: inset 0px -24px 28px 25px rgba(36,47,67,0.39);
+    bottom: 1vh;
+
+    &.playerItemShortcurts {
+      &-under-inventories {
+        left: 29vw;
+      }
+      &-under-player-components {
+        right: 0;
+      }
+    }
+  }
+}

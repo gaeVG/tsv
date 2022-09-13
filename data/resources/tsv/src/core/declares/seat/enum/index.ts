@@ -1,0 +1,1 @@
+export { SeatEnum } from './seat';

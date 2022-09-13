@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "target": "es5",
+    "module": "es6",
+    "paths": {
+      "*": ["types/*"]
+    },
+    "moduleResolution": "node",
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": false,
+    "lib": ["esnext", "dom"],
+    "types": ["@types/node", "@citizenfx/client"],
+    "jsx": "react",
+    "resolveJsonModule": true,
+    "experimentalDecorators": true
+  },
+  "include": ["./**/*"],
+  "exclude": ["**/node_modules", "**/__tests__/*"]
+}

@@ -1,0 +1,1 @@
+export { ICompagny } from './compagny';

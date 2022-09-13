@@ -1,0 +1,1 @@
+export { IconDynamic } from './iconDynamic';

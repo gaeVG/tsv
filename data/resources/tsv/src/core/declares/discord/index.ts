@@ -1,0 +1,1 @@
+export { IEmbed } from './interface';

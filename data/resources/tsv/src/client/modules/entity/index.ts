@@ -1,0 +1,1 @@
+export { EntityModule } from './module';

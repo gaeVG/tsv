@@ -1,0 +1,68 @@
+# Compiled source #
+###################
+*.com
+*.class
+*.exe
+*.o
+*.so
+*.ini
+*lock*
+*.env
+node_modules/
+*/**/dist/*
+!*/**/dist/assets
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs and databases #
+######################
+*.log
+*.sqlite
+*.sql
+*.db
+*.bkp
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.vscode
+.editorconfig
+
+# Repository #
+##############
+*.bat
+/server/
+!*/server/*
+/data/db
+/data/cache
+data/positions.txt
+local.cfg
+stream.cfg
+/local/
+\[local\]
+!*/local/*
+README.md
+!/README.md
+data/resources/[stream]/[mappings]
+data/resources/[stream]/[vehicles]
+data/resources/[stream]/[clothes]
+
+data/resources/\[stream\]/\[mappings\]/
+data/resources/\[stream\]/\[vehicles\]/
+data/resources/\[stream\]/\[clothes\]/

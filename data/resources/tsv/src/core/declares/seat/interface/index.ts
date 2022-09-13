@@ -1,0 +1,1 @@
+export { ISeat } from './seat';

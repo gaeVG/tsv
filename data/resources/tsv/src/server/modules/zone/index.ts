@@ -1,0 +1,1 @@
+export { ZoneModule } from './module';

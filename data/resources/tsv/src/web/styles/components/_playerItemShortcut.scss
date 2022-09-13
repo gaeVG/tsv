@@ -1,0 +1,10 @@
+.playerItemShortcut {
+  width: 5em;
+  height: 5em;
+  background-color: #242f43A0 !important;
+  
+  &.selected {
+    border-color: white !important;
+    box-shadow: inset yellow 0px 0px 6px 0px;
+  }
+}

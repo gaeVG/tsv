@@ -1,0 +1,11 @@
+#status {
+  position: absolute;
+  bottom: 0;
+  height: 26vh;
+  width: 19vw;
+
+  & > article > div > div {
+    left: 0.7em !important;
+    top: 1.4em !important;
+  }
+}

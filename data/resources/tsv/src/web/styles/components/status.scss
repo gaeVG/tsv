@@ -1,0 +1,21 @@
+#basicNeeds {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  bottom: 5vh;
+  left: 0.8vh;
+}
+
+
+#feeling {
+  display: flex;
+  flex-direction: row;
+  position: fixed;
+  bottom: -1.5vh;
+  left: 3vw;
+  align-self: flex-end;
+
+  & > div {
+    margin-right: 1em;
+  }
+}

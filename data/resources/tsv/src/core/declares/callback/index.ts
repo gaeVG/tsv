@@ -1,0 +1,1 @@
+export { ICallback } from './interface';

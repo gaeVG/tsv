@@ -1,0 +1,14 @@
+.minimap {
+  position: absolute;
+  bottom: 5vh;
+  left: 3vw;
+  display: block;
+  height: 21vh;
+  width: 16vw;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #9CA2AE !important;
+  background-color: #242f4330 !important;
+  -webkit-box-shadow: inset 0px 0px 28px 18px #242f43 !important; 
+  box-shadow: inset 0px 0px 28px 18px #242f43 !important;
+}

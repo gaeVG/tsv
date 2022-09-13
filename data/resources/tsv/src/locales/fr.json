@@ -1,0 +1,279 @@
+{
+  "translation": {
+    "global": {
+      "location": {
+        "constructor": "constructor()",
+        "init": "init()"
+      }
+    },
+    "server": {
+      "main": {
+        "constructor": {
+          "creating": "Création du gestionnaire principal"
+        }
+      },
+      "orm": {
+        "manager": {
+          "constructor": {
+            "creating": "Création du gestionnaire de base de données",
+            "databaseReady": "La base de donnée est prête",
+            "databaseNotReady": "La base de donnée n'est pas prête"
+          }
+        }
+      }
+    },
+    "client": {},
+    "core": {
+      "main": {
+        "constructor": {
+          "creating": "Création du core principal"
+        }
+      },
+      "crypto": {
+        "decryptedData": "Donnée déchifrée: %s"
+      },
+      "event": {
+        "manager": {
+          "constructor": {
+            "createManager": "Création du gestionnaire d'évènements",
+            "complete": "Création du gestionnaire d'évènements terminée",
+            "onNet": {
+              "handle": "Déclenchement de l'évènement {{eventHashName}} sur le réseau",
+              "eventNotFound": "L'évènement {{eventHashName}} n'a pas été trouvé"
+            }
+          },
+          "listen": {
+            "listenEvent": "Écoute de l'évènement {{eventName}} à écouter",
+            "isNetworkEvent": "{{eventName}} est un évènement est réseau",
+            "isLocalEvent": "{{eventName}} est un évènement local"
+          },
+          "trigger": {
+            "triggeringEvent": "Déclenchement de l'évènement {{eventName}}",
+            "noTargetEvent": "L'évènement doit avoir une cible pour être envoyé au bon client"
+          },
+          "emit": {
+            "processing": "Traitement de l'évènement local {{eventName}}",
+            "handleEvent": ""
+          },
+          "emitNet": {
+            "processing": "Traitement de l'évènement réseau {{eventName}}",
+            "handleEvent": "",
+            "triggerServerEvent": "Envoi de l'évènement {{eventName}} vers le serveur",
+            "triggerClientEvent": "Envoi de l'évènement {{eventName}} vers le client"
+          },
+          "on": {
+            "creatingEvent": "Création de l'évènement {{eventName}}",
+            "cannotCreateOnFromClient": "L'évènement {{eventName}} ne peut être enregistré que depuis le serveur",
+            "alreadyExist": "L'évènement local {{eventName}} existe déjà"
+          },
+          "onNet": {
+            "creatingEvent": "Création de l'évènement {{eventName}}",
+            "cannotCreateOnFromClient": "L'évènement {{eventName}} ne peut être enregistré que depuis le serveur",
+            "alreadyExist": "L'évènement réseau {{eventName}} existe déjà",
+            "registeredEvent": "L'évènement {{eventName}} a été enregistré"
+          },
+          "addOne": {
+            "eventAdded": "L'évènement {{eventName}} a bien été ajouté au gestionnaire"
+          },
+          "searchEvent": "Recherche de l'évènement {{eventName}} dans le gestionnaire",
+          "triggerEvent": "Déclenchement de l'évènement {{eventName}}",
+          "eventData": "Donnée de l'évènement {{eventName}}: {{eventData}}",
+          "foundEvent": "L'évènement %s a été trouvé dans le gestionnaire",
+          "notFoundEvent": "Impossible de trouver l'évènement dans le gestionnaire",
+          "onEvent": "Réception de l'évènement {{name}}",
+          "registeredEvent": "L'évènement {{eventName}} a été enregistré",
+          "alradyExistEvent": "L'évènement {{name}} existe déjà dans le gestionnaire",
+          "creatingEvent": "Création de l'évènement {{name}}",
+          "cannotTriggerEvent": "Impossible de déclencher l'évènement %s"
+        },
+        "class": {
+          "addEventHandler": {
+            "eventHandler": "Exécution de la méthode de l'évènement {{eventName}}"
+          }
+        }
+      },
+      "thread": {
+        "manager": {
+          "constructor": {
+            "create": "Création du gestionnaire de threads",
+            "complete": "Initialisation terminée"
+          },
+          "createThread": {
+            "create": "Création du thread %s",
+            "complete": "Création terminée",
+            "isFull": "Le thread %s est plein",
+            "added": "Le thread {{threadName}} est ajouté au gestionnaire"
+          }
+        },
+        "class": {
+          "constructor": {
+            "create": "Création d'un nouveau Thread",
+            "complete": "Initialisation terminée"
+          },
+          "tick": {
+            "endOfThread": "Fin du thread (ID: {{threadIdentifier}})",
+            "isFull": "Le thread est plein (ID: {{threadIdentifier}}, Fréquence: {{threadFrequency}})"
+          }
+        }
+      },
+      "module": {
+        "manager": {
+          "constructor": {
+            "creating": "Création du gestionnaire de modules",
+            "complete": "Création du gestionnaire terminée"
+          },
+          "loadModules": {
+            "loadingModule_zero": "Aucun module à charger",
+            "loadingModule_one": "Chargement de {{count}} module",
+            "loadingModule_other": "Chargement de {{count}} modules",
+            "loadedModule": "Le module {{moduleName}} a bien été chargé"
+          }
+        }
+      },
+      "user": {
+        "manager": {
+          "constructor": {
+            "creating": "Création du gestionnaire d'utilisateurs",
+            "complete": "Initialisation terminée"
+          },
+          "createUser": {
+            "create": "Création de l'utilisateur %s",
+            "complete": "Création terminée",
+            "alreadyExist": "L'utilisateur %s existe déjà"
+          },
+          "addOne": {
+            "userAlreadyRegistered": "L'utilisateur {{userId}} est déjà enregistré"
+          },
+          "updateOne": {
+            "updating": "Mise à jour de l'utilisateur {{userId}}",
+            "userNotFound": "L'utilisateur {{userId}} n'existe pas"
+          }
+        }
+      },
+      "orm": {
+        "manager": {
+          "constructor": {
+            "creating": "Création du gestionnaire de base de données",
+            "complete": "Initialisation terminée"
+          },
+          "createTable": {
+            "create": "Création de la table %s",
+            "complete": "Création terminée",
+            "alreadyExist": "La table %s existe déjà"
+          },
+          "addOne": {
+            "alreadyExist": "L'enregistrement %s existe déjà"
+          },
+          "updateOne": {
+            "notFound": "L'enregistrement %s n'existe pas"
+          }
+        },
+        "class": {}
+      },
+      "society": {
+        "bennys": {
+          "label": "Benny's"
+        },
+        "pacificStandard": {
+          "label": "Pacific Standard"
+        },
+        "police": {
+          "label": "Police"
+        },
+        "missionRow": {
+          "label": "Mission Row"
+        },
+        "ems": {
+          "label": "EMS"
+        },
+        "pillBox": {
+          "label": "Pill Box"
+        },
+        "downtownCab": {
+          "label": "Downtown Cab"
+        }
+      }
+    },
+    "module": {
+      "global": {
+        "eventListening": "Écoute de l'évènement {{eventName}}",
+        "eventTrigger": "Déclenchement de l'évènement {{eventName}}",
+        "init": "Chargement du module {{moduleName}}"
+      },
+      "player": {
+        "events": {
+          "onPlayerJoined": {
+            "playerJoinedSession": "Le joueur (ID: {{userSource}}) a rejoint la session",
+            "createUser": "Le joueur {{userName}} doit être créé",
+            "userAlreadyExists": "Le joueur {{userName}} a bien été trouvé dans la base de donnée"
+          },
+          "hostSession": {
+            "askingHost": "Le client {{userId}} a demandé à créer une nouvelle session"
+          },
+          "startSession": {
+            "askingStart": "Le client ({{userId}}) demandez à rejoindre session",
+            "clientActive": "Le client ({{userId}}) est bien actif",
+            "clientIddle": "Le client ({{userId}}) n'est pas actif"
+          },
+          "playerConnecting": {}
+        },
+        "module": {
+          "init": {
+            "starting": "Chargement du module {{moduleName}}"
+          },
+          "createPlayerOnDB": {
+            "creatingUser": "Création d'un nouvel utilisateur dans la base de donnée"
+          }
+        },
+        "skin": {
+          "loadSkin": {
+            "create": "Création du skin %s",
+            "complete": "Création terminée",
+            "isFull": "Le skin %s est plein",
+            "added": "Le skin %s est ajouté au gestionnaire",
+            "triggerCallback": "Déclenchement de la fonction callback"
+          }
+        }
+      },
+      "character": {
+        "events": {
+          "playerConnecting": {
+            "characterMustCreated": "Le client doit créer un nouveau personnage",
+            "characterMustLoaded": "Le client doit charger un personnage",
+            "totalCharacters": "Le client {{userName}} a créé {{count}} personnages"
+          }
+        }
+      },
+      "inventory": {
+        "nui": {
+          "maxWeight": "Poids max"
+        },
+        "commands": {
+          "openInventory": {
+            "description": "Ouvre l'inventaire du personnage"
+          }
+        },
+        "containers": {
+          "pocket": "Poches"
+        },
+        "items": {
+          "water": "Eau",
+          "beer": "Bière",
+          "bread": "Pain",
+          "hamburger": "Hamburger",
+          "key": "Clé"
+        }
+      }
+    },
+    "discord": {
+      "bot": {
+        "init": "Initialisation du bot Discord",
+        "loading": "Chargement du bot Discord",
+        "loadComplete": "Chargement terminé",
+        "ready": "Le bot Discord est prêt",
+        "tokenError": "Le token Discord est incorrect",
+        "authSuccess": "Authentification OAuth réussie"
+      }
+    }
+  }
+}

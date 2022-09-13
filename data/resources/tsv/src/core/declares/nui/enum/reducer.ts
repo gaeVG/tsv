@@ -1,0 +1,17 @@
+enum AppReducerActionEnum {
+  APP_THEME = 'APP_THEME',
+  SET_USER = 'SET_USER',
+  SET_ERROR = 'SET_ERROR',
+  SET_LOADING = 'SET_LOADING',
+  SET_LOADED = 'SET_LOADED',
+  SET_MODULES = 'SET_MODULES',
+  SET_CURRENT_DRAG = 'SET_CURRENT_DRAG',
+  DROP_CURRENT_DRAG = 'DROP_CURRENT_DRAG',
+  REMOVE_CURRENT_DRAG = 'REMOVE_CURRENT_DRAG',
+}
+
+enum ModuleReducerActionEnum {
+  SET_MODULES = 'SET_MODULES',
+}
+
+export { AppReducerActionEnum, ModuleReducerActionEnum };
