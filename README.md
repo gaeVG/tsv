@@ -98,7 +98,7 @@ Les instructions suivantes sont à compléter sur _txAdmin_ dans le champ **Adit
 7. [Online Interiors and locations](https://wiki.gtanet.work/index.php?title=Online_Interiors_and_locations)
 8. [Animations List](https://alexguirre.github.io/animations-list/)
 9. [Grand Theft Data](http://grandtheftdata.com)
-10. 📎 [GFX Sources](https://cenne.xyz/44948c3589/s/ytRoG76Ld7iLgR9)
+10. 📎 [GFX Sources](https://cenne.xyz/44948c3589/s/ytRoG76Ld7iLgR9/download/EVERYTHING.rar)
 ## Outils
 ### 3D
 1. [Code Walker](https://github.com/dexyfex/CodeWalker)
