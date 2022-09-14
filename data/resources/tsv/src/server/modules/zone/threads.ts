@@ -1,5 +1,6 @@
 import { ThreadModule } from '../../../core/declares/threads';
 import { EnumLogContainer, LogData } from '../../../core/declares/log';
+import { IUser } from '../../../core/declares/user';
 import moduleConfig from './config';
 import { tsv } from '../..';
 
