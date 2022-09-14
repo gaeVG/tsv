@@ -8,9 +8,6 @@
 *.ini
 *lock*
 *.env
-node_modules/
-*/**/dist/*
-!*/**/dist/assets
 # Packages #
 ############
 # it's better to unpack these files and commit the raw source
@@ -46,21 +43,12 @@ Thumbs.db
 
 # Repository #
 ##############
+node_modules/
+*/**/dist/*
+!*/**/dist/assets
 *.bat
 /server/
 !*/server/*
-/data/db
-/data/cache
-data/positions.txt
-local.cfg
-/local/
+cache/
 \[local\]
-!*/local/*
-README.md
-!/README.md
-
-data/resources/\[stream\]/\[mappings\]/
-data/resources/\[stream\]/\[vehicles\]/
-data/resources/\[stream\]/\[clothes\]/
-data/resources/\[stream\]/\[peds]/
-data/resources/\[stream\]/\[other]/
+\[stream\]
