@@ -1,7 +1,8 @@
 import { CommandType, ICommand, CommandConsoleNotAllowedError } from '../../declares/command';
 import { Crypto } from '../';
 import { UserGroup } from '../../declares/user';
-
+import { Env } from '../../libs/env';
+import _t from '../../../config/i18n';
 class Command implements ICommand{
   id: string;
   name: string;
@@ -17,24 +18,26 @@ class Command implements ICommand{
   constructor(command: CommandType) {
     this.id = Crypto.uuidv4();
     this.name = command.name;
-    this.description = command.description || '';
+    this.description = _t(command.description) || '';
     this.module = command.module;
     this.group = command.group;
     this.handler = () => this.handle(command.handler);
     this.suggestions = command.suggestion;
     this.keyMapper = command.keyMapper;
     this.key = command.key
+    console.log(this.description)
   }
 
   private handle = (handler: (args: unknown[]) => void) => {
+    console.log('handle command')
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     global.RegisterCommand(this.name, (playerId: number, commandArgs: unknown[], _) => {
       try {
-        if (global.IsDuplicityVersion()) {
+        Env.server(() => {
           if (this.allowConsole === undefined && playerId === 0) {
             throw new CommandConsoleNotAllowedError(this.name);
           }
-        }
+        })
 
         handler(commandArgs);
       } catch (error) {
@@ -43,8 +46,8 @@ class Command implements ICommand{
         }
       }
     }, true);
-
     if (this.keyMapper !== undefined) {
+      console.log('key mapper')
       global.RegisterKeyMapping(this.name, this.description, this.keyMapper, this.key);
     }
 
