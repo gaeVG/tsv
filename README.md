@@ -98,13 +98,14 @@ Les instructions suivantes sont à compléter sur _txAdmin_ dans le champ **Adit
 7. [Online Interiors and locations](https://wiki.gtanet.work/index.php?title=Online_Interiors_and_locations)
 8. [Animations List](https://alexguirre.github.io/animations-list/)
 9. [Grand Theft Data](http://grandtheftdata.com)
+10. 📎 [GFX Sources](https://cenne.xyz/44948c3589/s/ytRoG76Ld7iLgR9)
 ## Outils
 ### 3D
 1. [Code Walker](https://github.com/dexyfex/CodeWalker)
 2. [OpenIV](https://openiv.com/)
 3. [Props vizualizer](https://mwojtasik.dev/tools/gtav/objects)
 4. [YMAP &YBN Mover](https://forum.cfx.re/t/tool-ymap-ybn-mover/307344)
-5. [GTA Handling](https://files.gta5-mods.com/uploads/gtav-handling-editor/ac2d6b-GTAV%20Handling%20Editor%201.7.zip)
+5. 📎 [GTA Handling](https://files.gta5-mods.com/uploads/gtav-handling-editor/ac2d6b-GTAV%20Handling%20Editor%201.7.zip)
 6. [Recherche de props par hash (Pleb Master)](https://plebmasters.de/?app=objects)
 7. [Cloth Tool](https://www.gta5-mods.com/tools/alt-v-cloth-tool-addon-clothes-dlc-generator)
-8. [GIMS Evo](https://files.gta5-mods.com/uploads/gims-evo-with-gta-v-support/76198a-Manual.install.rar)
+8. 📎 [GIMS Evo](https://files.gta5-mods.com/uploads/gims-evo-with-gta-v-support/76198a-Manual.install.rar)
