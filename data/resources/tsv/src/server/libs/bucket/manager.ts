@@ -4,7 +4,7 @@ import { Bucket } from './bucket';
 import { LogData } from '../../../core/declares/log';
 import { EnumLogContainer } from '../../../core/declares/log';
 import { Log } from '../../../core/libs/log';
-import { tsp } from '../..';
+import { tsv } from '../..';
 
 const log: LogData = {
   namespace: 'Bucket',

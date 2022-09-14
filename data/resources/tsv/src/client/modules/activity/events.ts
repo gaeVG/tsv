@@ -3,7 +3,7 @@ import { IEventListener } from '../../../core/declares/events';
 // CONFIG
 import moduleConfig from './config';
 // TSP
-import { tsp } from '../..';
+import { tsv } from '../..';
 
 // List of all activities events
 const activityEvents: IEventListener[] = [

@@ -1,7 +1,7 @@
 import { DiceRoll } from '@dice-roller/rpg-dice-roller';
 import { VehicleHash, Player, Model, Ped } from '../../../../core/libs';
 import { Driver } from './activity';
-import { tsp } from '../../../';
+import { tsv } from '../../../';
 import { ActivityEnum } from '../../../../core/declares/activity';
 import { driver as driverConfig } from '../../../../config/societies/activities/driver';
 import { DriverActivityMissionEnum } from '../../../../core/declares/activity';

@@ -1,4 +1,4 @@
-import { tsp } from '../../';
+import { tsv } from '../../';
 import { IUser } from '../../../core/declares/user';
 import { EnumLogContainer } from '../../../core/declares/log';
 import { LogData } from '../../../core/declares/log';

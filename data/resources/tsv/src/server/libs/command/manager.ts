@@ -2,7 +2,7 @@ import { LogData, EnumLogContainer } from '../../../core/declares/log';
 import { ICommand } from '../../../core/declares/command';
 import { Log } from '../../../core/libs/log';
 
-import { tsp } from '../../../server';
+import { tsv } from '../../../server';
 
 const log: LogData = {
   namespace: 'CoreCommand',

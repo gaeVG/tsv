@@ -10,7 +10,7 @@ import {
 import { NUIMessage } from '../../../core/declares/nui';
 import { Log } from '../../../core/libs/log';
 import { EnumLogContainer, LogData } from '../../../core/declares/log';
-import { tsp } from '../..';
+import { tsv } from '../..';
 import { Game } from '../../../core/libs';
 import { IconType } from '../../../core/declares/nui';
 

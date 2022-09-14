@@ -1,6 +1,6 @@
 import { IEventListener } from '../../../core/declares/events';
 import { IStatus } from '../../../core/declares/status';
-import { tsp } from '../../';
+import { tsv } from '../../';
 
 const statusEvents: IEventListener[] = [
   {

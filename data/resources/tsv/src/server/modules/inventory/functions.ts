@@ -4,7 +4,7 @@ import { IInventory } from '../../../core/declares/inventory';
 import { IUser, UserNotFoundError } from '../../../core/declares/user';
 import { IItem } from '../../../core/declares/item';
 import moduleConfig from './config';
-import { tsp } from '../..';
+import { tsv } from '../..';
 
 const log: LogData = {
   namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,

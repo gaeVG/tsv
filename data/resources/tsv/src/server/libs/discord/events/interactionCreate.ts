@@ -1,4 +1,4 @@
-import { tsp } from '../../../index';
+import { tsv } from '../../../index';
 //import { EnumLogContainer } from '../../../../core/declares/log';
 
 async function interactionCreate(interaction) {

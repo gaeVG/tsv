@@ -1,6 +1,6 @@
 import { IModule } from '../../../core/declares/module';
 import { LogData, EnumLogContainer } from '../../../core/declares/log';
-import { tsp } from '../../../client';
+import { tsv } from '../../../client';
 import moduleConfig from './config';
 
 const log: LogData = {

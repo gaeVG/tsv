@@ -13,7 +13,7 @@ import { IAdaptativeCard } from '../../../core/declares/cards';
 import { Users as UsersEntity, UserCharacters as CharactersEntity } from '../../libs/db/entities';
 import { Player } from '../../../core/libs';
 import moduleConfig from './config';
-import { tsp } from '../../../server';
+import { tsv } from '../../../server';
 import { User } from '../../../core/libs/user';
 import { BucketDimension } from '../../../core/declares/bucket';
 import { StatusManager } from '../../../core/libs/status';
@@ -311,10 +311,6 @@ function onPlayerSpawn(_: any, user: IUser): IUser | Error {
     tsv.buckets.addUserIntoBucket(user, { id: BucketDimension.MAIN });
     return tsv.users.updateOne({
       ...user,
-      inventories:
-        user.character.inventories.length > 0 && new InventoryManager(user.character.inventories),
-      status: user.character.status.length > 0 && new StatusManager(user.character.status),
-      activities: user.character.activities,
       isReady: true,
     });
   } catch (error) {

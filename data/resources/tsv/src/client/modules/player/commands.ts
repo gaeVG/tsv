@@ -1,4 +1,4 @@
-import { tsp } from '../..';
+import { tsv } from '../..';
 import { CommandType } from '../../../core/declares/command';
 import moduleConfig from './config';
 

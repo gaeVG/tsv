@@ -13,7 +13,7 @@ import {
   playerDropped,
   onPlayerSpawn,
 } from './functions';
-import { tsp } from '../../../server';
+import { tsv } from '../../../server';
 import { BucketDimension } from '../../../core/declares/bucket';
 import { IUser } from '../../../core/declares/user';
 

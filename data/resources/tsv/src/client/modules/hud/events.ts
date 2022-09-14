@@ -2,7 +2,7 @@ import { EnumLogContainer, LogData } from '../../../core/declares/log';
 import { IEventListener, ClientEventNativeEnum } from '../../../core/declares/events';
 import { Wait } from '../../../core/libs';
 import moduleConfig from './config';
-import { tsp } from '../../index';
+import { tsv } from '../../index';
 
 const log: LogData = {
   namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,
@@ -38,7 +38,7 @@ const hudEvents: IEventListener[] = [
 
             return true;
           }
-
+          // TODO: The mini map is not aligned correctly
           SetMinimapClipType(1);
           AddReplaceTexture(
             'platform:/textures/graphics',

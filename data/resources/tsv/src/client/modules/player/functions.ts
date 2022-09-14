@@ -5,7 +5,7 @@ import { ClientEventNativeEnum } from '../../../core/declares/events';
 import { Player, Fading } from '../../../core/libs';
 import { selectCharacter } from '../character';
 import moduleConfig from './config';
-import { tsp } from '../..';
+import { tsv } from '../..';
 
 const log: LogData = {
   namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,
@@ -24,7 +24,7 @@ function playerConnecting(
 function playerHostingSession(): void {
   log.location = ClientEventNativeEnum.CEventNetworkHostSession;
   const player = new Player();
- 
+
   tsv.log.debug({
     ...log,
     message: tsv.locale('module.player.events.hostSession.askingHost', {

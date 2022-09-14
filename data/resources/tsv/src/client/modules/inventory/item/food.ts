@@ -3,7 +3,7 @@ import { ItemType } from '../../../../core/declares/item';
 import { EnumLogContainer, LogData } from '../../../../core/declares/log';
 import { UsableItem } from './usableItem';
 import moduleConfig from '../config';
-import { tsp } from '../../..';
+import { tsv } from '../../..';
 
 const log: LogData = {
   namespace: moduleConfig.name,

@@ -2,7 +2,7 @@ import { IModule } from '../../../core/declares/module';
 import { LogData, EnumLogContainer } from '../../../core/declares/log';
 import { playerEvents } from './events';
 import { playerThreads } from './threads';
-import { tsp } from '../../../server';
+import { tsv } from '../../../server';
 import moduleConfig from './config';
 
 const log: LogData = {

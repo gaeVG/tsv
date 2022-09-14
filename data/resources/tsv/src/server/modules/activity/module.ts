@@ -6,7 +6,7 @@ import moduleConfig from './config';
 // MODULE
 import { loadingActivities } from './functions';
 // CORE
-import { tsp } from '../..';
+import { tsv } from '../..';
 
 const log: LogData = {
   namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,

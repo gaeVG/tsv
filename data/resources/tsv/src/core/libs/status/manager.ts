@@ -2,7 +2,7 @@ import { Status } from './status';
 import { IStatus, PlayerStatus, StatusEnum } from '../../declares/status';
 import { LogData, EnumLogContainer } from '../../declares/log';
 import { Feed, Thrist, Health } from './needs';
-import { tsp } from '../../../server';
+import { tsv } from '../../../server';
 import { Log } from '../log';
 
 const log: LogData = {

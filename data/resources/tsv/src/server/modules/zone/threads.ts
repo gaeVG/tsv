@@ -1,7 +1,7 @@
 import { ThreadModule } from '../../../core/declares/threads';
 import { EnumLogContainer, LogData } from '../../../core/declares/log';
 import moduleConfig from './config';
-import { tsp } from '../..';
+import { tsv } from '../..';
 
 const log: LogData = {
   namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,

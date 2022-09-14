@@ -1,5 +1,5 @@
 import { Item } from '../../../../core/libs/item';
-import { tsp } from '../../..';
+import { tsv } from '../../..';
 import { IItem, ItemType, IUsableItem } from '../../../../core/declares/item';
 import { InventoryContainerType } from '../../../../core/declares/inventory';
 

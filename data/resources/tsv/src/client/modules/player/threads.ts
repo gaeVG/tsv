@@ -1,6 +1,6 @@
 import { ThreadModule } from '../../../core/declares/threads';
 import { LogData, EnumLogContainer } from '../../../core/declares/log';
-import { tsp } from '../..';
+import { tsv } from '../..';
 import moduleConfig from './config';
 
 const log: LogData = {

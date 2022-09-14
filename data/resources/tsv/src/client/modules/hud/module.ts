@@ -2,7 +2,7 @@ import { IModule } from '../../../core/declares/module';
 import { LogData, EnumLogContainer } from '../../../core/declares/log';
 import { hudEvents } from './events';
 import moduleConfig from './config';
-import { tsp } from '../..';
+import { tsv } from '../..';
 
 const log: LogData = {
   namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,

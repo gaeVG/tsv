@@ -3,7 +3,7 @@ import { EnumLogContainer } from '../../../core/declares/log';
 import appConfig from '../../../config';
 import moduleConfig from './config';
 import { LogData } from '../../../core/declares/log';
-import { tsp } from '../..';
+import { tsv } from '../..';
 
 const log: LogData = {
   namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,

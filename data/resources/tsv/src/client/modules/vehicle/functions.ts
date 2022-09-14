@@ -1,5 +1,5 @@
 import { Player, Scaleform, Vehicle } from '../../../core/libs';
-import { tsp } from '../..';
+import { tsv } from '../..';
 import { LogData } from '../../../core/declares/log';
 import moduleConfig from './config';
 

@@ -1,7 +1,7 @@
 import { SkinCharacter } from '../../../core/declares/user';
 import { EnumLogContainer, LogData } from '../../../core/declares/log';
 import { Log } from '../../../core/libs/log';
-import { tsp } from '../../index';
+import { tsv } from '../../index';
 
 const log: LogData = {
   namespace: 'ModulePlayer',

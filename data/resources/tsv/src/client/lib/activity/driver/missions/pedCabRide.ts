@@ -9,7 +9,7 @@ import { EnumLogContainer, LogData } from '../../../../../core/declares/log';
 import { Ped, Player, Vector3 } from '../../../../../core/libs';
 import { driver as driverConfig } from '../../../../../config/societies/activities/driver';
 import { getSeatPassenger, setPed } from './functions';
-import { tsp } from '../../../..';
+import { tsv } from '../../../..';
 
 const log: LogData = {
   namespace: 'PedCabRide',

@@ -15,7 +15,7 @@ import { ItemClotheLegsEnum } from '../../../core/declares/item/enum/clothe';
 import { InventoryContainerType } from '../../../core/declares/inventory';
 import { Clothe, Drink, Food, Weapon } from './item';
 import moduleConfig from './config';
-import { tsp } from '../../';
+import { tsv } from '../../';
 
 const log: LogData = {
   namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,
