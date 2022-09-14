@@ -53,15 +53,11 @@ Thumbs.db
 /data/cache
 data/positions.txt
 local.cfg
-stream.cfg
 /local/
 \[local\]
 !*/local/*
 README.md
 !/README.md
-data/resources/[stream]/[mappings]
-data/resources/[stream]/[vehicles]
-data/resources/[stream]/[clothes]
 
 data/resources/\[stream\]/\[mappings\]/
 data/resources/\[stream\]/\[vehicles\]/
