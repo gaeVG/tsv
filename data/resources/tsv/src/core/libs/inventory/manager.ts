@@ -14,8 +14,7 @@ class InventoryManager {
 
   constructor(inventories: InventoryType[]) {
     this.manager = [];
-    console.log('inventory manager constructor')
-    inventories.map((inventory) => {
+    inventories.forEach((inventory) => {
       this.manager.push(new Inventory(inventory));
     });
   }
@@ -24,7 +23,7 @@ class InventoryManager {
     return this.getAll().map((i) => i as IInventory);
   }
   set Manager(inventories: IInventory[]) {
-    inventories.map((inventory) => {
+    inventories.forEach((inventory) => {
       const inventoryManager = this.getOne(inventory.container);
       if (inventoryManager !== undefined) {
         this.updateOne(inventoryManager);
