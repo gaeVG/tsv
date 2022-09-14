@@ -8,6 +8,7 @@ class Item implements IItem {
   count: number;
   weight?: number;
   metadata?: { [key: string]: unknown }[];
+  props?: string;
 
   constructor(item: ItemType) {
     this.name = item.name;
@@ -19,6 +20,7 @@ class Item implements IItem {
       if (itemConfig !== undefined) {
         this.category = category as ItemCategoryType;
         this.weight = itemConfig.weight;
+        this.props = itemConfig.props;
         return;
       }
     });

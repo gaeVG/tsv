@@ -7,6 +7,7 @@ interface IItem {
   count: number;
   metadata?: { [key: string]: unknown }[];
   weight?: number;
+  props?: string;
 }
 
 export { IItem };

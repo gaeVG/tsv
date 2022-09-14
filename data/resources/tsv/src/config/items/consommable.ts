@@ -6,18 +6,18 @@ export default [
     name: ItemFoodEnum.BREAD,
     label: _t(`module.inventory.item.${ItemFoodEnum.BREAD}`),
     weight: 250,
-    props: 'props_bread',
+    props: 'prop_cs_burger_01',
   },
   {
     name: ItemDrinkEnum.WATER,
     label: _t(`module.inventory.items.${ItemDrinkEnum.WATER}`),
     weight: 100,
-    props: 'props_water',
+    props: 'vw_prop_casino_water_bottle_01a',
   },
   {
     name: ItemDrinkEnum.BEER,
     label: _t(`module.inventory.items.${ItemDrinkEnum.BEER}`),
     weight: 100,
-    props: 'props_beer',
+    props: 'prop_beer_pissh',
   },
 ] as ItemType[];
