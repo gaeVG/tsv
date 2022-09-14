@@ -67,15 +67,17 @@ function Item({ item, from, isSelected } : { item: ItemType, from: InventoryFrom
         <div
           id={`item-${item.name}-${itemID}`}
           className={`item ${isSelected ? 'selected' : ''}`}
-          onClick={() => fetch('https://ts_paradise/eventParadise', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              name: 'useItem',
-              module: 'inventory',
-              payload: [from, item]
-            })
-          })}
+          onClick={() => {
+            fetch('https://tsv/listener', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                name: 'useItem',
+                module: 'inventory',
+                payload: [from, item]
+              })
+            })}
+          }
         >
           {item.count} {itemLabel}
         </div>

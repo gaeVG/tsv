@@ -3,8 +3,8 @@ class NUIManager {
   private manager: NUIListener[];
 
   private on() {
-    RegisterNuiCallbackType('eventParadise');
-    on('__cfx_nui:eventParadise', (data, callback: (...args: unknown[]) => void) => {
+    RegisterNuiCallbackType('listener');
+    on('__cfx_nui:listener', (data: any, callback: (...args: unknown[]) => void) => {
       const event = this.manager.find((listener) => {
         return data.name === listener.name;
       });

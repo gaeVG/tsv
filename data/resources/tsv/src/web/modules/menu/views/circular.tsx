@@ -2,12 +2,11 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 // DECLARES
-import { MenuProps, ModuleReducerActionEnum } from '../../../../core/declares/nui';
+import { MenuProps } from '../../../../core/declares/nui';
 // HOOKS
 import { useId } from '@mantine/hooks';
 // COMPONENTS
 import { IconDynamic } from '../../../components';
-import { useNuiKey } from '../../../hooks';
 
 function MenuCircular({ buttons }: MenuProps) {
   const dispatch = useDispatch();
@@ -18,7 +17,7 @@ function MenuCircular({ buttons }: MenuProps) {
     console.log(e.key)
     console.log(isChecked)
     if (!isChecked) {
-      fetch('https://ts_paradise/eventParadise', {
+      fetch('https://tsv/listener', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

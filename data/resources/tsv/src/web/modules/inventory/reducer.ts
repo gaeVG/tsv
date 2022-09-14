@@ -81,7 +81,7 @@ const inventoryReducer = (
     case 'SET_DISPLAY':
       if (action.display.playerComponents !== undefined) {
         if (action.display.playerComponents === false) {
-          fetch('https://ts_paradise/eventParadise', {
+          fetch('https://tsv/listener', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -90,7 +90,7 @@ const inventoryReducer = (
             }),
           });
         } else {
-          fetch('https://ts_paradise/eventParadise', {
+          fetch('https://tsv/listener', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
