@@ -3,16 +3,16 @@ import { Vec4 } from '../../../libs/utils/Vector4';
 import { InventoryType } from '../../inventory';
 
 type CharacterDescription = {
+  skin?: SkinCharacter;
   lastname: string;
   firstname: string;
   age: number;
+  model: 'mp_m_freemode_01' | 'mp_f_freemode_01';
   sex: 'M' | 'F' | 'T';
 };
 
-type Character = {
+type UserCharacter = {
   description: CharacterDescription;
-  model: 'mp_m_freemode_01' | 'mp_f_freemode_01';
-  hashModel?: number;
   skin?: SkinCharacter;
   position: Vec4;
   isDead: boolean;
@@ -23,4 +23,4 @@ type Character = {
   experiences?: [];
 };
 
-export { Character, CharacterDescription };
+export { UserCharacter, CharacterDescription };

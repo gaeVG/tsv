@@ -54,10 +54,7 @@ class UserManager {
     try {
       const user = this.manager.find((user) => user.id === id);
       if (user === undefined) {
-        throw new UserNotFoundError({
-          id: id,
-          source: undefined,
-        });
+        throw new UserNotFoundError({ id: id });
       }
 
       return user;
@@ -115,13 +112,14 @@ class UserManager {
     return true;
   }
   updateOne(updateUser: IUser): IUser | Error {
+
     try {
       let userFound : User;
       this.manager = this.manager.reduce((userManager, currentUser) => {
         if (currentUser.id === updateUser.id) {
           Object.entries(updateUser).forEach(([userKey, userVal]) => {
             currentUser[userKey] = userVal;
-          });
+          });          
           userManager.push(currentUser);
           userFound = currentUser;
         }

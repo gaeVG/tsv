@@ -1,5 +1,5 @@
 import { Vector4 } from '../../../core/libs';
-import { SkinCharacter, Character } from '../../../core/declares/user';
+import { SkinCharacter, UserCharacter } from '../../../core/declares/user';
 import { InventoryContainerEnum } from '../../../core/declares/inventory';
 import { StatusEnum } from '../../../core/declares/status';
 
@@ -12,8 +12,8 @@ export default {
       lastname: undefined,
       age: 0,
       sex: 'M',
+      model: 'mp_m_freemode_01',
     },
-    model: 'mp_m_freemode_01',
     isDead: false,
     skin: {} as SkinCharacter,
     inventories: [
@@ -46,5 +46,5 @@ export default {
       },
     ],
     position: new Vector4(268.75, -956.4, 31.22, 180),
-  } as Character,
+  } as UserCharacter,
 };

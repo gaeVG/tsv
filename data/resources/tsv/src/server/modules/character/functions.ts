@@ -1,14 +1,12 @@
 import { LogData, EnumLogContainer } from '../../../core/declares/log';
 import { AddOneUserBucketAlreadyExistError, IBucket } from '../../../core/declares/bucket';
-import { UserNotFoundError } from '../../../core/declares/user';
+import { UserCharacter, UserNotFoundError } from '../../../core/declares/user';
 import { IUser } from '../../../core/declares/user';
-import { Crypto } from '../../../core/libs';
-import { IInventory } from '../../../core/declares/inventory';
+import { Crypto, Vector4 } from '../../../core/libs';
 import { StatusManager } from '../../../core/libs/status';
 import { InventoryManager } from '../../../core/libs/inventory';
-import { User } from '../../../core/libs/user';
 import moduleConfig from './config';
-import { tsp } from '../../../server';
+import { tsv } from '../../../server';
 
 const log: LogData = {
   namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,
@@ -16,14 +14,27 @@ const log: LogData = {
   isModuleDisplay: moduleConfig.debug,
 };
 
-function setCharacter(_: any, { id, character }: IUser): IUser | Error {
+function setCharacter(_: any, user: IUser, character: UserCharacter): IUser | Error {
   log.location = 'setCharacter()';
 
   try {
-    return tsv.users.updateOne({ id, character });
+    const updatedUser = tsv.users.updateOne({
+      id: user.id,
+      position: new Vector4(
+        character.position.x,
+        character.position.y,
+        character.position.z,
+        character.position.w,
+      ),
+      characterDescription: character.description,
+      inventories: character.inventories.length > 0 && new InventoryManager(character.inventories),
+      status: character.status.length > 0 && new StatusManager(character.status),
+      activities: character.activities,
+    });
+    return updatedUser;
   } catch (error) {
     if (error instanceof UserNotFoundError && process.env.NODE_ENV !== 'safemode') {
-      global.DropPlayer(id, error.message);
+      global.DropPlayer(user.source, error.message);
     }
     return error;
   }
@@ -41,10 +52,7 @@ function setNewCharacterIntoBucket(source: string, user: IUser): IBucket | Error
       host: tspUser.serverId,
     }) as IBucket;
 
-    tsv.users.updateOne({
-      ...user,
-      currentBucket: bucket.id,
-    });
+    tsv.users.updateOne({ id: user.id, currentBucket: bucket.id });
   } catch (error) {
     if (error instanceof AddOneUserBucketAlreadyExistError || error instanceof UserNotFoundError) {
       global.DropPlayer(user.source, error.message);

@@ -16,9 +16,10 @@ const statusThreads: ThreadModule[] = [
     timer: 1000,
     callback: () => {
       log.location = 'statusTick()';
+
       try {
-        tsv.users.All.map((user) => {
-          user.status.All.map((status) => {
+        tsv.users.All.forEach((user) => {
+          user.status.All.forEach((status) => {
             if (status instanceof Feed || status instanceof Thrist) {
               user.status.updateOne({
                 ...status,
@@ -36,9 +37,7 @@ const statusThreads: ThreadModule[] = [
         });
       } catch (error) {
         tsv.log.error({
-          namespace: 'status',
-          container: EnumLogContainer.Thread,
-          location: 'statusTick()',
+          ...log,
           message: error instanceof Error ? error.message : error,
         });
       }

@@ -1,6 +1,6 @@
 import { LogData, EnumLogContainer } from '../../../core/declares/log';
 import { IUser } from '../../../core/declares/user';
-import { Character } from '../../../core/declares/user';
+import { UserCharacter } from '../../../core/declares/user';
 import { ClientEventNativeEnum } from '../../../core/declares/events';
 import { Player, Fading } from '../../../core/libs';
 import { selectCharacter } from '../character';
@@ -17,7 +17,7 @@ function playerConnecting(
   _: string,
   user: IUser,
   isNewPlayer: boolean,
-  characters: Character[],
+  characters: UserCharacter[],
 ): void {
   selectCharacter(user, isNewPlayer, characters);
 }

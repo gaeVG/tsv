@@ -1,5 +1,5 @@
 import {
-  Character,
+  UserCharacter,
   IUser,
   UserIdentifier,
   UserIdentifierEnum,
@@ -16,8 +16,6 @@ import moduleConfig from './config';
 import { tsv } from '../../../server';
 import { User } from '../../../core/libs/user';
 import { BucketDimension } from '../../../core/declares/bucket';
-import { StatusManager } from '../../../core/libs/status';
-import { InventoryManager } from '../../../core/libs/inventory';
 
 const log: LogData = {
   namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,
@@ -38,11 +36,11 @@ async function createPlayerOnDB(source: string): Promise<UsersEntity> {
     user.auth = getIdentifiers(source) as UserIdentifier;
     user.group = UserGroupEnum.USER;
     const character = new CharactersEntity();
+    character.description = characterDefault.description;
     character.position = characterDefault.position;
+    character.isDead = false;
     character.status = characterDefault.status;
     character.inventories = characterDefault.inventories;
-    character.model = characterDefault.model;
-    character.isDead = false;
     user.characters = [character];
 
     return tsv.orm.dataSource.manager.save(user);
@@ -104,22 +102,13 @@ async function onPlayerJoined(source: string): Promise<void> {
       onNet: true,
       target: user.source,
       data: [
-        user as IUser,
+        user,
         isNewPlayer,
         userFromDB.characters.length > 0
-          ? userFromDB.characters.reduce((characters, character) => {
-              characters.push({
-                description: character.description,
-                model: character.model,
-                position: character.position,
-                status: character.status,
-                inventories: character.inventories,
-                skin: character.skin,
-                activities: character.activities,
-              } as Character);
-
-              return characters;
-            }, [] as Character[])
+          ? userFromDB.characters.reduce(
+              (characters: Array<UserCharacter>, character) => [...characters, character],
+              [],
+            )
           : [],
       ],
     });
@@ -132,9 +121,7 @@ async function onPlayerJoined(source: string): Promise<void> {
         });
       }
 
-      if (process.env.EXECUTION_MODE !== 'safemode') global.DropPlayer(source, error.message);
-
-      return;
+      process.env.EXECUTION_MODE !== 'safemode' && global.DropPlayer(source, error.message);
     }
   }
 }
@@ -309,10 +296,7 @@ async function playerHosting(source: string): Promise<void> {
 function onPlayerSpawn(_: any, user: IUser): IUser | Error {
   try {
     tsv.buckets.addUserIntoBucket(user, { id: BucketDimension.MAIN });
-    return tsv.users.updateOne({
-      ...user,
-      isReady: true,
-    });
+    return tsv.users.updateOne({ id: user.id, isReady: true });
   } catch (error) {
     tsv.log.error({
       ...log,
@@ -338,6 +322,7 @@ function getIdentifiers(source: string): UserIdentifier | Error {
 
   const playerIdentifiers = getPlayerIdentifiers(source).reduce((identifiers, identifier) => {
     const identifierSplit: string = identifier.split(':')[1];
+
     if (
       identifier.startsWith(UserIdentifierEnum.FIVEM) &&
       identifierSplit !== 'licence2' &&
@@ -349,8 +334,12 @@ function getIdentifiers(source: string): UserIdentifier | Error {
       process.env.IDENTIFIER_TYPE === 'steam'
     ) {
       identifiers.steam = identifierSplit;
-    } else if (identifier.startsWith(UserIdentifierEnum.DISCORD)) {
-      identifiers.discord = identifierSplit;
+    } else {
+      Object.values(UserIdentifierEnum).forEach((userIdentifier) => {
+        if (identifier.startsWith(userIdentifier)) {
+          identifiers[userIdentifier] = identifierSplit;
+        }
+      });
     }
 
     return identifiers;

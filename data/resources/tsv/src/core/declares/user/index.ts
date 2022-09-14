@@ -1,7 +1,7 @@
 export { IUser } from './interface';
 export { UserGroupEnum, UserIdentifierEnum } from './enum';
 export {
-  Character,
+  UserCharacter,
   CharacterDescription,
   PlayerData,
   SkinCharacter,

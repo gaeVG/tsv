@@ -9,9 +9,6 @@ class UserCharacters {
   description?: CharacterDescription;
 
   @Column()
-  model: 'mp_m_freemode_01' | 'mp_f_freemode_01';
-
-  @Column()
   skin?: SkinCharacter;
 
   @Column()
