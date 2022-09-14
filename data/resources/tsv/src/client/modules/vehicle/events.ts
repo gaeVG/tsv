@@ -30,7 +30,7 @@ const vehicleEvents: IEventListener[] = [
       vehicle.IsDriveable = true;
       vehicle.repair();
       if (!vehicle.Windows.AreAllWindowsIntact) {
-        vehicle.Windows.getAllWindows().map((window) => {
+        vehicle.Windows.getAllWindows().forEach((window) => {
           window.repair();
         });
       }

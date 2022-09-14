@@ -3,7 +3,7 @@ import { LogData, EnumLogContainer } from '../../../core/declares/log';
 import { inventoryCommands } from './commands';
 import { inventoryNui } from './nui';
 import moduleConfig from './config';
-import { tsp } from '../..';
+import { tsv } from '../..';
 
 const log: LogData = {
   namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,
@@ -22,8 +22,8 @@ const InventoryModule: IModule = {
         message: tsv.locale('module.global.init.start', { moduleName: moduleConfig.name }),
       });
 
-      inventoryCommands.map((command) => tsv.commands.register(command));
-      inventoryNui.map((nui) => tsv.nui.listen(nui));
+      inventoryCommands.forEach((command) => tsv.commands.register(command));
+      inventoryNui.forEach((nui) => tsv.nui.listen(nui));
     } catch (error) {
       return error;
     } finally {

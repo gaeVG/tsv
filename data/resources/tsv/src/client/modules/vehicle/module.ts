@@ -1,6 +1,6 @@
 import { IModule } from '../../../core/declares/module';
 import { LogData, EnumLogContainer } from '../../../core/declares/log';
-import { tsp } from '../../../client';
+import { tsv } from '../../../client';
 import { vehicleEvents } from './events';
 import moduleConfig from './config';
 
@@ -21,7 +21,7 @@ const VehicleModule: IModule = {
         message: tsv.locale('module.global.init', { moduleName: moduleConfig.name }),
       });
 
-      vehicleEvents.map((event) => tsv.events.listen(event));
+      vehicleEvents.forEach((event) => tsv.events.listen(event));
     } catch (error) {
       return error;
     } finally {

@@ -8,7 +8,7 @@ import {
 } from '../../../core/declares/activity';
 import { Activity } from './activity';
 import { Security, Driver } from '.';
-import { tsp } from '../..';
+import { tsv } from '../..';
 
 const log: LogData = {
   namespace: 'Actvitiy',
@@ -66,7 +66,7 @@ class ActivityManager {
   addActivity(addActivity: UserActivityType | UserActivityType[]) {
     try {
       if (addActivity instanceof Array) {
-        addActivity.map((activity) => this.addActivity(activity));
+        addActivity.forEach((activity) => this.addActivity(activity));
       } else {
         if (
           !Object.values(ActivityEnum).find(

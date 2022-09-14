@@ -2,7 +2,7 @@ import { IModule } from '../../../core/declares/module';
 import { LogData, EnumLogContainer } from '../../../core/declares/log';
 import { statusEvents } from './events';
 import moduleConfig from './config';
-import { tsp } from '../..';
+import { tsv } from '../..';
 
 const log: LogData = {
   namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,
@@ -21,7 +21,7 @@ const StatusModule: IModule = {
         message: tsv.locale('module.global.init.start', { moduleName: moduleConfig.name }),
       });
 
-      statusEvents.map((event) => tsv.events.listen(event));
+      statusEvents.forEach((event) => tsv.events.listen(event));
     } catch (error) {
       return error;
     } finally {

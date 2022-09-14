@@ -4,7 +4,7 @@ import { playerEvents } from './events';
 import { playerThreads } from './threads';
 import { playerCommands } from './commands';
 import { playerMenus } from './menus';
-import { tsp } from '../..';
+import { tsv } from '../..';
 import moduleConfig from './config';
 
 const log: LogData = {
@@ -24,10 +24,10 @@ const PlayerModule: IModule = {
         message: tsv.locale('module.global.init.start', { moduleName: moduleConfig.name }),
       });
 
-      playerEvents.map((event) => tsv.events.listen(event));
-      playerThreads.map((thread) => tsv.threads.createThread(thread));
-      playerCommands.map((command) => tsv.commands.register(command));
-      playerMenus.map((menu) => tsv.menus.createMenu(menu));
+      playerEvents.forEach((event) => tsv.events.listen(event));
+      playerThreads.forEach((thread) => tsv.threads.createThread(thread));
+      playerCommands.forEach((command) => tsv.commands.register(command));
+      playerMenus.forEach((menu) => tsv.menus.createMenu(menu));
     } catch (error) {
       return error;
     } finally {

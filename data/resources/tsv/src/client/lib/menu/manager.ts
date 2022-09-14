@@ -89,7 +89,7 @@ class MenuManager {
     menu.open();
   }
   closeAll(): void {
-    this.manager.map((menu) => menu.close());
+    this.manager.forEach((menu) => menu.close());
   }
 }
 

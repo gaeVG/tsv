@@ -7,7 +7,7 @@ import { LogData, EnumLogContainer } from '../../../../core/declares/log';
 import { Ped, Player } from '../../../../core/libs';
 import { Activity } from '..';
 import { driverEvents } from './events';
-import { tsp } from '../../..';
+import { tsv } from '../../..';
 import { IUser } from '../../../../core/declares/user';
 import { PedCabRide } from './missions';
 
@@ -34,7 +34,7 @@ class Driver extends Activity {
   }
 
   init() {
-    driverEvents.map((event) => tsv.events.listen(event));
+    driverEvents.forEach((event) => tsv.events.listen(event));
   }
   addPassenger(passenger: Ped | IUser) {
     log.location = 'addPassenger()';
