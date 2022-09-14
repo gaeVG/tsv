@@ -108,5 +108,3 @@ Les instructions suivantes sont à compléter sur _txAdmin_ dans le champ **Adit
 6. [Recherche de props par hash (Pleb Master)](https://plebmasters.de/?app=objects)
 7. [Cloth Tool](https://www.gta5-mods.com/tools/alt-v-cloth-tool-addon-clothes-dlc-generator)
 8. [GIMS Evo](https://files.gta5-mods.com/uploads/gims-evo-with-gta-v-support/76198a-Manual.install.rar)
-### Développement
-1. [Lua Beautifer](https://goonlinetools.com/lua-beautifier/)
