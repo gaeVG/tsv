@@ -102,7 +102,7 @@ const appReducer = (
         currentDrag: null,
       };
     case AppReducerActionEnum.DROP_CURRENT_DRAG:
-      fetch('https://ts_paradise/eventParadise', {
+      fetch('https://tsv/listener', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

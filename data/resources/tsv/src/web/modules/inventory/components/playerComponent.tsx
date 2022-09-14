@@ -35,7 +35,7 @@ function PlayerComponent({ component } : { component: PlayerComponentType }) {
       display: false,
     });
 
-    fetch('https://ts_paradise/eventParadise', {
+    fetch('https://tsv/listener', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
