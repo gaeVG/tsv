@@ -7,15 +7,9 @@
 1. [Télécharger git](https://git-scm.com/download/win)
 2. [Télécharger MongoDB](https://fastdl.mongodb.org/windows/mongodb-windows-x86_64-6.0.0-signed.msi)
 3. [Télécharger NodeJS](https://nodejs.org/dist/v16.16.0/node-v16.16.0-x64.msi)
+4. [Télécharger Visual Studio](https://visualstudio.microsoft.com/fr/thank-you-downloading-visual-studio/?sku=Community&channel=Release&version=VS2022&source=VSLandingPage&cid=2030&passive=false)
+    - Installer les composants _Windows desktop development with C++_
 
-## 🎛️ Paramétrage de git
-
-> _Ajouter les informations de connexion au dépot_
-
-```
-git config user.name "NAME"
-git config user.mail MAIL@ADRESSE.COM
-```
 
 ## 🔃 Récupération du projet
 
@@ -93,87 +87,6 @@ Les instructions suivantes sont à compléter sur _txAdmin_ dans le champ **Adit
 +set sv_maxclients 128 +set sv_hostname "Mon super serveur"
 +set sv_master="" +set svgui_disable true sets locale "FR-FR"
 ```
-
-# 🖥️ Developpement
-
-## ⚙️ Gestion des threads
-
-```ts
-import _t from "@config/i18n";
-import { tsp } from '@client';
-
-tsv.threads.createThread({
-    name: "exempleTick",
-    timer: 1000,
-    callback: () => {
-        const player = new Player();
-        tsv.log.debug({
-            namespace: "Exemple",
-            container: "Function",
-            location: "exempleTick()",
-            message: _t('exemple.tick.message', { playerName: player.Name })
-        });
-
-        return player.serverId === 0 false : true;
-    }
-});
-```
-
-## 🎉 Gestion des évènements
-
-### Enregistrement :
-
-```ts
-// Server
-
-tsv.events.listen({
-    name: 'exempleEvent',
-    module: 'exemple',
-    handler: (data) => {
-        tsv.log.debug({
-            ...log,
-            message: _t('exemple.event.message', { data: data })
-        });
-    }
-)}
-
-// Server <-> Client
-tsv.events.listen({
-    name: 'exempleEvent',
-    module: 'exemple',
-    onNet: true,
-    handler: (data) => {
-        tsv.log.debug({
-            ...log,
-            message: _t('exemple.event.message', { data: data })
-        });
-    }
-)}
-```
-
-### Déclenchement :
-
-```ts
-// Local
-tsv.event.trigger({ name: "exempleEvent" });
-
-// Server <-> Client
-tsv.event.trigger({ name: "exempleEvent", onNet: true });
-
-// Callback
-tsv.event.trigger({
-  name: "exempleEvent",
-  onNet: true,
-  data: [data],
-  callback: (result: any) => {
-    tsv.log.debug({
-      ...log,
-      message: _t("exemple.event.message", { result: result }),
-    });
-  },
-});
-```
-
 # 💡 Liens utilies
 ### FiveM
 1. [Game référence (FiveM Documentation)](https://docs.fivem.net/docs/game-references/)
