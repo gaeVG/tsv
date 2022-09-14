@@ -34,7 +34,7 @@ class Log {
     Env.client(() => preEnv = `${ColorClientConsoleEnum.RED}[ERROR] `);
     Env.server(() => preEnv = `💥${ColorServerConsoleEnum.RED}\t`);
 
-    (log.isModuleDisplay == undefined || log.isModuleDisplay) &&
+    (log.isModuleDisplay === undefined || log.isModuleDisplay) &&
       process.env.NODE_ENV === 'development' &&
       console.log(`${preEnv} ${formatMessage(log)}`);
   }
@@ -43,7 +43,7 @@ class Log {
     Env.client(() => preEnv = `${ColorClientConsoleEnum.YELLOW}[WARNING] `);
     Env.server(() => preEnv = `🧭${ColorServerConsoleEnum.YELLOW}\t`);
 
-    (log.isModuleDisplay == undefined || log.isModuleDisplay) &&
+    (log.isModuleDisplay === undefined || log.isModuleDisplay) &&
       process.env.NODE_ENV === 'development' &&
       console.log(`${preEnv} ${formatMessage(log)}`);
   }
@@ -52,18 +52,20 @@ class Log {
     Env.client(() => preEnv = `${ColorClientConsoleEnum.GREEN}[CONFIRM] `);
     Env.server(() => preEnv = `💚${ColorServerConsoleEnum.GREEN}\t`);
 
-    (log.isModuleDisplay == undefined || log.isModuleDisplay) &&
+    (log.isModuleDisplay === undefined || log.isModuleDisplay) &&
       process.env.NODE_ENV === 'development' &&
       console.log(`${preEnv} ${formatMessage(log)}`);
   }
   static safemode(log: LogData): void {
     let preEnv = '';
+
     Env.client(() => preEnv = `[SAFEMODE] `);
     Env.server(() => preEnv = `💽\t`);
 
-    (log.isModuleDisplay == undefined || log.isModuleDisplay) &&
+    (log.isModuleDisplay === undefined || log.isModuleDisplay) &&
       process.env.EXECUTION_MODE === 'safemode' &&
       console.log(`${preEnv} ${formatMessage(log)}`);
+
   }
 }
 
