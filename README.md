@@ -85,7 +85,7 @@ Les instructions suivantes sont à compléter sur _txAdmin_ dans le champ **Adit
 ```
 +exec permissions.cfg +set sv_licenseKey LICENSE_FIVEM +set steam_webApiKey "STEAM_API"
 +set sv_maxclients 128 +set sv_hostname "Mon super serveur"
-+set sv_master="" +set svgui_disable true sets locale "FR-FR"
++set sv_master="" sets locale "FR-FR"
 ```
 # 💡 Liens utilies
 ### FiveM
