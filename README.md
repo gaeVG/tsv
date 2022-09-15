@@ -1,3 +1,6 @@
+[![Latest Release](https://git.cenne.xyz/fivem/base/-/badges/release.svg)](https://git.cenne.xyz/fivem/base/-/releases)
+<a href="https://runtime.fivem.net/artifacts/fivem/build_server_windows/master/5848-4f71128ee48b07026d6d7229a60ebc5f40f2b9db/server.7z"><img class="js-lazy-loaded qa-js-lazy-loaded" decoding="async" alt="Latest Release" src="https://img.shields.io/badge/Artefact CFX-<= 5848-yellow" loading="lazy"></a>
+
 # 📒 Installation
 
 ## 🏒 Préparation de l'environnement (Windows)
@@ -36,10 +39,10 @@ cd server
 
 ### ⤵️ Téléchargement de l'artefact
 
-> _Décompresser le fichier [téléchargé](https://runtime.fivem.net/artifacts/fivem/build_server_windows/master/5878-a5c270439ddb3bbb1fc4e7d02cb5593be84a9b89/server.7z) dans le dossier `server`_
+> _Décompresser le fichier [téléchargé](https://runtime.fivem.net/artifacts/fivem/build_server_windows/master/5848-4f71128ee48b07026d6d7229a60ebc5f40f2b9db/server.7z) dans le dossier `server`_
 
 ```powershell
-Invoke-WebRequest -Uri "https://runtime.fivem.net/artifacts/fivem/build_server_windows/master/5878-a5c270439ddb3bbb1fc4e7d02cb5593be84a9b89/server.7z" -OutFile "server.7z"
+Invoke-WebRequest -Uri "https://runtime.fivem.net/artifacts/fivem/build_server_windows/master/5848-4f71128ee48b07026d6d7229a60ebc5f40f2b9db/server.7z" -OutFile "server.7z"
 ```
 
 ## 🧰 Préparation du noyau
@@ -85,7 +88,7 @@ Les instructions suivantes sont à compléter sur _txAdmin_ dans le champ **Adit
 ```
 +exec permissions.cfg +set sv_licenseKey LICENSE_FIVEM +set steam_webApiKey "STEAM_API"
 +set sv_maxclients 128 +set sv_hostname "Mon super serveur"
-+set sv_master="" +set svgui_disable true sets locale "FR-FR"
++set sv_master="" sets locale "FR-FR"
 ```
 # 💡 Liens utilies
 ### FiveM

@@ -13,7 +13,7 @@ const playerThreads: ThreadModule[] = [
   {
     name: 'is-network-player-active',
     timer: 500,
-    callback() {
+    callback: () => {
       const playerId = PlayerId();
       if (NetworkIsPlayerActive(playerId)) {
         tsv.log.safemode({
