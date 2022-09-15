@@ -1,4 +1,5 @@
 [![Latest Release](https://git.cenne.xyz/fivem/base/-/badges/release.svg)](https://git.cenne.xyz/fivem/base/-/releases)
+<img src="https://img.shields.io/badge/Artefact CFX-<= 5848-yellow">
 
 # 📒 Installation
 
@@ -38,10 +39,10 @@ cd server
 
 ### ⤵️ Téléchargement de l'artefact
 
-> _Décompresser le fichier [téléchargé](https://runtime.fivem.net/artifacts/fivem/build_server_windows/master/5878-a5c270439ddb3bbb1fc4e7d02cb5593be84a9b89/server.7z) dans le dossier `server`_
+> _Décompresser le fichier [téléchargé](https://runtime.fivem.net/artifacts/fivem/build_server_windows/master/5848-4f71128ee48b07026d6d7229a60ebc5f40f2b9db/server.7z) dans le dossier `server`_
 
 ```powershell
-Invoke-WebRequest -Uri "https://runtime.fivem.net/artifacts/fivem/build_server_windows/master/5878-a5c270439ddb3bbb1fc4e7d02cb5593be84a9b89/server.7z" -OutFile "server.7z"
+Invoke-WebRequest -Uri "https://runtime.fivem.net/artifacts/fivem/build_server_windows/master/5848-4f71128ee48b07026d6d7229a60ebc5f40f2b9db/server.7z" -OutFile "server.7z"
 ```
 
 ## 🧰 Préparation du noyau
