@@ -7,22 +7,25 @@ class Item implements IItem {
   category: ItemCategoryType;
   count: number;
   weight?: number;
-  metadata?: { [key: string]: unknown }[];
+  metadata?: unknown;
   props?: string;
 
   constructor(item: ItemType) {
     this.name = item.name;
     this.count = item.count;
     this.metadata = item.metadata;
-    Object.entries(config.items).forEach(([category, items]) => {
+    Object.entries(config.items).every(([category, items]) => {
       const itemConfig = items.find((item: ItemType) => item.name === this.name);
 
       if (itemConfig !== undefined) {
         this.category = category as ItemCategoryType;
         this.weight = itemConfig.weight;
         this.props = itemConfig.props;
-        return;
+
+        return false;
       }
+
+      return true;
     });
   }
 }

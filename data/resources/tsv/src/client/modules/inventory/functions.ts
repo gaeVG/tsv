@@ -5,15 +5,16 @@ import {
   IUsableItem,
   ItemCategoryEnum,
   ItemWeaponMeleeEnum,
+  ItemClotheLegsEnum,
   UnknownItemError,
   ItemDrinkEnum,
 } from '../../../core/declares/item';
 import { IInventory } from '../../../core/declares/inventory';
 import { Player, Ped } from '../../../core/libs';
 import { Wait } from '../../../core/libs';
-import { ItemClotheLegsEnum } from '../../../core/declares/item/enum/clothe';
+import {} from '../../../core/declares/item/enum/clothe';
 import { InventoryContainerType } from '../../../core/declares/inventory';
-import { Clothe, Drink, Food, Weapon } from './item';
+import { Clothe, Drink, Food, Weapon, Key } from './item';
 import moduleConfig from './config';
 import { tsv } from '../../';
 
@@ -108,6 +109,12 @@ function getItemClass(item: IItem): IUsableItem | Error {
       case ItemCategoryEnum.CLOTHE:
         if (Object.values(ItemClotheLegsEnum).find((clotheItem) => clotheItem === item.name))
           return new Clothe(item);
+
+        throw new UnknownItemError(item);
+      case ItemCategoryEnum.HARDWARE:
+        if (item.name === 'key') {
+          return new Key(item);
+        }
 
         throw new UnknownItemError(item);
       default:

@@ -6,7 +6,7 @@ interface IUsableItem {
   label?: string;
   category: ItemCategoryType | undefined;
   count: number;
-  metadata?: { [key: string]: unknown }[];
+  metadata?: unknown;
   use(...args: Array<unknown>): void;
   getAllowToUse(useItem: (canUseItem: boolean) => void, container: InventoryContainerType): void;
 }

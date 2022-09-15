@@ -5,6 +5,7 @@ type ItemCategoryType =
   | ItemCategoryEnum.CONSOMMABLE
   | ItemCategoryEnum.RESSOURCE
   | ItemCategoryEnum.WEAPON
-  | ItemCategoryEnum.CLOTHE;
+  | ItemCategoryEnum.CLOTHE
+  | ItemCategoryEnum.HARDWARE;
 
 export { ItemCategoryType };

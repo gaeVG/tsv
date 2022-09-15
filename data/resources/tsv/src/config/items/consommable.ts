@@ -2,12 +2,14 @@ import { ItemType, ItemFoodEnum, ItemDrinkEnum } from '../../core/declares/item'
 import _t from '../i18n';
 
 export default [
+  // Food items
   {
     name: ItemFoodEnum.BREAD,
     label: _t(`module.inventory.item.${ItemFoodEnum.BREAD}`),
     weight: 250,
     props: 'prop_cs_burger_01',
   },
+  // Drink items
   {
     name: ItemDrinkEnum.WATER,
     label: _t(`module.inventory.items.${ItemDrinkEnum.WATER}`),

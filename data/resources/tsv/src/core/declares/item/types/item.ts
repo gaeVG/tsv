@@ -3,7 +3,7 @@ type ItemType = {
   label?: string;
   count?: number;
   weight?: number;
-  metadata?: { [key: string]: any }[];
+  metadata?: unknown;
   props?: string;
 };
 

@@ -5,7 +5,7 @@ interface IItem {
   label?: string;
   category: ItemCategoryType | undefined;
   count: number;
-  metadata?: { [key: string]: unknown }[];
+  metadata?: unknown;
   weight?: number;
   props?: string;
 }
