@@ -1,5 +1,5 @@
 [![Latest Release](https://git.cenne.xyz/fivem/base/-/badges/release.svg)](https://git.cenne.xyz/fivem/base/-/releases)
-<img src="https://img.shields.io/badge/Artefact CFX-<= 5848-yellow">
+<a href="https://runtime.fivem.net/artifacts/fivem/build_server_windows/master/5848-4f71128ee48b07026d6d7229a60ebc5f40f2b9db/server.7z"><img class="js-lazy-loaded qa-js-lazy-loaded" decoding="async" alt="Latest Release" src="https://img.shields.io/badge/Artefact CFX-<= 5848-yellow" loading="lazy"></a>
 
 # 📒 Installation
 
