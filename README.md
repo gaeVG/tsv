@@ -1,3 +1,5 @@
+[![Latest Release](https://git.cenne.xyz/fivem/base/-/badges/release.svg)](https://git.cenne.xyz/fivem/base/-/releases)
+
 # 📒 Installation
 
 ## 🏒 Préparation de l'environnement (Windows)
