@@ -1,112 +1,58 @@
-import { Entity, Vector3, Crypto, Color } from '../../../core/libs';
-import config from '../../../config';
+import { Vector3, Crypto, Color } from '../../../core/libs';
 import { User } from '../../../core/libs/user';
 import { Bucket } from '../bucket';
 import { IUser } from '../../../core/declares/user';
 import { IZone, ZoneType } from '../../../core/declares/zone';
-import { EntityZoneType } from '../../../core/declares/zone/types/zone';
 
-class Zone implements IZone {
+abstract class Zone implements IZone {
   id: string;
   name: string;
   module: string;
+  points: Vector3[] | Vector3;
+  center?: Vector3;
+  min: Vector3;
+  max: Vector3;
+  size: Vector3;
+  area: number;
+  useGrid: boolean;
+  lazyGrid: boolean;
+  gridDivisions: number;
+  debugPoly: boolean;
+  debugGrid: boolean;
   color: {
     outline: Color;
     wall: Color;
   };
-  min: Vector3;
-  max: Vector3;
-  points: Vector3[] | Vector3 | Entity;
-  radius?: boolean;
   bucket?: Bucket;
   users?: IUser[];
   onEnter?: (user: User) => void;
   onLeave?: (user: User) => void;
 
-  static drawWall(p1: Vector3, p2: Vector3, borderHight?: number, borderColor?: Color) {
-    const pBorder = borderHight ? borderHight : 3;
-    const bottomLeft = p1.add(new Vector3(0, 0, -1.5));
-    const topLeft = p1.add(new Vector3(0, 0, pBorder));
-    const bottomRight = p2.add(new Vector3(0, 0, -1.5));
-    const topRight = p2.add(new Vector3(0, 0, pBorder));
-    const pBorderColor = borderColor ? borderColor : new Color(100, 0, 255, 0);
-
-    DrawPoly(
-      bottomLeft.x,
-      bottomLeft.y,
-      bottomLeft.z,
-      topLeft.x,
-      topLeft.y,
-      topLeft.z,
-      bottomRight.x,
-      bottomRight.y,
-      bottomRight.z,
-      pBorderColor.r,
-      pBorderColor.g,
-      pBorderColor.b,
-      pBorderColor.a,
-    );
-    DrawPoly(
-      topLeft.x,
-      topLeft.y,
-      topLeft.z,
-      topRight.x,
-      topRight.y,
-      topRight.z,
-      bottomRight.x,
-      bottomRight.y,
-      bottomRight.z,
-      pBorderColor.r,
-      pBorderColor.g,
-      pBorderColor.b,
-      pBorderColor.a,
-    );
-    DrawPoly(
-      bottomRight.x,
-      bottomRight.y,
-      bottomRight.z,
-      topRight.x,
-      topRight.y,
-      topRight.z,
-      topLeft.x,
-      topLeft.y,
-      topLeft.z,
-      pBorderColor.r,
-      pBorderColor.g,
-      pBorderColor.b,
-      pBorderColor.a,
-    );
-    DrawPoly(
-      bottomRight.x,
-      bottomRight.y,
-      bottomRight.z,
-      topLeft.x,
-      topLeft.y,
-      topLeft.z,
-      bottomLeft.x,
-      bottomLeft.y,
-      bottomLeft.z,
-      pBorderColor.r,
-      pBorderColor.g,
-      pBorderColor.b,
-      pBorderColor.a,
-    );
-  }
-
   constructor(zone: ZoneType) {
+    if (zone.points instanceof Array && zone.points.length < 3) {
+      throw new Error('Zone must have at least 3 points');
+    }
+
     this.id = Crypto.uuidv4();
     this.name = zone.name;
+    this.points = zone.points;
+    this.center = zone.center;
+    this.min = zone.min;
+    this.max = zone.max;
+    this.size = zone.size;
+    this.useGrid = zone.useGrid || true;
+    this.lazyGrid = zone.lazyGrid || true;
+    this.gridDivisions = zone.gridDivisions || 30;
+    this.debugPoly = zone.debugPoly || false;
+    this.debugGrid = zone.debugGrid || false;
     this.color = zone.color
       ? zone.color
       : {
           outline: new Color(100, 250, 0, 0),
           wall: new Color(100, 250, 0, 0),
         };
-    this.min = new Vector3(0, 0, 0);
-    this.max = new Vector3(0, 0, 0);
-    this.points = zone.points;
-    this.radius = zone.radius && zone.radius;
-    this.bucket = zone.bucket && zone.bucket;
+
+    // this.bucket = zone.bucket && zone.bucket;
 
     if (zone.onEnter)
       this.onEnter = (user: User) => {
@@ -124,6 +70,9 @@ class Zone implements IZone {
       };
   }
 
+  abstract isInside(coords: Vector3): boolean;
+  abstract left(...args: Array<Vector3>): boolean;
+
   addOneUser(user: IUser): boolean {
     if (this.users.find((u) => u.id === user.id)) {
       return false;
@@ -132,55 +81,113 @@ class Zone implements IZone {
     this.users.push(user);
     return true;
   }
-  isInsidePolygon(coords: Vector3, borderHight?: number): boolean {
-    const drawIt = process.env.DEBUG_MODULES.split(', ').includes('zone');
-    const polygons = this.points as Vector3[];
-    let j = polygons.length;
-    let oddNodes = false;
+}
 
-    polygons.map((point, i) => {
-      let p2: Vector3;
-
-      if (i < j && drawIt) {
-        p2 = polygons[i + 1];
-        Zone.drawWall(point, p2, borderHight);
-      }
-
-      if (
-        point.y < coords.y &&
-        polygons[j].y >= coords.y &&
-        polygons[j].y < coords.y &&
-        point.y >= coords.y
-      ) {
-        if (
-          point.x + ((coords.y - point.y) / (polygons[j].y - point.x)) * (polygons[j].x - point.x) <
-          coords.x
-        ) {
-          oddNodes = !oddNodes;
+class PolyZone extends Zone {
+  private innerLoop(p0: Vector3, p1: Vector3, p2: Vector3, i: number): number {
+    if (p0.y <= p2.y) {
+      if (p1.y > p2.y) {
+        if (this.left(p0, p1, p2)) {
+          return ++i;
         }
       }
-
-      j = i;
-    });
-
-    if (polygons.length > 2 && drawIt) {
-      const firstPoint = polygons[0];
-      const lastPoint = polygons[polygons.length];
-      Zone.drawWall(firstPoint, lastPoint);
+    } else {
+      if (p1.y <= p2.y) {
+        if (this.left(p0, p1, p2)) {
+          return --i;
+        }
+      }
     }
 
-    return oddNodes;
+    return i;
   }
-}
-class PolyZone extends Zone {
+  private calculatePolygon() {
+    if (
+      this.min === undefined ||
+      this.max === undefined ||
+      this.size === undefined ||
+      this.center === undefined
+    ) {
+      let minX = Number.MAX_SAFE_INTEGER,
+        minY = Number.MAX_SAFE_INTEGER,
+        minZ = Number.MAX_SAFE_INTEGER;
+      let maxX = Number.MIN_SAFE_INTEGER,
+        maxY = Number.MIN_SAFE_INTEGER,
+        maxZ = Number.MIN_SAFE_INTEGER;
+
+      const points = this.points as Vector3[];
+
+      points.forEach((point) => {
+        minX = Math.min(minX, point.x);
+        minY = Math.min(minY, point.y);
+        minZ = Math.min(minZ, point.z);
+        maxX = Math.max(maxX, point.x);
+        maxY = Math.max(maxY, point.y);
+        maxZ = Math.max(maxZ, point.z);
+      });
+
+      this.min = new Vector3(minX, minY, minZ);
+      this.max = new Vector3(maxX, maxY, maxZ);
+      this.size = this.max.subtract(this.min);
+      this.center = this.max.add(this.min).divide(2);
+    }
+  }
+
   constructor(zone: ZoneType) {
     super(zone);
+    this.calculatePolygon();
   }
-}
-class EntityZone extends Zone {
-  constructor(zone: EntityZoneType) {
-    super(zone);
-  }
-}
 
-export { Zone, PolyZone, EntityZone };
+  isInside(coords: Vector3): boolean {
+    // Checks if point is within the polygon's bounding box
+    if (
+      coords.x < this.min.x ||
+      coords.x > this.max.x ||
+      coords.y < this.min.y ||
+      coords.y > this.max.y
+    ) {
+      return false;
+    }
+
+    // Checks if point is within the polygon's height bounds
+    if ((this.min.z && coords.z < this.min.z) || (this.max.z && coords.z > this.max.z)) {
+      return false;
+    }
+
+    // Returns true if the grid cell associated with the point is entirely inside the poly
+    if (this.useGrid) {
+      const gridPosX = coords.x - this.min.x;
+      const gridPosY = coords.y - this.min.y;
+      const gridCellX = gridPosX * this.gridDivisions; // size.x
+      const gridCellY = gridPosY * this.gridDivisions; // size.y
+      //   const gridCellValue = grid[gridCellY + 1][gridCellX + 1]
+
+      //   if gridCellValue == nil and poly.lazyGrid then
+      //     gridCellValue = _isGridCellInsidePoly(gridCellX, gridCellY, poly)
+      //     grid[gridCellY + 1][gridCellX + 1] = gridCellValue
+      //   end
+      //   if gridCellValue then return true end
+      // end
+    }
+
+    if (this.points instanceof Array) {
+      let wn = 0;
+      for (let j = 0; j < this.points.length; j++) {
+        wn = this.innerLoop(this.points[wn], this.points[++wn], coords, wn);
+      }
+      wn = this.innerLoop(this.points[wn], this.points[0], coords, wn);
+
+      return wn !== 0;
+    }
+  }
+  left(p0: Vector3, p1: Vector3, p2: Vector3): boolean {
+    return (p1.x - p0.x) * (p2.y - p0.y) - (p2.x - p0.x) * (p1.y - p0.y) > 0;
+  }
+}
+// class EntityZone extends Zone {
+//   constructor(zone: EntityZoneType) {
+//     super(zone);
+//   }
+// }
+
+export { Zone, PolyZone /*EntityZone*/ };

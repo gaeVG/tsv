@@ -1,4 +1,4 @@
-import { Vector3, Color } from '../../../libs';
+import { Vector2, Vector3, Color } from '../../../libs';
 import { User } from '../../../libs/user';
 import { IBucket } from '../../bucket';
 import { Entity } from '../../../libs';
@@ -6,12 +6,23 @@ import { Entity } from '../../../libs';
 type ZoneType = {
   name: string;
   module: string;
+  points: Vector3[] | Vector3;
+  min?: Vector3;
+  max?: Vector3;
+  center?: Vector3;
+  size?: Vector3;
+  area: number;
+  useGrid?: boolean;
+  lazyGrid?: boolean;
+  gridDivisions: number;
+  debugColors: boolean;
+  debugPoly: boolean;
+  debugGrid: boolean;
   color?: {
     outline: Color;
     wall: Color;
   };
-  points: Vector3[] | Vector3 | Entity;
-  radius?: boolean;
+
   bucket?: IBucket;
 
   onEnter?: (user: User) => void;

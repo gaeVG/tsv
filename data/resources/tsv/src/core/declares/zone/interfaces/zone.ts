@@ -1,4 +1,4 @@
-import { Color, Entity, Vector3 } from '../../../libs';
+import { Color, Entity, Vector2, Vector3 } from '../../../libs';
 import { User } from '../../../libs/user';
 import { IBucket } from '../../bucket';
 import { IUser } from '../../user';
@@ -7,14 +7,21 @@ interface IZone {
   id: string;
   name: string;
   module: string;
+  points: Vector3[] | Vector3;
+  min: Vector3;
+  max: Vector3;
+  center?: Vector3;
+  size: Vector3;
+  area: number;
+  useGrid: boolean;
+  lazyGrid: boolean;
+  gridDivisions: number;
+  debugPoly: boolean;
+  debugGrid: boolean;
   color: {
     outline: Color;
     wall: Color;
   };
-  min: Vector3;
-  max: Vector3;
-  points: Vector3[] | Vector3 | Entity;
-  radius?: boolean;
   bucket?: IBucket;
   users?: IUser[];
 
