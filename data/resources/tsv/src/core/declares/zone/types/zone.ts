@@ -1,4 +1,4 @@
-import { Vector2, Vector3, Color } from '../../../libs';
+import { Vector3, Color } from '../../../libs';
 import { User } from '../../../libs/user';
 import { IBucket } from '../../bucket';
 import { Entity } from '../../../libs';
@@ -11,13 +11,12 @@ type ZoneType = {
   max?: Vector3;
   center?: Vector3;
   size?: Vector3;
-  area: number;
   useGrid?: boolean;
   lazyGrid?: boolean;
-  gridDivisions: number;
-  debugColors: boolean;
-  debugPoly: boolean;
-  debugGrid: boolean;
+  gridDivisions?: number;
+  debugColors?: boolean;
+  debugPoly?: boolean;
+  debugGrid?: boolean;
   color?: {
     outline: Color;
     wall: Color;
@@ -31,11 +30,25 @@ type ZoneType = {
 type PolyZoneType = {
   name: string;
   module: string;
-  color: {
+  polygon: Vector3[];
+  min?: Vector3;
+  max?: Vector3;
+  center?: Vector3;
+  size?: Vector3;
+  area: number;
+  useGrid?: boolean;
+  lazyGrid?: boolean;
+  gridArea?: number;
+  gridCellWidth?: number;
+  gridCellHeight?: number;
+  gridDivisions: number;
+  debugColors?: boolean;
+  debugPoly: boolean;
+  debugGrid: boolean;
+  color?: {
     outline: Color;
     wall: Color;
   };
-  points: Vector3[];
   bucket: IBucket;
 
   onEnter?: (user: User) => void;
@@ -44,12 +57,14 @@ type PolyZoneType = {
 type EntityZoneType = {
   name: string;
   module: string;
-  color: {
+  entity: Entity;
+  size?: Vector3;
+  debugColors?: boolean;
+  debug: boolean;
+  color?: {
     outline: Color;
     wall: Color;
   };
-  points: Entity;
-  radius: boolean;
 
   onEnter?: (user: User) => void;
   onLeave?: (user: User) => void;
@@ -61,7 +76,7 @@ type PointZoneType = {
     outline: Color;
     wall: Color;
   };
-  points: Vector3;
+  point: Vector3;
   radius: boolean;
 
   onEnter?: (user: User) => void;

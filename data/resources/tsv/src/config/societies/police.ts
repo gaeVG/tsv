@@ -16,11 +16,10 @@ const police = {
     {
       name: SocietyEnum.MISSION_ROW,
       building: [
-        new Vector3(390.62, -1029.29, 28.26),
-        new Vector3(394.31, -945.08, 26.38),
-        new Vector3(501.26, -947.86, 28.69),
-        new Vector3(500.56, -1023.67, 32.71),
-        new Vector3(387.12, -1042.82, 32.69),
+        new Vector3(390.82, -941.63, 28.42),
+        new Vector3(506.73, -943.37, 25.99),
+        new Vector3(508.29, -1022.76, 27.12),
+        new Vector3(386.33, -1037.27, 28.27),
       ],
       activities: [
         {

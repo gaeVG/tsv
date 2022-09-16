@@ -1,1 +1,1 @@
-export { ZoneType } from './zone';
+export { ZoneType, PolyZoneType, EntityZoneType } from './zone';

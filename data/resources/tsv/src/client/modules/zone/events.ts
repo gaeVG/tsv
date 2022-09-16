@@ -5,10 +5,10 @@ import moduleConfig from './config';
 
 const zoneEvents: IEventListener[] = [
   {
-    name: 'onEnterZone',
+    name: 'onEnter',
     module: moduleConfig.name,
-    isCallback: true,
-    handler: (_, user: IUser, zone: IZone) => {
+    onNet: true,
+    handler: (_, zone: IZone) => {
       console.log(zone);
 
       return true;

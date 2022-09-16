@@ -4,6 +4,7 @@ import appConfig from '../../../config';
 import moduleConfig from './config';
 import { LogData } from '../../../core/declares/log';
 import { tsv } from '../..';
+import { PolyZoneType } from '../../../core/declares/zone';
 
 const log: LogData = {
   namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,
@@ -14,13 +15,24 @@ const log: LogData = {
 async function loadingActivities(): Promise<Error> {
   log.location = 'loadingActivities()';
   try {
-    appConfig.societies.map((society) => {
+    appConfig.societies.forEach((society) => {
       const societyManager = tsv.societies.addOne(society) as ISociety;
+
+      if (societyManager.isCompagny) {
+        society.societies.forEach((society) =>
+          tsv.zones.addOne({
+            name: `building-${society.name}`,
+            module: 'activity',
+            polygon: society.building,
+          } as PolyZoneType),
+        );
+      }
+
       tsv.zones.addOne({
         name: `building-${societyManager.name}`,
         module: 'activity',
-        points: societyManager.building,
-      });
+        polygon: societyManager.building,
+      } as PolyZoneType);
     });
   } catch (error) {
     return error;

@@ -1,5 +1,7 @@
-import { Zone } from './zone';
+import { EntityZone, PolyZone, Zone } from './zone';
 import { ZoneType, IZone } from '../../../core/declares/zone';
+import { EntityZoneType, PolyZoneType } from '../../../core/declares/zone/types/zone';
+import { Ped } from '../../../core/libs';
 
 class ZoneManager {
   manager: Zone[];
@@ -21,8 +23,15 @@ class ZoneManager {
 
     return zone;
   }
-  addOne(zone: ZoneType): IZone {
-    const addZone = new Zone(zone);
+  addOne(zone: EntityZoneType | PolyZoneType): IZone {
+    let addZone: Zone;
+
+    if ((zone as PolyZoneType).polygon) {
+      addZone = new PolyZone(zone as PolyZoneType);
+    } else if ((zone as EntityZoneType).entity) {
+      addZone = new EntityZone(zone as EntityZoneType);
+    }
+
     this.manager.push(addZone);
 
     return addZone;
