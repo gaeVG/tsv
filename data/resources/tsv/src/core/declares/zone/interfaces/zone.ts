@@ -11,7 +11,7 @@ interface IZone {
   min?: Vector3;
   max?: Vector3;
   center?: Vector3;
-  size?: Vector3;
+  size?: number;
   useGrid?: boolean;
   lazyGrid?: boolean;
   gridDivisions?: number;

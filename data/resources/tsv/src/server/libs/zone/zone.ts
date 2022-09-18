@@ -1,9 +1,9 @@
-import { Entity, Vector3, Crypto, Color } from '../../../core/libs';
+import { Entity, Vector3, Crypto, Color, Vector2 } from '../../../core/libs';
 import { User } from '../../../core/libs/user';
 import { Bucket } from '../bucket';
 import { IUser } from '../../../core/declares/user';
 import { IZone, ZoneType } from '../../../core/declares/zone';
-import { PolyZoneType, EntityZoneType } from '../../../core/declares/zone/types/zone';
+import { PolyZoneType, EntityZoneType, CircleZoneType } from '../../../core/declares/zone';
 import { tsv } from '../..';
 
 abstract class Zone implements IZone {
@@ -14,7 +14,7 @@ abstract class Zone implements IZone {
   center?: Vector3;
   min?: Vector3;
   max?: Vector3;
-  size?: Vector3;
+  size?: number;
   useGrid?: boolean;
   lazyGrid?: boolean;
   gridDivisions?: number;
@@ -26,6 +26,7 @@ abstract class Zone implements IZone {
   };
   bucket?: Bucket;
   users?: IUser[];
+
   onEnter?: (user: User) => void;
   onLeave?: (user: User) => void;
 
@@ -53,30 +54,38 @@ abstract class Zone implements IZone {
     this.users = [];
     this.onEnter = (user: User) => {
       this.bucket !== undefined && this.bucket.addUser(user);
-
       this.addOneUser(user);
 
-      console.log('trigger');
-      console.log(user.source);
       tsv.events.trigger({
         name: 'onEnter',
         module: 'zone',
         onNet: true,
         target: user.source,
-        data: [zone],
+        data: [this],
       });
 
       zone.onEnter && zone.onEnter(user);
     };
 
     this.onLeave = (user: User) => {
+      console.log('on quitte');
       this.bucket && this.bucket.removeUser(user);
+
+      this.removeOneUser(user);
+
+      tsv.events.trigger({
+        name: 'onLeave',
+        module: 'zone',
+        onNet: true,
+        target: user.source,
+        data: [this],
+      });
+
       zone.onLeave && zone.onLeave(user);
     };
   }
 
   abstract isInside(coords: Vector3): boolean;
-  abstract isLeft(...args: Array<Vector3>): number;
 
   addOneUser(user: IUser): boolean {
     if (this.users.find((u) => u.id === user.id)) {
@@ -84,6 +93,18 @@ abstract class Zone implements IZone {
     }
 
     this.users.push(user);
+    return true;
+  }
+  removeOneUser(user: IUser): boolean {
+    const users = this.users.filter((u) => u.id !== user.id);
+
+    if (users.length === this.users.length) {
+      return false;
+    }
+    console.log(this.users.length);
+    this.users = users;
+    console.log(this.users.length);
+
     return true;
   }
 }
@@ -94,23 +115,6 @@ class PolyZone extends Zone {
   gridCellWidth: number;
   gridCellHeigth: number;
 
-  private innerLoop(p0: Vector3, p1: Vector3, p2: Vector3, wn: number): number {
-    if (p0.y <= p2.y) {
-      if (p1.y > p2.y) {
-        if (this.isLeft(p0, p1, p2) > 0) {
-          return wn + 1;
-        }
-      }
-    } else {
-      if (p1.y <= p2.y) {
-        if (this.isLeft(p0, p1, p2) < 0) {
-          return wn - 1;
-        }
-      }
-    }
-
-    return wn;
-  }
   private calculatePolygon() {
     if (
       this.min === undefined ||
@@ -136,9 +140,29 @@ class PolyZone extends Zone {
 
       this.min = new Vector3(minX, minY, minZ);
       this.max = new Vector3(maxX, maxY, maxZ);
-      this.size = this.max.subtract(this.min);
+      //this.size = this.max.subtract(this.min).n;
       this.center = this.max.add(this.min).divide(2);
     }
+  }
+  private innerLoop(p0: Vector3, p1: Vector3, p2: Vector3, wn: number): number {
+    if (p0.y <= p2.y) {
+      if (p1.y > p2.y) {
+        if (this.isLeft(p0, p1, p2) > 0) {
+          return wn + 1;
+        }
+      }
+    } else {
+      if (p1.y <= p2.y) {
+        if (this.isLeft(p0, p1, p2) < 0) {
+          return wn - 1;
+        }
+      }
+    }
+
+    return wn;
+  }
+  private isLeft(p0: Vector3, p1: Vector3, p2: Vector3): number {
+    return (p1.x - p0.x) * (p2.y - p0.y) - (p2.x - p0.x) * (p1.y - p0.y);
   }
 
   constructor(zone: PolyZoneType) {
@@ -161,25 +185,9 @@ class PolyZone extends Zone {
       return false;
     }
     // Checks if point is within the polygon's height bounds
-    if ((this.min.z && coords.z - 1 < this.min.z) || (this.max.z && coords.z - 1 > this.max.z)) {
+    if ((this.min.z && coords.z < this.min.z) || (this.max.z && coords.z > this.max.z)) {
       return false;
     }
-
-    // Returns true if the grid cell associated with the point is entirely inside the poly
-    // if (this.useGrid) {
-    //   const gridPosX = coords.x - this.min.x;
-    //   const gridPosY = coords.y - this.min.y;
-    //   const gridCellX = gridPosX * this.gridDivisions; // size.x
-    //   const gridCellY = gridPosY * this.gridDivisions; // size.y
-    //   //   const gridCellValue = grid[gridCellY + 1][gridCellX + 1]
-
-    //   //   if gridCellValue == nil and poly.lazyGrid then
-    //   //     gridCellValue = _isGridCellInsidePoly(gridCellX, gridCellY, poly)
-    //   //     grid[gridCellY + 1][gridCellX + 1] = gridCellValue
-    //   //   end
-    //   //   if gridCellValue then return true end
-    //   // end
-    // }
 
     let wn = 0;
 
@@ -189,27 +197,42 @@ class PolyZone extends Zone {
     wn = this.innerLoop(this.polygon[this.polygon.length - 1], this.polygon[0], coords, wn);
     return wn !== 0;
   }
-  isLeft(p0: Vector3, p1: Vector3, p2: Vector3): number {
-    return (p1.x - p0.x) * (p2.y - p0.y) - (p2.x - p0.x) * (p1.y - p0.y);
+}
+class CircleZone extends Zone {
+  diameter: number;
+  limitHeight: boolean;
+
+  constructor(zone: CircleZoneType) {
+    super({
+      ...zone,
+      points: zone.center,
+      size: zone.size,
+    });
+    this.diameter = zone.size * 2;
+    this.limitHeight = zone.limitHeight;
+  }
+
+  isInside(coords: Vector3): boolean {
+    if (this.limitHeight) {
+      return (this.points as Vector3).subtract(this.center).Length < this.size;
+    } else {
+      const points = this.points as Vector3;
+      return new Vector2(points.x, points.y).distance(coords) < this.size;
+    }
   }
 }
-class EntityZone extends Zone {
+class EntityZone extends CircleZone {
   entity: Entity;
 
   constructor(zone: EntityZoneType) {
     super({
       ...zone,
-      points: zone.entity.Position,
+      center: zone.entity.Position,
+      size: zone.size,
+      limitHeight: true,
     });
     this.entity = zone.entity;
   }
-
-  isInside(coords: Vector3): boolean {
-    return false;
-  }
-  isLeft(p0: Vector3, p1: Vector3, p2: Vector3): number {
-    return 0;
-  }
 }
 
-export { Zone, PolyZone, EntityZone };
+export { Zone, PolyZone, CircleZone, EntityZone };

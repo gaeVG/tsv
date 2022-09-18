@@ -1,2 +1,2 @@
 export { ZoneManager } from './manager';
-export { Zone, PolyZone, EntityZone } from './zone';
+export { Zone, PolyZone, CircleZone, EntityZone } from './zone';

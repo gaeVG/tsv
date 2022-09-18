@@ -1,6 +1,5 @@
 import { ThreadModule } from '../../../core/declares/threads';
 import { EnumLogContainer, LogData } from '../../../core/declares/log';
-import { PolyZone } from '../../libs/zone';
 import moduleConfig from './config';
 import { tsv } from '../..';
 
@@ -19,11 +18,11 @@ const zoneThreads: ThreadModule[] = [
 
       try {
         tsv.zones.All.forEach((zone) =>
-          tsv.users.All.forEach((user) => {
-            if (zone.isInside(user.Ped.Position) && !zone.users.includes(user)) {
-              zone.onEnter(user);
-            }
-          }),
+          tsv.users.All.forEach((user) =>
+            zone.isInside(user.Ped.Position)
+              ? !zone.users.includes(user) && zone.onEnter(user)
+              : zone.users.includes(user) && zone.onLeave(user),
+          ),
         );
       } catch (error) {
         tsv.log.error({
