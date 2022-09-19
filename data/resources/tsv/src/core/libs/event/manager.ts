@@ -21,49 +21,6 @@ const log: LogData = {
 class EventManager {
   private manager: Event[];
 
-  // private init(): void {
-  //   const _onNet : (handle: (hashName: string, hashData: string, source?: number) => void) => void = (handle: (eventHashName: string, eventHashData: string, source?: number) => void) => {
-  //     onNet('eventParadise', (eventHashName: string, eventHashData: string) => {
-  //       const eventSource = source
-  //       switchEnv(() => handle(eventHashName, eventHashData), () => handle(eventHashName, eventHashData, eventSource));
-  //     });
-  //   }
-  //   _onNet((eventHashName: string, eventHashData: string, source?: number) => {
-  //     const eventSource = source;
-  //     const event = this.manager.find(
-  //       (eventManager) => AES.decrypt(eventHashName) === eventManager.name,
-  //     );
-
-  //     if (event === undefined) {
-  //       Log.error(
-  //         logNamespace,
-  //         logContainer,
-  //         'onNet()',
-  //         `Impossible de trouver l'évènement ${AES.decrypt(eventHashName)}`,
-  //       );
-  //       return;
-  //     }
-
-  //     Log.safemode(
-  //       logNamespace,
-  //       logContainer,
-  //       'onNet()',
-  //       `Déclenchement de l'évènement (${AES.decrypt(eventHashName)})`,
-  //     );
-  //     Log.safemode(logNamespace, logContainer, 'onNet()', `Donnée de l'évènement : (${eventHashData})`);
-
-  //     const data = eventHashData !== null ? AES.decrypt(eventHashData) : undefined;
-  //     if (data === undefined) {
-  //       return
-  //     }
-
-  //     const dataParsed: unknown[] = JSON.parse(data);
-  //     Log.safemode(logContainer, logNamespace, 'on()event_paradise', `Donnée déchiffrée: ${data}`);
-
-  //     switchEnv(() => event.addEventHandler(JSON.parse(data)), () => event.addEventHandler(eventSource, dataParsed));
-  //   });
-  // }
-
   private emit(emitEvent: IEventTrigger): void {
     log.location = 'emit()';
 
