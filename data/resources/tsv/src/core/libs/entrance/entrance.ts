@@ -1,16 +1,22 @@
 import { Crypto, World, Model, Prop } from '..';
-import { EntranceType, DoorType, IEntrance } from '../../declares/entrance';
+import { EntranceType, DoorType, IEntrance, EntranceStateStype, EntranceStateEnum } from '../../declares/entrance';
 
 abstract class Entrance implements IEntrance {
   id: string;
   target: Prop | Prop[];
   distanceMax?: number;
   isRemote?: boolean;
+  state: EntranceStateStype;
 
   constructor(entrance: EntranceType) {
     this.id = Crypto.uuidv4();
     this.distanceMax= entrance.distanceMax || 2.0;
     this.isRemote = entrance.isRemote || false;
+    
+    if (entrance.state || EntranceStateEnum.CLOSE) {
+      this.state = entrance.state;
+      this.lock();
+    }
   }
 
   abstract lock(): void;

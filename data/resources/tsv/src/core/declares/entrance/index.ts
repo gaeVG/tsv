@@ -1,2 +1,3 @@
-export { EntranceType, DoorType, DoubleDoorType, GateType } from './types';
+export { EntranceType, EntranceStateStype, DoorType } from './types';
 export { IEntrance } from './interfaces';
+export { EntranceStateEnum } from './enums';
