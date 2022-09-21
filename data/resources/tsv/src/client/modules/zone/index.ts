@@ -1,1 +1,1 @@
-export { CharacterModule } from './module';
+export { ZoneModule } from './module';

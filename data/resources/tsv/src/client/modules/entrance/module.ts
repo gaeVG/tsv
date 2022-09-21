@@ -1,35 +1,36 @@
 import { IModule } from '../../../core/declares/module';
 import { LogData, EnumLogContainer } from '../../../core/declares/log';
-import { playerEvents } from './events';
-import { tsv } from '../../../server';
+import { entranceEvents } from './events';
 import moduleConfig from './config';
+import { tsv } from '../..';
 
 const log: LogData = {
   namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,
-  container: EnumLogContainer.Event,
+  container: EnumLogContainer.Module,
   isModuleDisplay: moduleConfig.debug,
 };
 
-const PlayerModule: IModule = {
+const EntranceModule: IModule = {
   name: moduleConfig.name,
   init(): Error {
-    log.location = tsv.locale('global.location.init');
+    log.location = tsv.locale('module.global.init.location');
+
     try {
       tsv.log.debug({
         ...log,
-        message: tsv.locale('global.message.init', { moduleName: moduleConfig.name }),
+        message: tsv.locale('module.global.init.start', { moduleName: moduleConfig.name }),
       });
 
-      playerEvents.forEach((event) => tsv.events.listen(event));
+      entranceEvents.forEach((event) => tsv.events.listen(event));
     } catch (error) {
       return error;
     } finally {
       tsv.log.debug({
         ...log,
-        message: tsv.locale('global.location.initComplete', { moduleName: moduleConfig.name }),
+        message: tsv.locale('module.global.init.complete', { moduleName: moduleConfig.name }),
       });
     }
   },
 };
 
-export { PlayerModule };
+export { EntranceModule };

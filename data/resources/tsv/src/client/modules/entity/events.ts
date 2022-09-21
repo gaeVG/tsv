@@ -1,19 +1,46 @@
 import { IEventListener } from '../../../core/declares/events';
-import { IUser } from '../../../core/declares/user';
-import { Player } from '../../../core/libs';
+import {
+  getEntityHeading,
+  setEntityHeading,
+  setEntityHealth,
+  setEntityArmor,
+  setEntityFreezePosition,
+} from './function';
 
 const entityEvents: IEventListener[] = [
+  {
+    name: 'getEntityHeading',
+    module: 'entity',
+    onNet: true,
+    isCallback: true,
+    handler: getEntityHeading,
+  },
+  {
+    name: 'setEntityHeading',
+    module: 'entity',
+    onNet: true,
+    isCallback: true,
+    handler: setEntityHeading,
+  },
   {
     name: 'setEntityHealth',
     module: 'entity',
     onNet: true,
-    handler: (_, user: IUser, health: number) => (new Player().Ped.Health = health),
+    isCallback: true,
+    handler: setEntityHealth,
   },
   {
     name: 'setEntityArmor',
     module: 'entity',
     onNet: true,
-    handler: (_, user: IUser, armor: number) => (new Player().Ped.Armor = armor),
+    handler: setEntityArmor,
+  },
+  {
+    name: 'setEntityFreezePosition',
+    module: 'entity',
+    onNet: true,
+    isCallback: true,
+    handler: setEntityFreezePosition,
   },
 ];
 

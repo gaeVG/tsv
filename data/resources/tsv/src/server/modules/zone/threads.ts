@@ -1,6 +1,5 @@
 import { ThreadModule } from '../../../core/declares/threads';
 import { EnumLogContainer, LogData } from '../../../core/declares/log';
-import { IUser } from '../../../core/declares/user';
 import moduleConfig from './config';
 import { tsv } from '../..';
 
@@ -16,27 +15,18 @@ const zoneThreads: ThreadModule[] = [
     timer: 1000,
     callback: () => {
       log.location = 'zoneTick()';
-      try {
-        tsv.zones.All.map((zone) =>
-          tsv.users.All.map((user) => {
-            if (user.currentZone !== zone.id && zone.isInsidePolygon(user.Ped.Position)) {
-              zone.onEnter(user);
-              tsv.users.updateOne({
-                ...user,
-                currentZone: zone.id,
-              });
 
-              if (zone.bucket) {
-                tsv.buckets.getOne(zone.bucket).addUser(user);
-              }
-            }
+      try {
+        tsv.zones.All.forEach((zone) =>
+          tsv.users.All.forEach((user) => {
+            zone.isInside(user.Ped.Position)
+              ? !zone.users.includes(user) && zone.onEnter(user)
+              : zone.users.includes(user) && zone.onLeave(user);
           }),
         );
       } catch (error) {
         tsv.log.error({
-          namespace: 'status',
-          container: EnumLogContainer.Thread,
-          location: 'statusTick()',
+          ...log,
           message: error instanceof Error ? error.message : error,
         });
       }

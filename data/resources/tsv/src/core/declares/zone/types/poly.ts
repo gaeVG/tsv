@@ -1,31 +1,33 @@
-import { Color, Vector3 } from '../../../libs';
-import { User } from '../../../libs/user';
+import { Vector3 } from '../../../libs/utils/Vector3';
+import { Color } from '../../../libs/utils/Color';
 import { IBucket } from '../../bucket';
-import { IUser } from '../../user';
+import { User } from '../../../libs/user';
 
-interface IZone {
-  id: string;
+type PolyZoneType = {
   name: string;
   module: string;
-  points: Vector3[] | Vector3;
+  polygon: Vector3[];
   min?: Vector3;
   max?: Vector3;
   center?: Vector3;
-  size?: number;
+  area?: number;
   useGrid?: boolean;
   lazyGrid?: boolean;
+  gridArea?: number;
+  gridCellWidth?: number;
+  gridCellHeight?: number;
   gridDivisions?: number;
+  debugColors?: boolean;
   debugPoly?: boolean;
   debugGrid?: boolean;
-  color: {
+  color?: {
     outline: Color;
     wall: Color;
   };
   bucket?: IBucket;
-  users?: IUser[];
 
   onEnter?: (user: User) => void;
   onLeave?: (user: User) => void;
-}
+};
 
-export { IZone };
+export { PolyZoneType };

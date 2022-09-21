@@ -8,6 +8,8 @@ interface ISociety {
   owner: string;
   building: Vector3[];
   activities?: ActivitiesManager;
+  isCompagny: boolean;
+  societies?: ISociety[];
 }
 
 export { ISociety };

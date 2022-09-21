@@ -29,32 +29,33 @@ git clone https://git.cenne.xyz/fivem/base.git ./
 ```
 
 ## 📒 Installation de l'artefact
-
-### Créer le dossier `server`
-
+### 1. Créer le dossier
 ```powershell
-mkdir server
-cd server
+mkdir MonServer
+$serverPath = Resolve-Path .\MonServer
 ```
 
-### ⤵️ Téléchargement de l'artefact
+### 2. Créer le dossier `server`
 
-> _Décompresser le fichier [téléchargé](https://runtime.fivem.net/artifacts/fivem/build_server_windows/master/5848-4f71128ee48b07026d6d7229a60ebc5f40f2b9db/server.7z) dans le dossier `server`_
-
+```powershell
+mkdir "$($serverPath)/server"
+cd "$($serverPath)/server"
+```
+### 3. Téléchargement de l'artefact
 ```powershell
 Invoke-WebRequest -Uri "https://runtime.fivem.net/artifacts/fivem/build_server_windows/master/5848-4f71128ee48b07026d6d7229a60ebc5f40f2b9db/server.7z" -OutFile "server.7z"
 ```
+### 4. Décompresser le fichier [téléchargé](https://runtime.fivem.net/artifacts/fivem/build_server_windows/master/5848-4f71128ee48b07026d6d7229a60ebc5f40f2b9db/server.7z) dans le dossier `server`
 
 ## 🧰 Préparation du noyau
 
 ```powershell
 cd data\resources\tsv\src
 npm i
-npm i -g yarn
 # Pour compiler la ressource sur le serveur de production :
-yarn build
+npm run build
 # Pour développper et compiler automatiquement la ressource :
-yarn watch
+npm run watch
 ```
 
 ### Configuration du noyau
@@ -62,7 +63,7 @@ yarn watch
 > 📘 _Créer le fichier d'environnement `.env` à la racine de la ressource et renseigner les informations correspondantes_
 
 ```
-EXECUTION_MODE="development"|"test"|"safemode"|"production"
+EXECUTION_MODE="development"|"test"|"safemode"|"production
 SECRET_KEY=string
 IDENTIFIER_TYPE=string
 DEBUG_MODULES=Array<string>
@@ -72,13 +73,10 @@ DB_NAME=string
 DB_USER=string
 DB_PASSWORD=string
 ```
-
 ## 🎇 Premier lancement
-
 > _Lancer le serveur depuis le dossier racine_
-
-```
-./server/FXServer.exe +set txDataPath ./server/txData/ +set serverProfile dev
+```powershell
+Invoke-Expression "& `"$($serverPath)\server\FXServer.exe`" +set txDataPath $($serverPath)\server\txData\ +set serverProfile dev"
 ```
 
 ## ✂️ Configuration du serveur

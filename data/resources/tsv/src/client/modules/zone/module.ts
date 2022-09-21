@@ -10,7 +10,7 @@ const log: LogData = {
   isModuleDisplay: moduleConfig.debug,
 };
 
-const CharacterModule: IModule = {
+const ZoneModule: IModule = {
   name: moduleConfig.name,
   init(): Error {
     log.location = tsv.locale('module.global.init.location');
@@ -34,4 +34,4 @@ const CharacterModule: IModule = {
   },
 };
 
-export { CharacterModule };
+export { ZoneModule };

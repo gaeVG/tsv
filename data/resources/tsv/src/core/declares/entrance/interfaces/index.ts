@@ -1,0 +1,1 @@
+export { IEntrance } from './entrance';

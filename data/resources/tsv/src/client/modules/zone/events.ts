@@ -1,18 +1,19 @@
 import { IEventListener } from '../../../core/declares/events';
-import { IUser } from '../../../core/declares/user';
-import { IZone } from '../../../core/declares/zone';
+import { onEnter, onLeave } from './functions';
 import moduleConfig from './config';
 
 const zoneEvents: IEventListener[] = [
   {
-    name: 'onEnterZone',
+    name: 'onEnter',
     module: moduleConfig.name,
-    isCallback: true,
-    handler: (_, user: IUser, zone: IZone) => {
-      console.log(zone);
-
-      return true;
-    },
+    onNet: true,
+    handler: onEnter,
+  },
+  {
+    name: 'onLeave',
+    module: moduleConfig.name,
+    onNet: true,
+    handler: onLeave,
   },
 ];
 

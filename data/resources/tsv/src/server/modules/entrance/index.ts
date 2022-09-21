@@ -1,0 +1,1 @@
+export { EntranceModule } from './module';
