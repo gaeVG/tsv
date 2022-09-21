@@ -7,6 +7,7 @@ type EntranceType = {
   doors: DoorType | DoorType[];
   distanceMax?: number;
   isRemote?: boolean;
+  isGate?: boolean;
   state: EntranceStateStype;
 };
 

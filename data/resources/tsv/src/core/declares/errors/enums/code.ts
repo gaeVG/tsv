@@ -1,6 +1,10 @@
 enum ErrorCodeEnum {
-  DriverActivityTargetTooFarAwayError = 0xda74263724,
-  DriverActivityPlayerNotInVehicleError = 0xda91432011,
+  // Activities
+  DriverActivityTargetTooFarAwayError = 0x5461726765745,
+  DriverActivityPlayerNotInVehicleError = 0x506c617965724,
+  // Entrances
+  EntranceNotFoundError = 0x456e7472616e6,
+  DoorsMustBeTwoError = 0x446f6f72734d7,
 }
 
 export { ErrorCodeEnum };

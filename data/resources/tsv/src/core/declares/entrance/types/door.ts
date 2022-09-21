@@ -1,8 +1,8 @@
-import { Vector3 } from '../../../libs/utils';
+import { Vector4 } from '../../../libs/utils';
 
 type DoorType = {
-  hash: string;
-  coords: Vector3;
+  hash: number;
+  coords: Vector4;
 };
 
 export { DoorType };
