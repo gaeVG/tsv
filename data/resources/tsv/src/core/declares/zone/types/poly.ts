@@ -10,21 +10,21 @@ type PolyZoneType = {
   min?: Vector3;
   max?: Vector3;
   center?: Vector3;
-  area: number;
+  area?: number;
   useGrid?: boolean;
   lazyGrid?: boolean;
   gridArea?: number;
   gridCellWidth?: number;
   gridCellHeight?: number;
-  gridDivisions: number;
+  gridDivisions?: number;
   debugColors?: boolean;
-  debugPoly: boolean;
-  debugGrid: boolean;
+  debugPoly?: boolean;
+  debugGrid?: boolean;
   color?: {
     outline: Color;
     wall: Color;
   };
-  bucket: IBucket;
+  bucket?: IBucket;
 
   onEnter?: (user: User) => void;
   onLeave?: (user: User) => void;
