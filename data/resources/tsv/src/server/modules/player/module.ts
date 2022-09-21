@@ -1,7 +1,6 @@
 import { IModule } from '../../../core/declares/module';
 import { LogData, EnumLogContainer } from '../../../core/declares/log';
 import { playerEvents } from './events';
-import { playerThreads } from './threads';
 import { tsv } from '../../../server';
 import moduleConfig from './config';
 
@@ -21,8 +20,7 @@ const PlayerModule: IModule = {
         message: tsv.locale('global.message.init', { moduleName: moduleConfig.name }),
       });
 
-      playerEvents.map((event) => tsv.events.listen(event));
-      playerThreads.map((thread) => tsv.threads.createThread(thread));
+      playerEvents.forEach((event) => tsv.events.listen(event));
     } catch (error) {
       return error;
     } finally {

@@ -18,11 +18,11 @@ const zoneThreads: ThreadModule[] = [
 
       try {
         tsv.zones.All.forEach((zone) =>
-          tsv.users.All.forEach((user) =>
+          tsv.users.All.forEach((user) => {
             zone.isInside(user.Ped.Position)
               ? !zone.users.includes(user) && zone.onEnter(user)
-              : zone.users.includes(user) && zone.onLeave(user),
-          ),
+              : zone.users.includes(user) && zone.onLeave(user);
+          }),
         );
       } catch (error) {
         tsv.log.error({
