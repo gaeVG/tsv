@@ -5,6 +5,7 @@ import { VehicleModule } from './vehicle';
 import { EntityModule } from './entity';
 import { InventoryModule } from './inventory';
 import { ZoneModule } from './zone/module';
+import { EntranceModule } from './entrance/module';
 
 export default [
   PlayerModule,
@@ -14,4 +15,5 @@ export default [
   VehicleModule,
   InventoryModule,
   ZoneModule,
+  EntranceModule,
 ];
