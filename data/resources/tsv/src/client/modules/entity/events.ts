@@ -1,5 +1,11 @@
 import { IEventListener } from '../../../core/declares/events';
-import { getEntityHeading, setEntityHeading, setEntityHealth, setEntityArmor } from './function';
+import {
+  getEntityHeading,
+  setEntityHeading,
+  setEntityHealth,
+  setEntityArmor,
+  setEntityFreezePosition,
+} from './function';
 
 const entityEvents: IEventListener[] = [
   {
@@ -28,6 +34,13 @@ const entityEvents: IEventListener[] = [
     module: 'entity',
     onNet: true,
     handler: setEntityArmor,
+  },
+  {
+    name: 'setEntityFreezePosition',
+    module: 'entity',
+    onNet: true,
+    isCallback: true,
+    handler: setEntityFreezePosition,
   },
 ];
 
