@@ -141,7 +141,7 @@ function onEnterBuilding(user: User, society: SocietyType) {
         }).length === 0
       ) {
         societyEntrances.forEach(
-          (entrance) => entrance.state === EntranceStateEnum.CLOSE && entrance.lock(),
+          (entrance) => entrance.state === EntranceStateEnum.CLOSE && entrance.lock(user),
         );
         return false;
       }

@@ -10,7 +10,7 @@ interface IEntrance {
   isRemote?: boolean;
   state: EntranceStateStype;
 
-  lock(): void;
+  lock(user: IUser): void;
   unlock(): void;
   getTargetPropsFromClient: (user: IUser) => void;
 }

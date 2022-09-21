@@ -37,5 +37,17 @@ function setEntityArmor(_: string, _entity: IEntity, armor: number): number {
 
   return (entity as Ped).Armor;
 }
+function setEntityFreezePosition(_: string, _entity: IEntity, freeze: boolean): boolean {
+  const entity = Entity.fromHandle(_entity.handle);
+  entity.IsPositionFrozen = freeze;
 
-export { getEntityHeading, setEntityHeading, setEntityHealth, setEntityArmor };
+  return entity.IsPositionFrozen;
+}
+
+export {
+  getEntityHeading,
+  setEntityHeading,
+  setEntityHealth,
+  setEntityArmor,
+  setEntityFreezePosition,
+};

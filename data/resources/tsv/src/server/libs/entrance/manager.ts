@@ -6,7 +6,7 @@ import {
   EntranceType,
   IEntrance,
 } from '../../../core/declares/entrance';
-import { tsv } from '../../../server';
+import { tsv } from '../..';
 
 const log: LogData = {
   namespace: 'CoreEntrance',

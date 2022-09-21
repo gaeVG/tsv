@@ -1,4 +1,4 @@
-import { Crypto, World, Model, Prop, Vector3, Entity } from '../../../core/libs';
+import { Prop } from '../../../core/libs';
 import {
   EntranceType,
   DoorType,
@@ -8,6 +8,35 @@ import {
 } from '../../../core/declares/entrance';
 import { IUser } from '../../../core/declares/user';
 import { tsv } from '../..';
+
+function freezeDoor(door: Prop, freeze: boolean, user?: IUser) {
+  try {
+    tsv.events.trigger({
+      name: 'setEntityFreezePosition',
+      module: 'entity',
+      onNet: true,
+      target: -1,
+      data: [door, true],
+      callback: (_, isFreeze: boolean) => {
+        if (isFreeze === false) {
+          throw new Error('Impossible de fermer la porte');
+        }
+      },
+    });
+  } catch (error) {
+    if (error instanceof Error) {
+      if (user === undefined) {
+        tsv.events.trigger({
+          name: 'sendNotification',
+          module: 'notification',
+          onNet: true,
+          target: user.source,
+          data: [error.message],
+        });
+      }
+    }
+  }
+}
 
 abstract class Entrance implements IEntrance {
   id: string;
@@ -40,18 +69,58 @@ abstract class Entrance implements IEntrance {
       },
     });
   }
+  lock(user: IUser) {
+    if (Array.isArray(this.target)) {
+      (this.target as Prop[]).forEach((door, i) => {
+        const entranceDoor = this.doors as DoorType[];
+        const doorHeading = entranceDoor[i].coords.w;
 
-  lock() {
-    Array.isArray(this.target)
-      ? this.target.forEach((door) => (door.IsPositionFrozen = true))
-      : (this.target.IsPositionFrozen = true);
-    this.state !== EntranceStateEnum.CLOSE && EntranceStateEnum.CLOSE;
+        tsv.events.trigger({
+          name: 'getEntityHeading',
+          module: 'entity',
+          onNet: true,
+          target: user.source,
+          data: [door],
+          callback: (_, heading: number) => {
+            if (heading !== doorHeading) {
+              // La porte n'est pas fermée
+            } else {
+              freezeDoor(door, true, user);
+            }
+          },
+        });
+      });
+    } else {
+      const entranceDoor = this.doors as DoorType;
+
+      tsv.events.trigger({
+        name: 'getEntityHeading',
+        module: 'entity',
+        onNet: true,
+        target: user.source,
+        data: [this.target],
+        callback: (_, heading: number) => {
+          console.log('ici');
+          if (heading !== entranceDoor.coords.w) {
+            console.log(`La porte n'est pas fermée`);
+          } else {
+            console.log('fermer la porte');
+            global.FreezeEntityPosition((this.target as Prop).Handle, true);
+          }
+        },
+      });
+    }
+    this.state = EntranceStateEnum.CLOSE;
   }
   unlock() {
     Array.isArray(this.target)
-      ? this.target.forEach((door) => (door.IsPositionFrozen = false))
-      : (this.target.IsPositionFrozen = false);
-    this.state !== EntranceStateEnum.OPEN && EntranceStateEnum.OPEN;
+      ? this.target.forEach(
+          (door) => (
+            global.FreezeEntityPosition(door.Handle, false), (this.state = EntranceStateEnum.OPEN)
+          ),
+        )
+      : global.FreezeEntityPosition((this.target as Prop).Handle, false);
+    this.state = EntranceStateEnum.OPEN;
   }
 }
 
@@ -62,14 +131,6 @@ class Door extends Entrance {
     super(entrance);
     this.door = entrance.doors as DoorType;
   }
-
-  lock() {
-    super.lock();
-  }
-
-  unlock() {
-    super.unlock();
-  }
 }
 class DoubleDoor extends Entrance {
   doors: DoorType[];
@@ -77,14 +138,6 @@ class DoubleDoor extends Entrance {
   constructor(entrance: EntranceType) {
     super(entrance);
     this.doors = entrance.doors as DoorType[];
-  }
-
-  lock() {
-    super.lock();
-  }
-
-  unlock() {
-    super.unlock();
   }
 }
 class Gate extends Entrance {
@@ -95,11 +148,8 @@ class Gate extends Entrance {
     this.gate = entrance.doors as DoorType;
   }
 
-  lock() {
-    const target = this.target as Prop;
-    target.IsPositionFrozen = true;
-    console.log('freeze ?');
-    console.log(target.IsPositionFrozen);
+  lock(user: IUser) {
+    freezeDoor(this.target as Prop, true, user);
   }
 
   unlock() {
