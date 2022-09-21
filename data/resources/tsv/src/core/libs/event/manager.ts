@@ -49,9 +49,9 @@ class EventManager {
         ? AES.encrypt(JSON.stringify(emitEventNet.data))
         : null;
 
-    Env.client(() => emitNet('eventParadise', eventHashName, eventHashData));
+    Env.client(() => emitNet('TSeVent', eventHashName, eventHashData));
     Env.server(() => emitNet(
-      'eventParadise',
+      'TSeVent',
       emitEventNet.target !== undefined ? emitEventNet.target : -1,
       eventHashName,
       eventHashData,
@@ -142,8 +142,8 @@ class EventManager {
       message: _t('core.event.manager.constructor.createManager'),
     });
 
-    onNet('eventParadise', (eventHashName: string, eventHashData: string) => {
-      log.location = `onNet('eventParadise')`;
+    onNet('TSeVent', (eventHashName: string, eventHashData: string) => {
+      log.location = `onNet('TSeVent')`;
       const eventSource = source.toString();
       const event = this.manager.find((eventManager) => AES.decrypt(eventHashName) === eventManager.name);
       if (event === undefined) {
