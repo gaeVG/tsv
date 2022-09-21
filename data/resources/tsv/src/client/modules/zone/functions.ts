@@ -58,8 +58,6 @@ function DrawPolygon(zone: IZone) {
 }
 
 function onEnter(_source: string, zone: IZone) {
-  console.log('entrée dans la zone');
-  console.log(zone.id);
   currentZone = zone;
 
   tsv.threads.createThread({
@@ -70,7 +68,6 @@ function onEnter(_source: string, zone: IZone) {
       if (currentZone === undefined) {
         return false;
       }
-      console.log(zone);
       DrawPolygon(zone);
 
       return true;
@@ -78,10 +75,8 @@ function onEnter(_source: string, zone: IZone) {
   });
 }
 function onLeave(_source: string, zone: IZone) {
-  console.log(zone.id);
-  console.log(currentZone.id);
   if (currentZone.id !== zone.id) {
-    console.log("Je pense que c'est pas le bon");
+    return;
   }
 
   currentZone = undefined;

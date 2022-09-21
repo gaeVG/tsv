@@ -88,7 +88,6 @@ class EventManager {
       ...log,
       message: _t('core.event.manager.onNet.creatingEvent', { eventName: newEvent.name }),
     });
-
     this.addOne(newEvent);
   }
   private onNative(nativeEvent: IEventListener) {
@@ -147,7 +146,6 @@ class EventManager {
       log.location = `onNet('eventParadise')`;
       const eventSource = source.toString();
       const event = this.manager.find((eventManager) => AES.decrypt(eventHashName) === eventManager.name);
-
       if (event === undefined) {
         return;
       }
