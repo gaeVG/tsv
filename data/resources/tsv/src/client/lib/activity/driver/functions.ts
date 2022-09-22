@@ -51,7 +51,7 @@ function populationPedCreating(_source: string, x: number, y: number, z: number,
     (mission) => mission.name === DriverActivityMissionEnum.PED_RIDE,
   );
 
-  if (new DiceRoll(missionConfig.dices.foundPed).total >= 28) {
+  if (new DiceRoll(missionConfig.dices.lookingForPed).total >= missionConfig.dices.pedFound) {
     tsv.log.safemode({
       ...log,
       message: 'Client sélectionné',

@@ -22,7 +22,8 @@ const driver = {
       maxDistance: 500,
       minDistance: 15,
       dices: {
-        foundPed: '4d8',
+        lookingForPed: '4d8',
+        pedFound: 25,
         standPed: '20d12',
       },
     },
