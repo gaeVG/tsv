@@ -13,13 +13,22 @@ const log: LogData = {
   isModuleDisplay: moduleConfig.debug,
 };
 
-function playerConnecting(
+async function playerConnecting(
   _: string,
   user: IUser,
   isNewPlayer: boolean,
   characters: UserCharacter[],
-): void {
-  selectCharacter(user, isNewPlayer, characters);
+): Promise<void> {
+  const characterSelected = await selectCharacter(user, isNewPlayer, characters);
+
+  if (characterSelected instanceof Error) {
+    tsv.log.error({
+      ...log,
+      message: characterSelected.message,
+    });
+
+    return;
+  }
 }
 function playerHostingSession(): void {
   log.location = ClientEventNativeEnum.CEventNetworkHostSession;

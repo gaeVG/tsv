@@ -88,6 +88,11 @@ async function initializeCharacter(user: IUser): Promise<Player> {
   global.SetMaxWantedLevel(1);
   player.Ped.IsPositionFrozen = false;
 
+  tsv.log.debug({
+    ...log,
+    message: tsv.locale('module.character.events.spanwCharacter.initialized'),
+  });
+
   return player;
 }
 /**
@@ -95,33 +100,25 @@ async function initializeCharacter(user: IUser): Promise<Player> {
  * @param {IUser} user The interface representing the player
  * @param {UserCharacter} character The interface representing the user character
  */
-async function spawnCharacter(user: IUser): Promise<void> {
+async function spawnCharacter(user: IUser): Promise<Error> {
   log.location = 'spawnCharacter()';
 
-  const player = await initializeCharacter(user);
-  if (player instanceof Error) {
-    spawnCharacter(user);
-  }
+  try {
+    const player = await initializeCharacter(user);
+    if (player instanceof Error) {
+      spawnCharacter(user);
+    }
 
-  tsv.log.debug({
-    ...log,
-    message: tsv.locale('module.character.events.spanwCharacter.initialized'),
-  });
-
-  (
-    tsv.events.trigger({
+    const updatedUser = await (tsv.events.trigger({
       name: 'onPlayerSpawn',
       module: 'player',
       onNet: true,
       isCallback: true,
       data: [user],
-    }) as Promise<IUser | Error>
-  ).then((updatedUser: IUser | Error) => {
+    }) as Promise<IUser | Error>);
+
     if (updatedUser instanceof Error) {
-      return tsv.log.error({
-        ...log,
-        message: updatedUser.message,
-      });
+      throw updatedUser;
     }
 
     tsv.nui.trigger({ name: 'setUser', module: 'app', payload: user });
@@ -131,14 +128,17 @@ async function spawnCharacter(user: IUser): Promise<void> {
     global.ShutdownLoadingScreen();
     global.ShutdownLoadingScreenNui();
 
-    Fading.fadeIn(2000).then(() => {
-      tsv.log.debug({
-        ...log,
-        message: `Chargement du personnage terminé`,
-        isLast: true,
-      });
+    await Fading.fadeIn(2000);
+    tsv.log.debug({
+      ...log,
+      message: `Chargement du personnage terminé`,
+      isLast: true,
     });
-  });
+  } catch (error) {
+    if (error instanceof Error) {
+      return error;
+    }
+  }
 }
 /**
  *
@@ -146,38 +146,49 @@ async function spawnCharacter(user: IUser): Promise<void> {
  * @param {boolean} isNewPlayer If the player has no characters registered in the database
  * @param {Array<UserCharacter>} characters An array of characters stored in database
  */
-function selectCharacter(user: IUser, isNewPlayer: boolean, characters: UserCharacter[]) {
+async function selectCharacter(
+  user: IUser,
+  isNewPlayer: boolean,
+  characters: UserCharacter[],
+): Promise<Error> {
+  let userCharacter: UserCharacter;
+
   try {
+    const bucket = await (tsv.events.trigger({
+      name: 'setNewCharacterIntoBucket',
+      module: 'character',
+      onNet: true,
+      isCallback: true,
+      data: [user],
+    }) as Promise<IBucket | Error>);
+
+    if (bucket instanceof Error) {
+      throw bucket;
+    }
+
     if (!isNewPlayer) {
       // TODO: Créer une interface pour la sélection du personnage à jouer
       // Pour le moment, on prend le premier personnage de la liste
-      const userCharacter = characters[0];
-
-      (
-        tsv.events.trigger({
-          name: 'setCharacter',
-          module: 'character',
-          onNet: true,
-          isCallback: true,
-          data: [user, userCharacter],
-        }) as Promise<IUser | Error>
-      ).then((updatedUser: IUser | Error) => {
-        if (updatedUser instanceof Error) {
-          throw updatedUser;
-        }
-        spawnCharacter(updatedUser);
-      });
+      userCharacter = characters[0];
     } else {
-      newCharacter(user, characters[0]);
+      userCharacter = createCharacter(user, characters[0]);
     }
+
+    const updatedUser = await (tsv.events.trigger({
+      name: 'setCharacter',
+      module: 'character',
+      onNet: true,
+      isCallback: true,
+      data: [user, userCharacter],
+    }) as Promise<IUser | Error>);
+
+    if (updatedUser instanceof Error) {
+      throw updatedUser;
+    }
+
+    return spawnCharacter(updatedUser);
   } catch (error) {
-    tsv.log.error({
-      ...log,
-      message: tsv.locale('module.character.setCharacter.error', {
-        userId: user.id,
-        errorMessage: error.message,
-      }),
-    });
+    return error;
   }
 }
 /**
@@ -185,44 +196,27 @@ function selectCharacter(user: IUser, isNewPlayer: boolean, characters: UserChar
  * @param {IUser} user The interface representing the player
  * @param {UserCharacter} character The description of the player character
  */
-function newCharacter(user: IUser, character: UserCharacter): void {
+function createCharacter(user: IUser, character: UserCharacter): UserCharacter {
   log.location = 'newCharacter()';
 
   try {
-    (
-      tsv.events.trigger({
-        name: 'setNewCharacterIntoBucket',
-        module: 'character',
-        onNet: true,
-        isCallback: true,
-        data: [user],
-      }) as Promise<IBucket | Error>
-    ).then((bucket: IBucket | Error) => {
-      if (bucket instanceof Error) {
-        throw bucket;
-      }
-      spawnCharacter(user);
+    tsv.threads.createThread({
+      name: 'new-character',
+      timer: 1000,
+      callback: () => {
+        tsv.log.warning({
+          ...log,
+          message: `La caméra doit être bloquée...`,
+        });
 
-      tsv.threads.createThread({
-        name: 'new-character',
-        timer: 1000,
-        callback: () => {
-          tsv.log.warning({
-            ...log,
-            message: `La caméra doit être bloquée...`,
-          });
-
-          return true;
-        },
-      });
+        return true;
+      },
     });
+
+    return character;
   } catch (error) {
-    tsv.log.error({
-      ...log,
-      message: error instanceof Error ? error.message : error,
-      isLast: true,
-    });
+    return error;
   }
 }
 
-export { spawnCharacter, newCharacter, selectCharacter };
+export { spawnCharacter, selectCharacter };
