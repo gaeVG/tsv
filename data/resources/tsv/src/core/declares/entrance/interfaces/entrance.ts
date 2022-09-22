@@ -10,7 +10,7 @@ interface IEntrance {
   isRemote?: boolean;
   state: EntranceStateStype;
 
-  lock(user: IUser): void;
+  lock(user: IUser): Promise<EntranceStateStype>;
   unlock(): void;
 }
 
