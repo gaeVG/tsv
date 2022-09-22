@@ -88,10 +88,32 @@ class EntranceManager {
       }
     }
   }
-  updateOne(door: IEntrance) {
-    const index = this.manager.findIndex((d) => d.id === door.id);
-    if (index === -1) return;
-    this.manager[index] = door;
+  updateOne(entrance: IEntrance): IEntrance | Error {
+    try {
+      let entranceFound: Entrance;
+
+      this.manager = this.manager.reduce((entrances, currentEntrance) => {
+        if (currentEntrance.id === entrance.id) {
+          Object.entries(entrance).forEach(([entranceKey, entranceVal]) => {
+            currentEntrance[entranceKey] = entranceVal;
+          });
+          entranceFound = currentEntrance;
+        }
+
+        return [...entrances, currentEntrance];
+      }, []);
+
+      if (!entranceFound) {
+        throw new EntranceNotFoundError(entrance.id);
+      }
+
+      return entranceFound;
+    } catch (error) {
+      if (error instanceof Error) {
+        return error;
+      }
+      tsv.log.error({ ...log, message: error.message });
+    }
   }
 }
 
