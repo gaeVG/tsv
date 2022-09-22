@@ -11,6 +11,7 @@ import { freezeTarget, getTargetHeading } from './function';
 import { tsv } from '../..';
 import { EntranceToogleStateError } from '../../../core/declares/entrance/errors/entranceToggleState';
 import { EntranceHeadingError } from '../../../core/declares/entrance/errors/entranceHeading';
+import { Crypto } from '../../../core/libs';
 
 abstract class Entrance implements IEntrance {
   id: string;
@@ -21,6 +22,7 @@ abstract class Entrance implements IEntrance {
   state: EntranceStateStype;
 
   constructor(entrance: EntranceType) {
+    this.id = Crypto.uuidv4();
     this.doors = entrance.doors;
     this.distanceMax = entrance.distanceMax || 2.0;
     this.isRemote = entrance.isRemote || false;
