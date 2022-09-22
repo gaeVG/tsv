@@ -1,13 +1,17 @@
+import { Entity, Prop, Vector3 } from '../../../core/libs';
 import { ISociety, SocietyType } from '../../../core/declares/society';
-import { EnumLogContainer } from '../../../core/declares/log';
-import appConfig from '../../../config';
-import moduleConfig from './config';
-import { LogData } from '../../../core/declares/log';
-import { tsv } from '../..';
+import { LogData, EnumLogContainer } from '../../../core/declares/log';
 import { PolyZoneType } from '../../../core/declares/zone';
+import {
+  DoorType,
+  EntranceStateEnum,
+  IEntrance,
+  EntranceToogleStateError,
+} from '../../../core/declares/entrance';
 import { User } from '../../../core/libs/user';
-import { EntranceStateEnum, IEntrance } from '../../../core/declares/entrance';
-import { Wait } from '../../../core/libs';
+import moduleConfig from './config';
+import appConfig from '../../../config';
+import { tsv } from '../..';
 
 const log: LogData = {
   namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,
@@ -120,11 +124,28 @@ async function loadingActivities(): Promise<Error> {
   // });
 }
 
+/**
+ * Find the prop inside the GamePool
+ * @param {DoorType} door
+ * @returns The found prop
+ */
+function getTargetProp(door: DoorType): Prop {
+  return new Prop(
+    global
+      .GetGamePool('CObject')
+      .find(
+        (object: number) =>
+          Entity.fromHandle(object).Position ===
+          new Vector3(door.coords.x, door.coords.y, door.coords.z),
+      ),
+  );
+}
 function onEnterBuilding(user: User, society: SocietyType) {
   tsv.threads.createThread({
     name: 'activity-onEnterBuilding-getDoorProps',
     timer: 1000,
     callback: () => {
+      // Recover all the entrances of the society
       const societyEntrances = tsv.entrances.All.reduce((entrances, entrance) => {
         society.entrances.forEach((societyEntrance) => {
           if (entrance.doors === societyEntrance.doors) {
@@ -135,21 +156,39 @@ function onEnterBuilding(user: User, society: SocietyType) {
         return entrances;
       }, [] as IEntrance[]);
 
-      if (
-        societyEntrances.filter((entrance) => {
-          return entrance.target === undefined;
-        }).length === 0
-      ) {
-        societyEntrances.forEach(
-          (entrance) => entrance.state === EntranceStateEnum.CLOSE && entrance.lock(user),
-        );
+      if (societyEntrances.filter((entrance) => entrance.target === undefined).length === 0) {
+        // All the targets are filled in, now apply states lock
+
+        try {
+          societyEntrances.forEach(
+            (entrance) =>
+              entrance.state === EntranceStateEnum.CLOSE &&
+              entrance.lock(user).then((entranceState) => {
+                if (entranceState === EntranceStateEnum.CLOSE) {
+                  throw new EntranceToogleStateError(entrance);
+                }
+              }),
+          );
+        } catch (error) {
+          if (error instanceof Error) {
+            tsv.log.error({
+              ...log,
+              message: error.message,
+            });
+          }
+        }
+
         return false;
       }
 
       societyEntrances.forEach((entrance) => {
         if (entrance.target === undefined) {
-          entrance.getTargetPropsFromClient(user);
-          Wait(500);
+          tsv.entrances.updateOne({
+            ...entrance,
+            target: Array.isArray(entrance.doors)
+              ? entrance.doors.map((door) => getTargetProp(door))
+              : getTargetProp(entrance.doors),
+          });
         }
       });
 
