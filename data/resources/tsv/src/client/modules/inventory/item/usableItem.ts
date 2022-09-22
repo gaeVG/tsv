@@ -9,14 +9,16 @@ abstract class UsableItem extends Item implements IUsableItem {
   }
 
   getAllowToUse(useItem: (canUseItem: boolean) => void, container: InventoryContainerType) {
-    tsv.events.trigger({
-      name: 'useItem',
-      module: 'inventory',
-      onNet: true,
-      data: [container, this],
-      callback: (item: IItem | Error) => {
-        useItem(!(item instanceof Error));
-      },
+    (
+      tsv.events.trigger({
+        name: 'useItem',
+        module: 'inventory',
+        onNet: true,
+        isCallback: true,
+        data: [container, this],
+      }) as Promise<IItem | Error>
+    ).then((item: IItem | Error) => {
+      useItem(!(item instanceof Error));
     });
   }
 

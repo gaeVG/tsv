@@ -108,34 +108,36 @@ async function spawnCharacter(user: IUser): Promise<void> {
     message: tsv.locale('module.character.events.spanwCharacter.initialized'),
   });
 
-  tsv.events.trigger({
-    name: 'onPlayerSpawn',
-    module: 'player',
-    onNet: true,
-    data: [user],
-    callback: (_, updatedUser: IUser | Error) => {
-      if (updatedUser instanceof Error) {
-        return tsv.log.error({
-          ...log,
-          message: updatedUser.message,
-        });
-      }
-
-      tsv.nui.trigger({ name: 'setUser', module: 'app', payload: user });
-      tsv.activities.addActivity(updatedUser.activities);
-
-      // Exit the loading screen
-      global.ShutdownLoadingScreen();
-      global.ShutdownLoadingScreenNui();
-
-      Fading.fadeIn(2000).then(() => {
-        tsv.log.debug({
-          ...log,
-          message: `Chargement du personnage terminé`,
-          isLast: true,
-        });
+  (
+    tsv.events.trigger({
+      name: 'onPlayerSpawn',
+      module: 'player',
+      onNet: true,
+      isCallback: true,
+      data: [user],
+    }) as Promise<IUser | Error>
+  ).then((updatedUser: IUser | Error) => {
+    if (updatedUser instanceof Error) {
+      return tsv.log.error({
+        ...log,
+        message: updatedUser.message,
       });
-    },
+    }
+
+    tsv.nui.trigger({ name: 'setUser', module: 'app', payload: user });
+    tsv.activities.addActivity(updatedUser.activities);
+
+    // Exit the loading screen
+    global.ShutdownLoadingScreen();
+    global.ShutdownLoadingScreenNui();
+
+    Fading.fadeIn(2000).then(() => {
+      tsv.log.debug({
+        ...log,
+        message: `Chargement du personnage terminé`,
+        isLast: true,
+      });
+    });
   });
 }
 /**
@@ -151,17 +153,19 @@ function selectCharacter(user: IUser, isNewPlayer: boolean, characters: UserChar
       // Pour le moment, on prend le premier personnage de la liste
       const userCharacter = characters[0];
 
-      tsv.events.trigger({
-        name: 'setCharacter',
-        module: 'character',
-        onNet: true,
-        data: [user, userCharacter],
-        callback: (_, updatedUser: IUser | Error) => {
-          if (updatedUser instanceof Error) {
-            throw updatedUser;
-          }
-          spawnCharacter(updatedUser);
-        },
+      (
+        tsv.events.trigger({
+          name: 'setCharacter',
+          module: 'character',
+          onNet: true,
+          isCallback: true,
+          data: [user, userCharacter],
+        }) as Promise<IUser | Error>
+      ).then((updatedUser: IUser | Error) => {
+        if (updatedUser instanceof Error) {
+          throw updatedUser;
+        }
+        spawnCharacter(updatedUser);
       });
     } else {
       newCharacter(user, characters[0]);
@@ -185,31 +189,32 @@ function newCharacter(user: IUser, character: UserCharacter): void {
   log.location = 'newCharacter()';
 
   try {
-    tsv.events.trigger({
-      name: 'setNewCharacterIntoBucket',
-      module: 'character',
-      onNet: true,
-      data: [user],
-      callback: (bucket: IBucket | Error) => {
-        if (bucket instanceof Error) {
-          throw bucket;
-        }
+    (
+      tsv.events.trigger({
+        name: 'setNewCharacterIntoBucket',
+        module: 'character',
+        onNet: true,
+        isCallback: true,
+        data: [user],
+      }) as Promise<IBucket | Error>
+    ).then((bucket: IBucket | Error) => {
+      if (bucket instanceof Error) {
+        throw bucket;
+      }
+      spawnCharacter(user);
 
-        spawnCharacter(user);
+      tsv.threads.createThread({
+        name: 'new-character',
+        timer: 1000,
+        callback: () => {
+          tsv.log.warning({
+            ...log,
+            message: `La caméra doit être bloquée...`,
+          });
 
-        tsv.threads.createThread({
-          name: 'new-character',
-          timer: 1000,
-          callback: () => {
-            tsv.log.warning({
-              ...log,
-              message: `La caméra doit être bloquée...`,
-            });
-
-            return true;
-          },
-        });
-      },
+          return true;
+        },
+      });
     });
   } catch (error) {
     tsv.log.error({

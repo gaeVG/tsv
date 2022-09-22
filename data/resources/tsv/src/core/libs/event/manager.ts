@@ -220,21 +220,9 @@ class EventManager {
       }
     }
   }
-  trigger(triggerEvent: IEventTrigger): void {
+  trigger(triggerEvent: IEventTrigger): void | Promise<any> {
     log.location = 'trigger()';
     
-    if (triggerEvent.callback) {
-      this.onNet({
-        name: triggerEvent.name,
-        module: triggerEvent.module,
-        onNet: true,
-        handler: (eventSource: string, ...args: unknown[]) => {
-          triggerEvent.callback(eventSource, ...args);
-          this.manager = this.manager.filter((event) => event.name !== triggerEvent.name);
-        },
-      });
-    }
-
     if (triggerEvent.onNet) {
       if (GetGameName() === EnumEventTarget.SERVER && triggerEvent.target == undefined) {
         Log.error({
@@ -245,6 +233,20 @@ class EventManager {
         return;
       }
       this.emitNet(triggerEvent);
+
+      if (triggerEvent.isCallback) {
+        return new Promise((resolve) => {
+          this.onNet({
+            name: triggerEvent.name,
+            module: triggerEvent.module,
+            onNet: true,
+            handler: (_, args: unknown[]) => {
+              this.manager = this.manager.filter((event) => event.name !== triggerEvent.name);
+              resolve(args);
+            },
+          });
+        });
+      }
     } else {
       this.emit(triggerEvent);
     }
