@@ -1,11 +1,11 @@
 interface IEventTrigger {
   name: string;
   module?: string;
-  target?: number | string;
+  target?: string | string[];
   onNet?: boolean;
   isLocal?: boolean;
   data?: unknown[];
-  callback?: (...args: unknown[]) => void;
+  isCallback?: boolean;
 }
 
 export { IEventTrigger };

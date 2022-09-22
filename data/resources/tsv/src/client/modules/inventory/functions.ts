@@ -49,42 +49,43 @@ async function openInventory() {
   while (player.Character.Speed > 0.1) {
     await Wait(100);
   }
+  (
+    tsv.events.trigger({
+      name: 'getAllInventories',
+      module: 'inventory',
+      onNet: true,
+      isCallback: true,
+    }) as Promise<IInventory[]>
+  ).then((inventory: IInventory[]) => {
+    tsv.nui.trigger({ name: 'open-player-inventory', module: 'inventory', payload: inventory });
 
-  tsv.events.trigger({
-    name: 'getAllInventories',
-    module: 'inventory',
-    onNet: true,
-    callback(_, inventory: IInventory[]) {
-      tsv.nui.trigger({ name: 'open-player-inventory', module: 'inventory', payload: inventory });
-
-      tsv.nui.listen({
-        name: 'close-inventory',
-        module: 'inventory',
-        removeAfterTriggered: true,
-        handler: () => {
-          global.SetNuiFocus(false, false);
-        },
-      });
-      tsv.nui.listen({
-        name: 'display-character',
-        module: moduleConfig.name,
-        handler: async () => {
-          global.SetFrontendActive(true);
-          global.ActivateFrontendMenu('FE_MENU_VERSION_EMPTY', false, -1);
-          await Wait(100);
-          global.SetMouseCursorVisibleInMenus(false);
-          playerOverlay = await createPedOverlay(player);
-        },
-      });
-      tsv.nui.listen({
-        name: 'hide-character',
-        module: moduleConfig.name,
-        handler: () => {
-          playerOverlay.delete();
-          global.SetFrontendActive(false);
-        },
-      });
-    },
+    tsv.nui.listen({
+      name: 'close-inventory',
+      module: 'inventory',
+      removeAfterTriggered: true,
+      handler: () => {
+        global.SetNuiFocus(false, false);
+      },
+    });
+    tsv.nui.listen({
+      name: 'display-character',
+      module: moduleConfig.name,
+      handler: async () => {
+        global.SetFrontendActive(true);
+        global.ActivateFrontendMenu('FE_MENU_VERSION_EMPTY', false, -1);
+        await Wait(100);
+        global.SetMouseCursorVisibleInMenus(false);
+        playerOverlay = await createPedOverlay(player);
+      },
+    });
+    tsv.nui.listen({
+      name: 'hide-character',
+      module: moduleConfig.name,
+      handler: () => {
+        playerOverlay.delete();
+        global.SetFrontendActive(false);
+      },
+    });
   });
 }
 
