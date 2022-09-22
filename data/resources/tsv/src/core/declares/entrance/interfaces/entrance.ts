@@ -12,7 +12,6 @@ interface IEntrance {
 
   lock(user: IUser): void;
   unlock(): void;
-  getTargetPropsFromClient: (user: IUser) => void;
 }
 
 export { IEntrance };

@@ -1,6 +1,7 @@
-import { Player, Model, Vector3, World } from '../../../../core/libs';
+import { Model, Vector3, World } from '../../../../core/libs';
 import { ItemType } from '../../../../core/declares/item';
 import { EnumLogContainer, LogData } from '../../../../core/declares/log';
+import { DoorType, EntranceStateStype } from '../../../../core/declares/entrance';
 import { UsableItem } from './usableItem';
 import moduleConfig from '../config';
 import { tsv } from '../../..';
@@ -11,40 +12,45 @@ const log: LogData = {
   isModuleDisplay: moduleConfig.debug,
 };
 
-type MetadataKey = {
-  targetHash: number;
-  targetPosition: Vector3;
-};
-
 class Key extends UsableItem {
-  metadata?: MetadataKey;
+  metadata?: DoorType | DoorType[];
 
   constructor(item: ItemType) {
     super(item);
-    this.metadata = item.metadata as MetadataKey;
+    this.metadata = item.metadata as DoorType | DoorType[];
   }
 
   use() {
-    console.log('use');
     try {
-      const metadata = {
-        targetHash: this.metadata.targetHash as number,
-        targetPosition: new Vector3(
-          this.metadata.targetPosition.x as number,
-          this.metadata.targetPosition.y as number,
-          this.metadata.targetPosition.z as number,
-        ),
-      } as MetadataKey;
+      const toggleEntrance = tsv.events.trigger({
+        name: 'toggleEntrance',
+        module: 'entrance',
+        onNet: true,
+        isCallback: true,
+        data: Array.isArray(this.metadata)
+          ? this.metadata.map((door) =>
+              World.getClosestObject(
+                new Model(door.hash),
+                new Vector3(door.coords.x, door.coords.y, door.coords.z),
+                3,
+                false,
+              ),
+            )
+          : [
+              World.getClosestObject(
+                new Model(this.metadata.hash),
+                new Vector3(this.metadata.coords.x, this.metadata.coords.y, this.metadata.coords.z),
+                3,
+                false,
+              ),
+            ],
+      }) as Promise<[boolean, EntranceStateStype]>;
 
-      const player = new Player();
-      const model = new Model('prop_bin_01a');
-
-      if (!metadata.targetHash) {
-        throw new Error('No target hash');
-      }
-      const target = World.getClosestObject(model, player.Ped.Position, 3, false);
-
-      console.log(target.Position.distance(metadata.targetPosition));
+      toggleEntrance.then(([isEntranceStateChange, entranceState]) => {
+        if (isEntranceStateChange) {
+          console.log(entranceState);
+        }
+      });
     } catch (error) {
       console.log(error.message);
       tsv.log.error({

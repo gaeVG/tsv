@@ -7,36 +7,10 @@ import {
   EntranceStateEnum,
 } from '../../../core/declares/entrance';
 import { IUser } from '../../../core/declares/user';
+import { freezeTarget, getTargetHeading } from './function';
 import { tsv } from '../..';
-
-function freezeDoor(door: Prop, freeze: boolean, user?: IUser) {
-  try {
-    tsv.events.trigger({
-      name: 'setEntityFreezePosition',
-      module: 'entity',
-      onNet: true,
-      target: -1,
-      data: [door, true],
-      callback: (_, isFreeze: boolean) => {
-        if (isFreeze === false) {
-          throw new Error('Impossible de fermer la porte');
-        }
-      },
-    });
-  } catch (error) {
-    if (error instanceof Error) {
-      if (user === undefined) {
-        tsv.events.trigger({
-          name: 'sendNotification',
-          module: 'notification',
-          onNet: true,
-          target: user.source,
-          data: [error.message],
-        });
-      }
-    }
-  }
-}
+import { EntranceToogleStateError } from '../../../core/declares/entrance/errors/entranceToggleState';
+import { EntranceHeadingError } from '../../../core/declares/entrance/errors/entranceHeading';
 
 abstract class Entrance implements IEntrance {
   id: string;
@@ -53,64 +27,49 @@ abstract class Entrance implements IEntrance {
     this.state = entrance.state || EntranceStateEnum.CLOSE;
   }
 
-  getTargetPropsFromClient(user: IUser) {
-    tsv.events.trigger({
-      name: 'getEntranceDoors',
-      module: 'entrance',
-      onNet: true,
-      target: user.source,
-      data: [this.doors],
-      callback: (_, props: { handle: number } | { handle: number }[]) => {
-        if (Array.isArray(props)) {
-          this.target = props.map((prop) => new Prop(prop.handle));
-        } else {
-          this.target = new Prop(props.handle);
-        }
-      },
-    });
-  }
-  lock(user: IUser) {
-    if (Array.isArray(this.target)) {
-      (this.target as Prop[]).forEach((door, i) => {
-        const entranceDoor = this.doors as DoorType[];
-        const doorHeading = entranceDoor[i].coords.w;
+  /**
+   * Locks the entrance
+   * @param {IUser} user The user who triggers the entrance closure
+   * @returns A promise of the updated entrance state
+   */
+  async lock(user: IUser): Promise<EntranceStateStype> {
+    try {
+      if (Array.isArray(this.target)) {
+        this.target.forEach(async (prop, i) => {
+          const targetHeading = await getTargetHeading(prop, user);
+          if (targetHeading !== this.doors[i].coords.w) {
+            throw new EntranceHeadingError();
+          }
 
+          if (!(await freezeTarget(prop, this.state === EntranceStateEnum.CLOSE, user))) {
+            throw new EntranceToogleStateError(this);
+          }
+        });
+
+        return (this.state = EntranceStateEnum.CLOSE);
+      } else {
+        const targetHeading = await getTargetHeading(this.target, user);
+        if (targetHeading !== (this.doors as DoorType).coords.w) {
+          throw new EntranceHeadingError();
+        }
+
+        if (!(await freezeTarget(this.target, this.state === EntranceStateEnum.CLOSE, user))) {
+          throw new EntranceToogleStateError(this);
+        }
+
+        return (this.state = EntranceStateEnum.CLOSE);
+      }
+    } catch (error) {
+      if (error instanceof Error) {
         tsv.events.trigger({
-          name: 'getEntityHeading',
-          module: 'entity',
+          name: 'sendNotification',
+          module: 'notification',
           onNet: true,
           target: user.source,
-          data: [door],
-          callback: (_, heading: number) => {
-            if (heading !== doorHeading) {
-              // La porte n'est pas fermée
-            } else {
-              freezeDoor(door, true, user);
-            }
-          },
+          data: [error.message],
         });
-      });
-    } else {
-      const entranceDoor = this.doors as DoorType;
-
-      tsv.events.trigger({
-        name: 'getEntityHeading',
-        module: 'entity',
-        onNet: true,
-        target: user.source,
-        data: [this.target],
-        callback: (_, heading: number) => {
-          console.log('ici');
-          if (heading !== entranceDoor.coords.w) {
-            console.log(`La porte n'est pas fermée`);
-          } else {
-            console.log('fermer la porte');
-            global.FreezeEntityPosition((this.target as Prop).Handle, true);
-          }
-        },
-      });
+      }
     }
-    this.state = EntranceStateEnum.CLOSE;
   }
   unlock() {
     Array.isArray(this.target)
@@ -148,8 +107,29 @@ class Gate extends Entrance {
     this.gate = entrance.doors as DoorType;
   }
 
-  lock(user: IUser) {
-    freezeDoor(this.target as Prop, true, user);
+  /**
+   * Lock the gate
+   * @param user The user who triggers the entrance closure
+   * @returns A promise of the updated entrance state
+   */
+  async lock(user: IUser): Promise<EntranceStateStype> {
+    try {
+      if (
+        !(await freezeTarget(this.target as Prop, this.state !== EntranceStateEnum.CLOSE, user))
+      ) {
+        throw new EntranceToogleStateError(this);
+      }
+
+      return (this.state = EntranceStateEnum.CLOSE);
+    } catch (error) {
+      if (error instanceof Error) {
+        tsv.log.error({
+          namespace: 'entrance',
+          container: 'Gate',
+          message: error.message,
+        });
+      }
+    }
   }
 
   unlock() {

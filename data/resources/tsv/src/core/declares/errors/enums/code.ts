@@ -5,6 +5,8 @@ enum ErrorCodeEnum {
   // Entrances
   EntranceNotFoundError = 0x456e7472616e6,
   DoorsMustBeTwoError = 0x446f6f72734d7,
+  EntranceToggleStateError = 0x456e7472616e7,
+  EntranceHeadingError = 0x456e7472616e8,
 }
 
 export { ErrorCodeEnum };

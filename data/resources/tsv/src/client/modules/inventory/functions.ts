@@ -45,20 +45,17 @@ async function createPedOverlay(player: Player): Promise<Ped> {
 async function openInventory() {
   const player = new Player();
   let playerOverlay: Ped;
-
   global.SetNuiFocus(true, true);
-  while (player.Character.Speed > 0.1) {
-    await Wait(100);
-  }
-  (
-    tsv.events.trigger({
-      name: 'getAllInventories',
-      module: 'inventory',
-      onNet: true,
-      isCallback: true,
-    }) as Promise<IInventory[]>
-  ).then((inventory: IInventory[]) => {
-    tsv.nui.trigger({ name: 'open-player-inventory', module: 'inventory', payload: inventory });
+
+  const playerInventories = tsv.events.trigger({
+    name: 'getAllInventories',
+    module: 'inventory',
+    isCallback: true,
+    onNet: true,
+  }) as Promise<IInventory[]>;
+
+  playerInventories.then((inventories) => {
+    tsv.nui.trigger({ name: 'open-player-inventory', module: 'inventory', payload: inventories });
 
     tsv.nui.listen({
       name: 'close-inventory',
