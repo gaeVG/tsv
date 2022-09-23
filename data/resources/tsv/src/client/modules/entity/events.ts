@@ -1,5 +1,6 @@
 import { IEventListener } from '../../../core/declares/events';
 import {
+  getGamePool,
   getEntityHeading,
   setEntityHeading,
   setEntityHealth,
@@ -8,6 +9,13 @@ import {
 } from './function';
 
 const entityEvents: IEventListener[] = [
+  {
+    name: 'getGamePool',
+    module: 'entity',
+    onNet: true,
+    isCallback: true,
+    handler: getGamePool,
+  },
   {
     name: 'getEntityHeading',
     module: 'entity',

@@ -1,8 +1,30 @@
-import { Ped } from '../../../core/libs';
-import { Entity } from '../../../core/libs/models';
+import { Ped, World, Entity, Pickup, Rope } from '../../../core/libs';
 
 interface IEntity {
   handle: number;
+}
+
+function getGamePool(
+  pool: 'CPed' | 'CObject' | 'CVehicle' | 'CPickup' | 'CRopes',
+): Entity[] | Pickup[] | Rope[] | Error {
+  try {
+    switch (pool) {
+      case 'CPed':
+        return World.getAllPeds();
+      case 'CObject':
+        return World.getAllProps();
+      case 'CVehicle':
+        return World.getAllVehicles();
+      case 'CPickup':
+        return World.getAllPickups();
+      case 'CRopes':
+        return World.getAllRopes();
+      default:
+        throw new Error('Invalid pool');
+    }
+  } catch (error) {
+    return error;
+  }
 }
 
 function getEntityHeading(_: string, entity: IEntity): number {
@@ -45,6 +67,7 @@ function setEntityFreezePosition(_: string, _entity: IEntity, freeze: boolean): 
 }
 
 export {
+  getGamePool,
   getEntityHeading,
   setEntityHeading,
   setEntityHealth,

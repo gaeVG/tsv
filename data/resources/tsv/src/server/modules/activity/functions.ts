@@ -12,6 +12,7 @@ import { User } from '../../../core/libs/user';
 import moduleConfig from './config';
 import appConfig from '../../../config';
 import { tsv } from '../..';
+import { IUser } from '../../../core/declares/user';
 
 const log: LogData = {
   namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,
@@ -129,16 +130,34 @@ async function loadingActivities(): Promise<Error> {
  * @param {DoorType} door
  * @returns The found prop
  */
-function getTargetProp(door: DoorType): Prop {
-  return new Prop(
-    global
-      .GetGamePool('CObject')
-      .find(
-        (object: number) =>
-          Entity.fromHandle(object).Position ===
-          new Vector3(door.coords.x, door.coords.y, door.coords.z),
-      ),
-  );
+async function getTargetProp(door: DoorType, user: IUser): Promise<Prop | Error> {
+  try {
+    const pedGamePool = await (tsv.events.trigger({
+      name: 'getGamePool',
+      module: 'entity',
+      target: user.source,
+      data: ['CPed'],
+    }) as Promise<{ handle: number }[] | Error>);
+
+    if (pedGamePool instanceof Error) {
+      throw pedGamePool;
+    }
+
+    let targetProp: Prop;
+
+    pedGamePool.every((pedPool) => {
+      const prop = Entity.fromHandle(pedPool.handle) as Prop;
+
+      if (prop.Position === new Vector3(door.coords.x, door.coords.y, door.coords.z)) {
+        targetProp = prop;
+        return false;
+      }
+    });
+
+    return targetProp;
+  } catch (error) {
+    return error;
+  }
 }
 function onEnterBuilding(user: User, society: SocietyType) {
   tsv.threads.createThread({
@@ -181,13 +200,21 @@ function onEnterBuilding(user: User, society: SocietyType) {
         return false;
       }
 
-      societyEntrances.forEach((entrance) => {
+      societyEntrances.forEach(async (entrance) => {
         if (entrance.target === undefined) {
+          let targetProps: Prop | Prop[];
+
+          if (Array.isArray(entrance.doors)) {
+            entrance.doors.forEach(async (door) => {
+              (targetProps as Prop[]).push((await getTargetProp(door, user)) as Prop);
+            });
+          } else {
+            targetProps = (await getTargetProp(entrance.doors, user)) as Prop;
+          }
+
           tsv.entrances.updateOne({
             ...entrance,
-            target: Array.isArray(entrance.doors)
-              ? entrance.doors.map((door) => getTargetProp(door))
-              : getTargetProp(entrance.doors),
+            target: targetProps,
           });
         }
       });
