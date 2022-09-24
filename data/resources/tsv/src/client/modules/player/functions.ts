@@ -60,4 +60,62 @@ function playerStartingSession(): void {
   Fading.fadeOut(500);
 }
 
-export { playerConnecting, playerHostingSession, playerStartingSession };
+async function setUserFromDB(): Promise<void> {
+  try {
+    const [user, isNewPlayer, userCharacters] = await (tsv.events.trigger({
+      name: 'onPlayerJoined',
+      module: 'player',
+      onNet: true,
+      isCallback: true,
+    }) as Promise<[IUser, boolean, UserCharacter[]]>);
+
+    const error = selectCharacter(user, isNewPlayer, userCharacters);
+    if (error !== undefined) {
+      throw error;
+    }
+
+    tsv.events.trigger({
+      name: 'onPlayerSpawn',
+      module: 'player',
+      onNet: true,
+      data: [user],
+    });
+  } catch (error) {
+    if (error instanceof Error) {
+      tsv.log.error({
+        ...log,
+        message: error.message,
+      });
+    }
+  }
+}
+function isNetworkPlayerActiveTick(): boolean {
+  try {
+    const playerId = PlayerId();
+
+    if (NetworkIsPlayerActive(playerId)) {
+      tsv.log.safemode({
+        ...log,
+        message: tsv.locale('module.player.events.startSession.clientActive', {
+          userId: playerId,
+        }),
+      });
+
+      setUserFromDB();
+      return false;
+    }
+
+    return true;
+  } catch (error) {
+    if (error instanceof Error) {
+      tsv.log.error({
+        ...log,
+        message: error.message,
+      });
+    }
+
+    return false;
+  }
+}
+
+export { isNetworkPlayerActiveTick, playerConnecting, playerHostingSession, playerStartingSession };
