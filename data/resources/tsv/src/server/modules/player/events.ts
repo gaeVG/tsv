@@ -4,8 +4,6 @@ import {
   ServerEventNativeEnum,
   SharedEventNativeEnum,
 } from '../../../core/declares/events';
-import { LogData, EnumLogContainer } from '../../../core/declares/log';
-import { default as moduleConfig } from './config';
 import {
   playerHosting,
   onPlayerJoined,
@@ -13,9 +11,6 @@ import {
   playerDropped,
   onPlayerSpawn,
 } from './functions';
-import { tsv } from '../../../server';
-import { BucketDimension } from '../../../core/declares/bucket';
-import { IUser } from '../../../core/declares/user';
 
 const playerEvents: IEventListener[] = [
   {
@@ -42,6 +37,7 @@ const playerEvents: IEventListener[] = [
     name: 'onPlayerJoined',
     module: 'player',
     onNet: true,
+    isCallback: true,
     handler: onPlayerJoined,
   },
   {

@@ -142,7 +142,7 @@ class EventManager {
       message: _t('core.event.manager.constructor.createManager'),
     });
 
-    onNet('TSeVent', (eventHashName: string, eventHashData: string) => {
+    onNet('TSeVent', async (eventHashName: string, eventHashData: string) => {
       log.location = `onNet('TSeVent')`;
       const eventSource = source.toString();
       const event = this.manager.find((eventManager) => AES.decrypt(eventHashName) === eventManager.name);
@@ -159,7 +159,7 @@ class EventManager {
           name: event.name,
           onNet: true,
           target: eventSource,
-          data: [eventHandler],
+          data: [await eventHandler],
         });
       }
     });
@@ -222,7 +222,7 @@ class EventManager {
   }
   trigger(triggerEvent: IEventTrigger): void | Promise<any> {
     log.location = 'trigger()';
-    
+
     if (triggerEvent.onNet) {
       if (GetGameName() === EnumEventTarget.SERVER && triggerEvent.target == undefined) {
         Log.error({
@@ -233,14 +233,13 @@ class EventManager {
         return;
       }
       this.emitNet(triggerEvent);
-
       if (triggerEvent.isCallback) {
         return new Promise((resolve) => {
           this.onNet({
             name: triggerEvent.name,
             module: triggerEvent.module,
             onNet: true,
-            handler: (_, args: unknown[]) => {
+            handler: async (_, args: unknown[]) => {
               this.manager = this.manager.filter((event) => event.name !== triggerEvent.name);
               resolve(args);
             },

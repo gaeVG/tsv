@@ -51,12 +51,29 @@ async function createPlayerOnDB(source: string): Promise<UsersEntity> {
     });
   }
 }
-async function onPlayerJoined(source: string): Promise<void> {
-  log.location = 'onPlayerJoined()';
-  const userFromSource = new Player(parseInt(source));
-  let user: User;
-  let isNewPlayer = false;
+async function getUserFromDB(playerSource: string): Promise<[UsersEntity, boolean]> {
+  let userFromDB = await tsv.orm.dataSource.getMongoRepository(UsersEntity).findOneBy({
+    [`auth.${process.env.IDENTIFIER_TYPE}`]: (getIdentifiers(playerSource) as UserIdentifier)[
+      process.env.IDENTIFIER_TYPE
+    ],
+  });
 
+  if (!userFromDB) {
+    tsv.log.safemode({
+      ...log,
+      message: tsv.locale('module.player.onPlayerJoined.newUser', {
+        userName: Player.fromServerId(parseInt(playerSource)).Name,
+      }),
+    });
+
+    userFromDB = await createPlayerOnDB(playerSource);
+    return [userFromDB, true];
+  }
+
+  return [userFromDB, false];
+}
+async function onPlayerJoined(source: string): Promise<[IUser, boolean, UserCharacter[]]> {
+  log.location = 'onPlayerJoined()';
   tsv.log.debug({
     ...log,
     message: tsv.locale('module.player.event.onPlayerJoined.playerJoinedSession', {
@@ -66,22 +83,10 @@ async function onPlayerJoined(source: string): Promise<void> {
   log.isChild = true;
 
   try {
-    let userFromDB = await tsv.orm.dataSource.getMongoRepository(UsersEntity).findOneBy({
-      [`auth.${process.env.IDENTIFIER_TYPE}`]: (getIdentifiers(source) as UserIdentifier)[
-        process.env.IDENTIFIER_TYPE
-      ],
-    });
-
-    if (!userFromDB) {
-      tsv.log.safemode({
-        ...log,
-        message: tsv.locale('module.player.onPlayerJoined.newUser', {
-          userName: userFromSource.Name,
-        }),
-      });
-
-      userFromDB = await createPlayerOnDB(source);
-      isNewPlayer = true;
+    const userFromSource = new Player(parseInt(source));
+    const [userFromDB, isNewPlayer] = await getUserFromDB(source);
+    if (userFromDB instanceof Error) {
+      throw userFromDB;
     }
 
     tsv.log.safemode({
@@ -89,29 +94,17 @@ async function onPlayerJoined(source: string): Promise<void> {
       message: `Création de l'utilisateur ${userFromSource.Name} (ID: ${userFromDB.id})`,
     });
 
-    user = tsv.users.addOne({
+    const user = tsv.users.addOne({
       id: userFromDB.id.toString(),
       source: source,
       identifiers: userFromDB.auth,
       group: userFromDB.group,
     }) as User;
 
-    tsv.events.trigger({
-      name: 'playerConnecting',
-      module: 'player',
-      onNet: true,
-      target: user.source,
-      data: [
-        user,
-        isNewPlayer,
-        userFromDB.characters.length > 0
-          ? userFromDB.characters.reduce(
-              (characters: Array<UserCharacter>, character) => [...characters, character],
-              [],
-            )
-          : [],
-      ],
-    });
+    const userCharacters = userFromDB.characters.reduce((characters, character) => {
+      return [...characters, character as UserCharacter];
+    }, [] as UserCharacter[]);
+    return [user, isNewPlayer, userCharacters];
   } catch (error) {
     if (error instanceof Error) {
       if (process.env.EXECUTION_MODE !== 'production') {
@@ -120,8 +113,8 @@ async function onPlayerJoined(source: string): Promise<void> {
           message: error instanceof Error ? error.message : error,
         });
       }
-
-      process.env.EXECUTION_MODE !== 'safemode' && global.DropPlayer(source, error.message);
+      process.env.EXECUTION_MODE !== 'safemode' &&
+        global.DropPlayer(source, `Erreur: ${error.message}`);
     }
   }
 }
@@ -306,7 +299,7 @@ function onPlayerSpawn(_: any, user: IUser): IUser | Error {
     });
 
     if (error instanceof UserNotFoundError && process.env.EXECUTION_MODE !== 'safemode') {
-      global.DropPlayer(user.source, error.message);
+      global.DropPlayer(user.source, `Error: ${error.message}`);
     }
 
     return error;
