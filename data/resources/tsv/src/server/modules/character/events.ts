@@ -20,7 +20,7 @@ const characterEvents: IEventListener[] = [
     isCallback: true,
   },
   {
-    name: 'setNewCharacterBucket',
+    name: 'setNewCharacterIntoBucket',
     module: 'character',
     onNet: true,
     isCallback: true,
