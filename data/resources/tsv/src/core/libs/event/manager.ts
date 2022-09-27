@@ -11,6 +11,7 @@ import { Log } from '../log';
 import { AES } from '../aes';
 import { EnumLogContainer, LogData } from '../../declares/log';
 import { Env } from '../../utils/env';
+import { uuid } from '../../utils/uuid';
 import _t from '../../../config/i18n';
 
 const log: LogData = {
@@ -50,12 +51,14 @@ class EventManager {
         : null;
 
     Env.client(() => emitNet('TSeVent', eventHashName, eventHashData));
-    Env.server(() => emitNet(
-      'TSeVent',
-      emitEventNet.target !== undefined ? emitEventNet.target : -1,
-      eventHashName,
-      eventHashData,
-    ));
+    Env.server(() => {
+      emitNet(
+        'TSeVent',
+        emitEventNet.target !== undefined ? emitEventNet.target : -1,
+        eventHashName,
+        eventHashData,
+      )
+    });
   }
   private on(newEvent: IEventListener): void {
     log.location = 'on()';
@@ -144,6 +147,7 @@ class EventManager {
 
     onNet('TSeVent', async (eventHashName: string, eventHashData: string) => {
       log.location = `onNet('TSeVent')`;
+
       const eventSource = source.toString();
       const event = this.manager.find((eventManager) => AES.decrypt(eventHashName) === eventManager.name);
       if (event === undefined) {
@@ -156,7 +160,7 @@ class EventManager {
 
       if (event.isCallback) {
         this.emitNet({
-          name: event.name,
+          name: dataParsed[dataParsed.length - 1] as string,
           onNet: true,
           target: eventSource,
           data: [await eventHandler],
@@ -232,20 +236,28 @@ class EventManager {
 
         return;
       }
-      this.emitNet(triggerEvent);
+
       if (triggerEvent.isCallback) {
+        const data = triggerEvent.data || []
+        const callbackName = `${triggerEvent.name}-callback-${uuid()}`;
+
+        this.emitNet({
+          ...triggerEvent, data: [...data, callbackName]
+        });
+
         return new Promise((resolve) => {
           this.onNet({
-            name: triggerEvent.name,
+            name: callbackName,
             module: triggerEvent.module,
             onNet: true,
             handler: async (_, args: unknown[]) => {
-              this.manager = this.manager.filter((event) => event.name !== triggerEvent.name);
+              this.manager = this.manager.filter((event) => event.name !== callbackName);
               resolve(args);
             },
           });
         });
       }
+      this.emitNet(triggerEvent);
     } else {
       this.emit(triggerEvent);
     }
