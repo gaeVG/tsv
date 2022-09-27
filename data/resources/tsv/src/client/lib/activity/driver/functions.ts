@@ -1,12 +1,11 @@
 import { DiceRoll } from '@dice-roller/rpg-dice-roller';
-import { VehicleHash, Player, Model, Ped } from '../../../../core/libs';
+import { VehicleHash, Player, Model, Ped, Vector3 } from '../../../../core/libs';
 import { Driver } from './activity';
 import { tsv } from '../../../';
 import { ActivityEnum } from '../../../../core/declares/activity';
 import { driver as driverConfig } from '../../../../config/societies/activities/driver';
 import { DriverActivityMissionEnum } from '../../../../core/declares/activity';
 import { EnumLogContainer, LogData } from '../../../../core/declares/log';
-import { Vector3 } from 'three';
 
 const log: LogData = {
   namespace: 'DriverActivity',

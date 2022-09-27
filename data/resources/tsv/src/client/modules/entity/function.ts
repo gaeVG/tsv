@@ -1,12 +1,44 @@
-import { Ped, World, Entity, Pickup, Rope } from '../../../core/libs';
+import {
+  Ped,
+  World,
+  Entity,
+  Pickup,
+  Rope,
+  Model,
+  Vector3,
+  Prop,
+  Vector4,
+} from '../../../core/libs';
 
 interface IEntity {
   handle: number;
 }
+interface IProp {
+  hash: number;
+  coords: Vector4;
+}
+
+function getClosestObject(_source: string, object: IProp): Prop | Error {
+  try {
+    const model = new Model(object.hash);
+    const coords = new Vector3(object.coords.x, object.coords.y, object.coords.z);
+    const prop = World.getClosestObject(model, coords);
+    if (prop === undefined) {
+      throw new Error('No prop found');
+    }
+    prop.IsMissionEntity = true;
+    console.log(prop.Handle);
+    return prop;
+  } catch (error) {
+    console.log('une erreur');
+    return error;
+  }
+}
 
 function getGamePool(
+  _source: string,
   pool: 'CPed' | 'CObject' | 'CVehicle' | 'CPickup' | 'CRopes',
-): Entity[] | Pickup[] | Rope[] | Error {
+): Entity[] | Prop[] | Prop | Pickup[] | Rope[] | Error {
   try {
     switch (pool) {
       case 'CPed':
@@ -68,6 +100,7 @@ function setEntityFreezePosition(_: string, _entity: IEntity, freeze: boolean): 
 
 export {
   getGamePool,
+  getClosestObject,
   getEntityHeading,
   setEntityHeading,
   setEntityHealth,

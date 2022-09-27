@@ -20,7 +20,6 @@ const EntityModule: IModule = {
         ...log,
         message: tsv.locale('module.global.init.start', { moduleName: moduleConfig.name }),
       });
-
       entityEvents.forEach((event) => tsv.events.listen(event));
     } catch (error) {
       return error;

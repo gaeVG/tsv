@@ -15,6 +15,7 @@ class User extends Player implements IUser {
   activities? : UserActivityType[];
   currentBucket?: number;
   currentZone?: string;
+  isReady: boolean;
 
   constructor(user: IUser) {
     super(GetGameName() === 'fxserver' ? parseInt(user.source) : -1);
@@ -35,6 +36,7 @@ class User extends Player implements IUser {
 
     this.group = user.group;
     this.characterDescription = user.characterDescription;
+    this.isReady = false;
 
     global.ExecuteCommand(`add_principal identifier.${process.env.IDENTIFIER_TYPE}:${this.identifiers[process.env.IDENTIFIER_TYPE]} group.${this.group}`);
   }
