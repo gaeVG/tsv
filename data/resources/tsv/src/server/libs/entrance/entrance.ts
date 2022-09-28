@@ -1,4 +1,5 @@
 import { Prop } from '../../../core/libs';
+import { Crypto } from '../../../core/libs';
 import {
   EntranceType,
   DoorType,
@@ -8,10 +9,9 @@ import {
 } from '../../../core/declares/entrance';
 import { IUser } from '../../../core/declares/user';
 import { freezeTarget, getTargetHeading } from './function';
-import { tsv } from '../..';
 import { EntranceToogleStateError } from '../../../core/declares/entrance/errors/entranceToggleState';
 import { EntranceHeadingError } from '../../../core/declares/entrance/errors/entranceHeading';
-import { Crypto } from '../../../core/libs';
+import { tsv } from '../..';
 
 abstract class Entrance implements IEntrance {
   id: string;
@@ -73,7 +73,12 @@ abstract class Entrance implements IEntrance {
       }
     }
   }
-  unlock() {
+  /**
+   * Unlocks the entrance
+   * @param {IUser} user The user who triggers the entrance opening
+   * @returns A promise of the updated entrance state
+   */
+  async unlock(user: IUser): Promise<EntranceStateStype> {
     Array.isArray(this.target)
       ? this.target.forEach(
           (door) => (
@@ -82,6 +87,8 @@ abstract class Entrance implements IEntrance {
         )
       : global.FreezeEntityPosition((this.target as Prop).Handle, false);
     this.state = EntranceStateEnum.OPEN;
+
+    return this.state;
   }
 }
 
@@ -116,12 +123,9 @@ class Gate extends Entrance {
    */
   async lock(user: IUser): Promise<EntranceStateStype> {
     try {
-      if (
-        !(await freezeTarget(this.target as Prop, this.state !== EntranceStateEnum.CLOSE, user))
-      ) {
+      if (!(await freezeTarget(this.target as Prop, true, user))) {
         throw new EntranceToogleStateError(this);
       }
-
       return (this.state = EntranceStateEnum.CLOSE);
     } catch (error) {
       if (error instanceof Error) {
@@ -131,11 +135,13 @@ class Gate extends Entrance {
           message: error.message,
         });
       }
+
+      return (this.state = EntranceStateEnum.OPEN);
     }
   }
 
-  unlock() {
-    console.log('open');
+  async unlock(user: IUser): Promise<EntranceStateStype> {
+    return this.state;
   }
 }
 

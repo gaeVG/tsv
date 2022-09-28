@@ -4,14 +4,14 @@ import { IUser } from '../../user';
 
 interface IEntrance {
   id: string;
-  doors: DoorType | DoorType[];
-  target: Prop | Prop[];
+  doors?: DoorType | DoorType[];
+  target?: Prop | Prop[];
   distanceMax?: number;
   isRemote?: boolean;
-  state: EntranceStateStype;
+  state?: EntranceStateStype;
 
-  lock(user: IUser): Promise<EntranceStateStype>;
-  unlock(): void;
+  lock?(user: IUser): Promise<EntranceStateStype>;
+  unlock?(user: IUser): Promise<EntranceStateStype>;
 }
 
 export { IEntrance };
