@@ -60,6 +60,26 @@ class EventManager {
       )
     });
   }
+  private emitCallbackNet(emitEventCallbackNet: IEventTrigger): Promise<any> {
+    const data = emitEventCallbackNet.data || []
+    const callbackName = `${emitEventCallbackNet.name}-callback-${uuid()}`;
+
+    this.emitNet({
+      ...emitEventCallbackNet, data: [...data, callbackName]
+    });
+
+    return new Promise((resolve) => {
+      this.onNet({
+        name: callbackName,
+        module: emitEventCallbackNet.module,
+        onNet: true,
+        handler: async (_, args: unknown[]) => {
+          this.manager = this.manager.filter((event) => event.name !== callbackName);
+          resolve(args);
+        },
+      });
+    });
+  }
   private on(newEvent: IEventListener): void {
     log.location = 'on()';
     Log.safemode({
@@ -224,7 +244,7 @@ class EventManager {
       }
     }
   }
-  trigger(triggerEvent: IEventTrigger): void | Promise<any> {
+  trigger(triggerEvent: IEventTrigger): Promise<any> {
     log.location = 'trigger()';
 
     if (triggerEvent.onNet) {
@@ -238,25 +258,9 @@ class EventManager {
       }
 
       if (triggerEvent.isCallback) {
-        const data = triggerEvent.data || []
-        const callbackName = `${triggerEvent.name}-callback-${uuid()}`;
-
-        this.emitNet({
-          ...triggerEvent, data: [...data, callbackName]
-        });
-
-        return new Promise((resolve) => {
-          this.onNet({
-            name: callbackName,
-            module: triggerEvent.module,
-            onNet: true,
-            handler: async (_, args: unknown[]) => {
-              this.manager = this.manager.filter((event) => event.name !== callbackName);
-              resolve(args);
-            },
-          });
-        });
+        return this.emitCallbackNet(triggerEvent);
       }
+
       this.emitNet(triggerEvent);
     } else {
       this.emit(triggerEvent);
