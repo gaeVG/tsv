@@ -53,7 +53,7 @@ abstract class Zone implements IZone {
     // this.bucket = zone.bucket && zone.bucket;
     this.users = [];
     this.onEnter = (user: User) => {
-      this.bucket !== undefined && this.bucket.addUser(user);
+      //this.bucket !== undefined && this.bucket.addUser(user);
       this.addOneUser(user);
 
       tsv.events.trigger({
@@ -63,14 +63,11 @@ abstract class Zone implements IZone {
         target: user.source,
         data: [this],
       });
-
       zone.onEnter && zone.onEnter(user);
     };
 
     this.onLeave = (user: User) => {
-      console.log('on quitte');
-      this.bucket && this.bucket.removeUser(user);
-
+      //this.bucket && this.bucket.removeUser(user);
       this.removeOneUser(user);
 
       tsv.events.trigger({
@@ -80,7 +77,6 @@ abstract class Zone implements IZone {
         target: user.source,
         data: [this],
       });
-
       zone.onLeave && zone.onLeave(user);
     };
   }
@@ -101,9 +97,7 @@ abstract class Zone implements IZone {
     if (users.length === this.users.length) {
       return false;
     }
-    console.log(this.users.length);
     this.users = users;
-    console.log(this.users.length);
 
     return true;
   }
@@ -111,39 +105,11 @@ abstract class Zone implements IZone {
 
 class PolyZone extends Zone {
   polygon: Vector3[];
+  maxHeight: number;
   gridArea: number;
   gridCellWidth: number;
   gridCellHeigth: number;
 
-  private calculatePolygon() {
-    if (
-      this.min === undefined ||
-      this.max === undefined ||
-      this.size === undefined ||
-      this.center === undefined
-    ) {
-      let minX = Number.MAX_SAFE_INTEGER,
-        minY = Number.MAX_SAFE_INTEGER,
-        minZ = Number.MAX_SAFE_INTEGER;
-      let maxX = Number.MIN_SAFE_INTEGER,
-        maxY = Number.MIN_SAFE_INTEGER,
-        maxZ = Number.MIN_SAFE_INTEGER;
-
-      this.polygon.forEach((point) => {
-        minX = Math.min(minX, point.x);
-        minY = Math.min(minY, point.y);
-        minZ = Math.min(minZ, point.z);
-        maxX = Math.max(maxX, point.x);
-        maxY = Math.max(maxY, point.y);
-        maxZ = Math.max(maxZ, point.z);
-      });
-
-      this.min = new Vector3(minX, minY, minZ);
-      this.max = new Vector3(maxX, maxY, maxZ);
-      //this.size = this.max.subtract(this.min).n;
-      this.center = this.max.add(this.min).divide(2);
-    }
-  }
   private innerLoop(p0: Vector3, p1: Vector3, p2: Vector3, wn: number): number {
     if (p0.y <= p2.y) {
       if (p1.y > p2.y) {
@@ -164,14 +130,36 @@ class PolyZone extends Zone {
   private isLeft(p0: Vector3, p1: Vector3, p2: Vector3): number {
     return (p1.x - p0.x) * (p2.y - p0.y) - (p2.x - p0.x) * (p1.y - p0.y);
   }
+  private calcultePolygon(): Vector3[] {
+    let minX = Number.MAX_SAFE_INTEGER,
+      minY = Number.MAX_SAFE_INTEGER,
+      minZ = Number.MAX_SAFE_INTEGER;
+
+    let maxX = Number.MIN_SAFE_INTEGER,
+      maxY = Number.MIN_SAFE_INTEGER;
+
+    this.polygon.forEach((point) => {
+      minX = Math.min(minX, point.x);
+      minY = Math.min(minY, point.y);
+      minZ = Math.min(minZ, point.z);
+      maxX = Math.max(maxX, point.x);
+      maxY = Math.max(maxY, point.y);
+    });
+
+    return [new Vector3(minX, minY, minZ), new Vector3(maxX, maxY, this.maxHeight)];
+  }
 
   constructor(zone: PolyZoneType) {
     super({
       ...zone,
+      name: zone.name,
       points: zone.polygon,
     });
+
     this.polygon = zone.polygon;
-    this.calculatePolygon();
+    this.maxHeight = zone.height;
+    [this.min, this.max] = this.calcultePolygon();
+    this.center = this.max.add(this.min).divide(2);
   }
 
   isInside(coords: Vector3): boolean {
@@ -180,21 +168,23 @@ class PolyZone extends Zone {
       coords.x < this.min.x ||
       coords.x > this.max.x ||
       coords.y < this.min.y ||
-      coords.y > this.max.y
+      coords.y > this.max.y ||
+      coords.z < this.min.z ||
+      coords.z > this.max.z
     ) {
       return false;
     }
     // Checks if point is within the polygon's height bounds
-    if ((this.min.z && coords.z < this.min.z) || (this.max.z && coords.z > this.max.z)) {
+    if (coords.z < this.min.z || coords.z > this.max.z) {
       return false;
     }
 
     let wn = 0;
-
-    for (let i = 0; i < this.polygon.length - 1; i++) {
+    for (let i = 0; i < this.polygon.length - 2; i++) {
       wn = this.innerLoop(this.polygon[i], this.polygon[i + 1], coords, wn);
     }
     wn = this.innerLoop(this.polygon[this.polygon.length - 1], this.polygon[0], coords, wn);
+
     return wn !== 0;
   }
 }

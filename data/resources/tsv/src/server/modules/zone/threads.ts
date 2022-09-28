@@ -12,25 +12,28 @@ const log: LogData = {
 const zoneThreads: ThreadModule[] = [
   {
     name: 'zoneTick',
-    timer: 1000,
+    timer: 500,
     callback: () => {
       log.location = 'zoneTick()';
-
       try {
-        tsv.zones.All.forEach((zone) =>
-          tsv.users.All.forEach((user) => {
-            zone.isInside(user.Ped.Position)
-              ? !zone.users.includes(user) && zone.onEnter(user)
-              : zone.users.includes(user) && zone.onLeave(user);
-          }),
-        );
+        tsv.users.All.forEach((user) => {
+          user.isReady &&
+            tsv.zones.All.forEach(async (zone) => {
+              if (zone.isInside(user.Ped.Position)) {
+                if (!zone.users.includes(user)) {
+                  zone.onEnter(user);
+                }
+              } else if (zone.users.includes(user)) {
+                zone.onLeave(user);
+              }
+            });
+        });
       } catch (error) {
         tsv.log.error({
           ...log,
           message: error instanceof Error ? error.message : error,
         });
       }
-
       return true;
     },
   },
