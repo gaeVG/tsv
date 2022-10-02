@@ -13,7 +13,6 @@ class Inventory implements IInventory {
   items: IItem[];
 
   constructor(inventory: InventoryType) {
-    console.log('inventory constructor')
     this.container = inventory.container;
     this.items = inventory.items.map((item) => new Item(item));
   }
@@ -50,52 +49,53 @@ class Inventory implements IInventory {
 
     return true;
   }
-  updateItem(itemUpdate: IItem): IItem | Error {
+  updateItem(itemUpdate: IItem): Error {
     log.location = 'updateItem()';
 
     try {
-      let itemFound: IItem;
+      let itemFound = false;
 
       this.items = this.items.reduce((inventoryItems, currentItem) => {
         if (currentItem.name === itemUpdate.name) {
           if (itemUpdate.metadata !== undefined) {
             if (JSON.stringify(currentItem.metadata) === JSON.stringify(itemUpdate.metadata)) {
-              currentItem.count = itemFound.count;
+              Object.entries(itemUpdate).forEach(([key, value]) => {
+                currentItem[key] = value;
+              });
             }
           } else {
-            currentItem.count = itemFound.count;
+            Object.entries(itemUpdate).forEach(([key, value]) => {
+              currentItem[key] = value;
+            });
           }
 
-          itemFound = currentItem;
+          itemFound = true;
         }
 
         inventoryItems.push(currentItem);
         return inventoryItems;
       }, [] as Item[]);
 
-      if (itemFound === undefined) {
+      if (!itemFound) {
         throw new InventoryItemNotFoundError(this.container, itemUpdate)
       }
-
-      return itemFound;
     } catch (error) {
+      console.log('une erreur est survenue')
       if (error instanceof InventoryItemNotFoundError) {
         return error
       }
     }
   }
-  // getItem(item: ItemType) : IItem[] {
-  //   return this.items.filter(i => {
-  //     if (i.name === item.name) {
-  //       if (item.metadata) {
-  //         return JSON.stringify(i.metadata) === JSON.stringify(item.metadata);
-  //       }
-
-  //       return true;
-  //     }
-
-  //   });
-  //}
+  getItem(item: ItemType) : IItem {
+    return this.items.find(i => {
+      if (i.name === item.name) {
+        if (item.metadata) {
+          return JSON.stringify(i.metadata) === JSON.stringify(item.metadata);
+        }
+        return true;
+      }
+    });
+  }
   // removeItem(item) {
   //     this.items = this.items.filter(i => i !== item);
   // }

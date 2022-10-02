@@ -6,8 +6,12 @@ class Weapon extends UsableItem {
     super(item);
   }
 
-  use() {
-    console.log(`J'équipe mon ${this.name}`);
+  async use(): Promise<Error> {
+    try {
+      console.log(`J'équipe mon ${this.name}`);
+    } catch (error) {
+      return error;
+    }
   }
 }
 

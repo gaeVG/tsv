@@ -1,4 +1,5 @@
-import { ItemType } from '../../../../core/declares/item';
+import { ItemType, IItem, ItemShouldNoLongerExistError } from '../../../../core/declares/item';
+import { InventoryContainerType, InventoryFromType } from '../../../../core/declares/inventory';
 import { UsableItem } from './usableItem';
 import { Player, World, Vector3, Bone, Model } from '../../../../core/libs';
 import { Wait } from '../../../../core/libs';
@@ -17,12 +18,21 @@ class Drink extends UsableItem {
     super(item);
   }
 
-  use() {
+  async use(container: InventoryFromType): Promise<IItem | Error> {
+    log.location = 'use(drink)';
+
     try {
+      const drink = await this.consumeItem(container);
+      if (drink.name === 'ItemShouldNoLongerExistError') {
+        throw new ItemShouldNoLongerExistError(this);
+      }
+
+      tsv.log.safemode({ ...log, message: `Consommation de la boisson ${this.name}` });
+      log.isChild = true;
+
       const player = new Player();
 
-      // TODO: Create a props to attach to the player to make him eat
-      // Does not work at the moment
+      // TODO: Create a props to attach to the player to make him drink
       World.createProp(
         new Model(this.props),
         player.Ped.Position.add(new Vector3(0, 0, 0.2)),
@@ -54,11 +64,10 @@ class Drink extends UsableItem {
           });
         });
       });
+
+      return drink;
     } catch (error) {
-      tsv.log.error({
-        ...log,
-        message: error.message,
-      });
+      return error;
     }
   }
 }

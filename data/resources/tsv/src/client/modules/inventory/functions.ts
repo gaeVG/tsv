@@ -9,7 +9,7 @@ import {
   UnknownItemError,
   ItemDrinkEnum,
 } from '../../../core/declares/item';
-import { IInventory } from '../../../core/declares/inventory';
+import { IInventory, InventoryFromType } from '../../../core/declares/inventory';
 import { Player, Ped } from '../../../core/libs';
 import { Wait } from '../../../core/libs';
 import {} from '../../../core/declares/item/enum/clothe';
@@ -47,43 +47,45 @@ async function openInventory() {
   let playerOverlay: Ped;
   global.SetNuiFocus(true, true);
 
-  const playerInventories = tsv.events.trigger({
+  const playerInventories = await (tsv.events.trigger({
     name: 'getAllInventories',
     module: 'inventory',
     isCallback: true,
     onNet: true,
-  }) as Promise<IInventory[]>;
+  }) as Promise<IInventory[]>);
 
-  playerInventories.then((inventories) => {
-    tsv.nui.trigger({ name: 'open-player-inventory', module: 'inventory', payload: inventories });
+  tsv.nui.trigger({
+    name: 'open-player-inventory',
+    module: 'inventory',
+    payload: playerInventories,
+  });
 
-    tsv.nui.listen({
-      name: 'close-inventory',
-      module: 'inventory',
-      removeAfterTriggered: true,
-      handler: () => {
-        global.SetNuiFocus(false, false);
-      },
-    });
-    tsv.nui.listen({
-      name: 'display-character',
-      module: moduleConfig.name,
-      handler: async () => {
-        global.SetFrontendActive(true);
-        global.ActivateFrontendMenu('FE_MENU_VERSION_EMPTY', false, -1);
-        await Wait(100);
-        global.SetMouseCursorVisibleInMenus(false);
-        playerOverlay = await createPedOverlay(player);
-      },
-    });
-    tsv.nui.listen({
-      name: 'hide-character',
-      module: moduleConfig.name,
-      handler: () => {
-        playerOverlay.delete();
-        global.SetFrontendActive(false);
-      },
-    });
+  tsv.nui.listen({
+    name: 'close-inventory',
+    module: 'inventory',
+    removeAfterTriggered: true,
+    handler: () => {
+      global.SetNuiFocus(false, false);
+    },
+  });
+  tsv.nui.listen({
+    name: 'display-character',
+    module: moduleConfig.name,
+    handler: async () => {
+      global.SetFrontendActive(true);
+      global.ActivateFrontendMenu('FE_MENU_VERSION_EMPTY', false, -1);
+      await Wait(100);
+      global.SetMouseCursorVisibleInMenus(false);
+      playerOverlay = await createPedOverlay(player);
+    },
+  });
+  tsv.nui.listen({
+    name: 'hide-character',
+    module: moduleConfig.name,
+    handler: () => {
+      playerOverlay.delete();
+      global.SetFrontendActive(false);
+    },
   });
 }
 
@@ -124,17 +126,13 @@ function getItemClass(item: IItem): IUsableItem | Error {
     }
   }
 }
-function useItem([container, usingItem]: [InventoryContainerType, IItem]): void {
+async function useItem([container, usingItem]: [InventoryFromType, IItem]): Promise<IItem | Error> {
   log.location = 'useItem()';
 
-  try {
-    const item = getItemClass(usingItem) as IUsableItem;
-    item.getAllowToUse((canUseItem) => canUseItem && item.use(), container);
-  } catch (error) {
-    if (error instanceof Error) {
-      console.error(error);
-    }
-  }
+  const item = getItemClass(usingItem) as IUsableItem;
+  if (item instanceof Error) return item;
+  tsv.log.debug({ ...log, message: `Using item ${item.name}` });
+  return await item.use(container);
 }
 
 export { openInventory, useItem };

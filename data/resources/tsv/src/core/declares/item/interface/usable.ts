@@ -1,5 +1,5 @@
-import { InventoryContainerType } from '../../inventory';
-import { ItemCategoryType } from '../../item';
+import { InventoryFromType } from '../../inventory';
+import { ItemCategoryType, IItem } from '..';
 
 interface IUsableItem {
   name: string;
@@ -7,8 +7,9 @@ interface IUsableItem {
   category: ItemCategoryType | undefined;
   count: number;
   metadata?: unknown;
-  use(...args: Array<unknown>): void;
-  getAllowToUse(useItem: (canUseItem: boolean) => void, container: InventoryContainerType): void;
+  canUseItem(container: InventoryFromType): Promise<boolean | Error>;
+  use(container: InventoryFromType): Promise<IItem | Error>;
+  consumeItem(container: InventoryFromType): Promise<IItem | Error>;
 }
 
 export { IUsableItem };

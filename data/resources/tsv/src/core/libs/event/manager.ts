@@ -156,7 +156,14 @@ class EventManager {
 
       const data = eventHashData !== null ? AES.decrypt(eventHashData) : undefined;
       const dataParsed: unknown[] = data !== undefined ? JSON.parse(data) : [];
-      const eventHandler = event.addEventHandler(eventSource, ...dataParsed);
+      const args = event.isCallback
+        ? dataParsed.length > 2
+          ? dataParsed.slice(0, -1) 
+          : dataParsed.length === 1
+            ? [] 
+            : [dataParsed[0]]
+        : dataParsed;
+      const eventHandler = event.addEventHandler(eventSource, ...args);
 
       if (event.isCallback) {
         this.emitNet({

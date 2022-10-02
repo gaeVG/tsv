@@ -10,4 +10,4 @@ export {
   ItemClotheLegsEnum,
 } from './enum';
 export { ItemType, ItemCategoryType } from './types';
-export { UnknownItemError } from './errors';
+export { UnknownItemError, ItemShouldNoLongerExistError } from './errors';

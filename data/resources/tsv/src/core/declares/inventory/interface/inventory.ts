@@ -6,6 +6,7 @@ interface IInventory {
   items: IItem[];
 
   addItem(item: ItemType): boolean;
+  getItem(item: ItemType): IItem;
   updateItem(item: IItem): IItem | Error;
 }
 

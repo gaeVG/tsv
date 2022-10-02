@@ -2,6 +2,8 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
+import { MantineProvider } from '@mantine/core';
+import { NotificationsProvider } from '@mantine/notifications';
 // COMPONENTS
 import App from './app';
 // STYLES
@@ -14,6 +16,10 @@ const container = document.getElementById('root');
 const root = createRoot(container!);
 root.render(
   <Provider store={appStore}>
-    <App />
+    <MantineProvider withGlobalStyles>
+      <NotificationsProvider>
+        <App />
+      </NotificationsProvider>
+    </MantineProvider>
   </Provider>
 );

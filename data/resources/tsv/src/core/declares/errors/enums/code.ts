@@ -7,6 +7,9 @@ enum ErrorCodeEnum {
   DoorsMustBeTwoError = 0x446f6f72734d7,
   EntranceToggleStateError = 0x456e7472616e7,
   EntranceHeadingError = 0x456e7472616e8,
+  // Items
+  UnknownItemError = 0x556e6b6e6f774,
+  ItemShouldNoLongerExistError = 0x496e76656e746,
 }
 
 export { ErrorCodeEnum };

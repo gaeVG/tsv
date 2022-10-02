@@ -20,9 +20,17 @@ class Key extends UsableItem {
     this.metadata = item.metadata as DoorType | DoorType[];
   }
 
-  use() {
+  async use() {
+    log.location = 'use(key)';
+
     try {
-      const toggleEntrance = tsv.events.trigger({
+      tsv.log.error({
+        ...log,
+        message: 'TTrigger the server callback event to attempt to open a entrance',
+      });
+      log.isChild = true;
+      console.log('envoi trigger');
+      const [isEntranceStateChange, entranceState] = await (tsv.events.trigger({
         name: 'toggleEntrance',
         module: 'entrance',
         onNet: true,
@@ -44,19 +52,15 @@ class Key extends UsableItem {
                 false,
               ),
             ],
-      }) as Promise<[boolean, EntranceStateStype]>;
+      }) as Promise<[boolean, EntranceStateStype]>);
 
-      toggleEntrance.then(([isEntranceStateChange, entranceState]) => {
-        if (isEntranceStateChange) {
-          console.log(entranceState);
-        }
-      });
+      console.log(isEntranceStateChange, entranceState);
+
+      if (isEntranceStateChange) {
+        console.log(entranceState);
+      }
     } catch (error) {
-      console.log(error.message);
-      tsv.log.error({
-        ...log,
-        message: error.message,
-      });
+      return error;
     }
   }
 }

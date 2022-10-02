@@ -1,28 +1,34 @@
 import { Item } from '../../../../core/libs/item';
 import { tsv } from '../../..';
 import { IItem, ItemType, IUsableItem } from '../../../../core/declares/item';
-import { InventoryContainerType } from '../../../../core/declares/inventory';
+import { InventoryContainerType, InventoryFromType } from '../../../../core/declares/inventory';
 
 abstract class UsableItem extends Item implements IUsableItem {
   constructor(item: ItemType) {
     super(item);
   }
 
-  getAllowToUse(useItem: (canUseItem: boolean) => void, container: InventoryContainerType) {
-    (
-      tsv.events.trigger({
-        name: 'useItem',
-        module: 'inventory',
-        onNet: true,
-        isCallback: true,
-        data: [container, this],
-      }) as Promise<IItem | Error>
-    ).then((item: IItem | Error) => {
-      useItem(!(item instanceof Error));
-    });
+  async consumeItem(container: InventoryFromType): Promise<IItem | Error> {
+    return tsv.events.trigger({
+      name: 'consumeItem',
+      module: 'inventory',
+      onNet: true,
+      isCallback: true,
+      data: [this, container],
+    }) as Promise<IItem | Error>;
   }
 
-  abstract use(): void;
+  async canUseItem(from: InventoryFromType): Promise<boolean | Error> {
+    return tsv.events.trigger({
+      name: 'canUseItem',
+      module: 'inventory',
+      onNet: true,
+      isCallback: true,
+      data: [this, from],
+    }) as Promise<boolean | Error>;
+  }
+
+  abstract use(container: InventoryFromType): Promise<IItem | Error>;
 }
 
 export { UsableItem };

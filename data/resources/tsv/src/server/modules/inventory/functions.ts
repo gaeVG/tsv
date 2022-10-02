@@ -1,8 +1,8 @@
 import { LogData, EnumLogContainer } from '../../../core/declares/log';
-import { InventoryContainerType } from '../../../core/declares/inventory';
+import { InventoryContainerType, InventoryFromType } from '../../../core/declares/inventory';
 import { IInventory } from '../../../core/declares/inventory';
 import { IUser, UserNotFoundError } from '../../../core/declares/user';
-import { IItem } from '../../../core/declares/item';
+import { IItem, ItemShouldNoLongerExistError } from '../../../core/declares/item';
 import moduleConfig from './config';
 import { tsv } from '../..';
 
@@ -14,9 +14,7 @@ const log: LogData = {
 
 function getAllInventories(source: string, target?: string): IInventory[] | undefined {
   try {
-    console.log('source', source);
     let tspUser: IUser;
-
     if (target !== undefined) {
       tspUser = tsv.users.getOnebyId(target) as IUser;
     } else {
@@ -52,18 +50,20 @@ function getInventory(
     });
   }
 }
-
 function getItemCount(
   source: string,
-  container: InventoryContainerType,
+  from: InventoryFromType,
   inventoryItem: IItem,
 ): number | Error {
   try {
-    const user = tsv.users.getOneBySource(source) as IUser;
+    let inventory: IInventory;
+    if ((from.owner as unknown) instanceof Number) {
+      const target = tsv.users.getOneBySource(from.owner.toString()) as IUser;
 
-    const inventory = user.inventories.Manager.find(
-      (inventory) => inventory.container === container,
-    );
+      inventory = getInventory(target.source, from.container);
+    } else if (from.owner === 'player') {
+      inventory = getInventory(source, from.container);
+    }
 
     return inventory.items.find((item) => item.name === inventoryItem.name).count;
   } catch (error) {
@@ -79,33 +79,46 @@ function getItemCount(
     return new Error('Item not found');
   }
 }
-function useItem(
-  source: string,
-  container: InventoryContainerType,
-  inventoryItem: IItem,
-): IItem | Error {
+function consumeItem(source: string, inventoryItem: IItem, from: InventoryFromType): IItem | Error {
   log.location = 'useItem()';
-
   try {
-    const user = tsv.users.getOneBySource(source) as IUser;
-    const userInventory = user.inventories.Manager.find(
-      (inventory) => inventory.container === container,
-    );
-    const itemFound = userInventory.updateItem({
-      ...inventoryItem,
-      count: inventoryItem.count - 1,
-    });
+    tsv.log.debug({ ...log, message: `Consuming item ${inventoryItem.name}` });
+    const itemCount = getItemCount(source, from, inventoryItem);
+    if (itemCount instanceof Error) return itemCount;
 
-    user.inventories.Manager = [userInventory];
-    tsv.users.updateOne(user);
+    if (itemCount === 0) {
+      throw new ItemShouldNoLongerExistError(inventoryItem);
+    }
 
-    return itemFound;
+    const target = tsv.users.getOneBySource(source) as IUser;
+    const targetInventory = getInventory(source, from.container, target.id) as IInventory;
+    const targetItem = targetInventory.getItem(inventoryItem);
+
+    const error = targetInventory.updateItem({ ...targetItem, count: targetItem.count - 1 });
+
+    if (error instanceof Error) {
+      return error;
+    }
+
+    target.inventories.Manager = [targetInventory];
+    tsv.users.updateOne(target);
+    console.log(targetInventory.getItem(inventoryItem));
+    return targetInventory.getItem(inventoryItem);
   } catch (error) {
     tsv.log.error({
       ...log,
       message: error instanceof Error ? error.message : error,
     });
+
+    return error;
+  }
+}
+function canUseItem(source: string, item: IItem, container: InventoryFromType): boolean | Error {
+  try {
+    return getItemCount(source, container, item) > 0;
+  } catch (error) {
+    return error;
   }
 }
 
-export { getInventory, getAllInventories, getItemCount, useItem };
+export { getInventory, getAllInventories, getItemCount, canUseItem, consumeItem };
