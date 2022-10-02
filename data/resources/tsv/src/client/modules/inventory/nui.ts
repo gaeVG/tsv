@@ -17,6 +17,13 @@ const inventoryNui: NUIListener[] = [
     module: moduleConfig.name,
     handler: useItem,
   },
+  {
+    name: 'hideInventory',
+    module: moduleConfig.name,
+    handler: () => {
+      global.SetNuiFocus(false, false);
+    },
+  },
 ];
 
 export { inventoryNui };

@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { GiSpiderMask, GiHand, GiSchoolBag, GiBilledCap, GiArmoredPants, GiFootTrip, GiTShirt, Gi3DGlasses, GiSleevelessJacket } from 'react-icons/gi';
 import { PlayerComponentType } from '../../../../core/declares/inventory';
+import { fetchNui } from '../../../hooks';
 
 function PlayerComponent({ component } : { component: PlayerComponentType }) {
 
@@ -31,20 +32,14 @@ function PlayerComponent({ component } : { component: PlayerComponentType }) {
 
   const closeInventory = () => {
     dispatch({
-      type: 'SET_DISPLAY_MODULE',
-      display: false,
+      type: 'SET_DISPLAY',
+      display: { module: false,}
     });
 
-    fetch('https://tsv/listener', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name: 'close-inventory',
-        module: 'inventory'
-      })
-    })
+    fetchNui({
+      name: 'closeInventory',
+      module: 'inventory',
+    });
   };
 
   return (

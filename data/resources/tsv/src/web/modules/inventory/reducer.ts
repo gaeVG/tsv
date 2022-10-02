@@ -1,3 +1,4 @@
+import { fetchNui } from '../../hooks';
 import { InventoryType } from '../../../core/declares/inventory';
 import { ItemType } from '../../../core/declares/item';
 
@@ -67,8 +68,6 @@ const inventoryReducer = (
 ) => {
   switch (action.type) {
     case 'SET_PLAYER_INVENTORIES':
-      console.log('SET_PLAYER_INVENTORIES');
-      console.log(action.playerInventories);
       return {
         ...state,
         playerInventories: action.playerInventories,
@@ -80,25 +79,21 @@ const inventoryReducer = (
       };
     case 'SET_DISPLAY':
       if (action.display.playerComponents !== undefined) {
-        if (action.display.playerComponents === false) {
-          fetch('https://tsv/listener', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              name: 'hide-character',
+        action.display.playerComponents
+          ? fetchNui({
+              name: 'hideCharacter',
               module: 'inventory',
-            }),
-          });
-        } else {
-          fetch('https://tsv/listener', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              name: 'display-character',
+            })
+          : fetchNui({
+              name: 'displayCharacter',
               module: 'inventory',
-            }),
+            });
+      } else if (action.display.module !== undefined) {
+        !action.display.module &&
+          fetchNui({
+            name: 'hideInventory',
+            module: 'inventory',
           });
-        }
       }
       return {
         ...state,
