@@ -55,7 +55,14 @@ class Food extends UsableItem {
         49,
       );
       await Wait(3000);
-      // TODO: Update player status hunger
+      // Update player status hunger
+      tsv.events.trigger({
+        name: 'statusUpdate',
+        module: 'status',
+        onNet: true,
+        isCallback: true,
+        data: [this.effect],
+      });
       props.delete();
       player.Ped.Task.clearSecondary();
 
