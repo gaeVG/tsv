@@ -1,4 +1,4 @@
-import { ItemCategoryType } from '../types';
+import { ItemCategoryType, ItemStatusEffectType } from '..';
 
 interface IItem {
   name: string;
@@ -8,6 +8,7 @@ interface IItem {
   metadata?: unknown;
   weight?: number;
   props?: string;
+  effect?: ItemStatusEffectType;
 }
 
 export { IItem };

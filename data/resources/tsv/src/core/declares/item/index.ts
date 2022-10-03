@@ -9,5 +9,5 @@ export {
   ItemClotheTorsoEnum,
   ItemClotheLegsEnum,
 } from './enum';
-export { ItemType, ItemCategoryType } from './types';
+export { ItemType, ItemCategoryType, ItemStatusEffectType } from './types';
 export { UnknownItemError, ItemShouldNoLongerExistError } from './errors';
