@@ -1,5 +1,11 @@
 import { Player } from '..';
-import { CharacterDescription, IUser, UserGroup, UserIdentifier, UserIdentifierEnum } from '../../declares/user';
+import {
+  CharacterDescription,
+  IUser,
+  UserGroup,
+  UserIdentifier,
+  UserIdentifierEnum,
+} from '../../declares/user';
 import { StatusManager } from '../status';
 import { InventoryManager } from '../inventory';
 import { UserActivityType } from '../../declares/activity';
@@ -12,7 +18,7 @@ class User extends Player implements IUser {
   characterDescription: CharacterDescription;
   status?: StatusManager;
   inventories?: InventoryManager;
-  activities? : UserActivityType[];
+  activities?: UserActivityType[];
   currentBucket?: number;
   currentZone?: string;
   isReady: boolean;
@@ -21,7 +27,7 @@ class User extends Player implements IUser {
     super(GetGameName() === 'fxserver' ? parseInt(user.source) : -1);
     this.id = user.id;
     this.source = user.source;
-  
+
     this.identifiers = getPlayerIdentifiers(this.source).reduce((identifiers, identifier) => {
       if (identifier.startsWith(UserIdentifierEnum.STEAM)) {
         identifiers.steam = identifier;
@@ -38,7 +44,11 @@ class User extends Player implements IUser {
     this.characterDescription = user.characterDescription;
     this.isReady = false;
 
-    global.ExecuteCommand(`add_principal identifier.${process.env.IDENTIFIER_TYPE}:${this.identifiers[process.env.IDENTIFIER_TYPE]} group.${this.group}`);
+    global.ExecuteCommand(
+      `add_principal identifier.${process.env.IDENTIFIER_TYPE}:${
+        this.identifiers[process.env.IDENTIFIER_TYPE]
+      } group.${this.group}`,
+    );
   }
 
   isAdmin(): boolean {

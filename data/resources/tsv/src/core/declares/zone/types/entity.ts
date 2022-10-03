@@ -1,5 +1,4 @@
 import { Entity } from '../../../libs/models/Entity';
-import { Vector3 } from '../../../libs/utils/Vector3';
 import { Color } from '../../../libs/utils/Color';
 import { User } from '../../../libs/user';
 

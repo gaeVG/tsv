@@ -34,7 +34,7 @@ const server = {
     new DotEnv(),
   ],
   optimization: {
-    minimize: process.env.NODE_ENV === 'production' ? true : false,  
+    minimize: process.env.NODE_ENV === 'production' ? true : false,
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],

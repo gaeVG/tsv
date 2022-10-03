@@ -1,6 +1,6 @@
 import { Column, Entity } from 'typeorm';
 import { InventoryType, InventoryContainerType } from '../../../../core/declares/inventory';
-import { IItem, ItemType } from '../../../../core/declares/item';
+import { ItemType } from '../../../../core/declares/item';
 
 @Entity()
 class Inventories {

@@ -21,7 +21,7 @@ function Menu() {
       currentMenu: menu
     })
   })
-  useNuiEvent('closeMenu', (menu: IMenu) => {
+  useNuiEvent('closeMenu', () => {
     dispatch({ type: 'CLOSE_CURRENT_MENU' })
   })
   useNuiEvent('updateMenu', (menu: IMenu) => {

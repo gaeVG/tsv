@@ -1,4 +1,4 @@
-import { Model, Vector3, World, Prop } from '../../../../core/libs';
+import { Model, Vector3, World } from '../../../../core/libs';
 import { ItemType } from '../../../../core/declares/item';
 import { EnumLogContainer, LogData } from '../../../../core/declares/log';
 import {

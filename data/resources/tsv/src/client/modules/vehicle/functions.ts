@@ -3,7 +3,6 @@ import { tsv } from '../..';
 import { LogData } from '../../../core/declares/log';
 import moduleConfig from './config';
 
-let zone: string;
 let streetName1: number, streetName2: number;
 let streetHashName1: string, streetHashName2: string;
 let previousHashName1: string, previousHashName2: string;
@@ -15,10 +14,15 @@ const log: LogData = {
 };
 
 async function setDisplayRadar() {
+  log.location = 'setDisplayRadar()';
+  tsv.log.safemode({
+    ...log,
+    message: 'Setting radar display',
+  });
+
   DisplayRadar(true);
   const minimap = new Scaleform('minimap');
   await minimap.load();
-  const blipNorth = GetNorthRadarBlip();
   SetMinimapComponentPosition('minimap', 'L', 'B', -0.0045, -0.022, 0.15, 0.2);
   SetMinimapComponentPosition('minimap_mask', 'L', 'B', 0.0, 0.032, 0.101, 0.2);
   SetMinimapComponentPosition('minimap_blur', 'L', 'B', -0.009, -0.008, 0.275, 0.27);

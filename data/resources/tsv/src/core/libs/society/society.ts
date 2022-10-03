@@ -21,9 +21,10 @@ class Society {
     this.building = society.building;
     this.activities = !society.isCompagny && new ActivitiesManager(society.activities);
     this.isCompagny = society.isCompagny ? society.isCompagny : false;
-    this.societies = this.isCompagny && society.societies
-      ? society.societies.map((compagnySociety) => new Society(compagnySociety))
-      : undefined;
+    this.societies =
+      this.isCompagny && society.societies
+        ? society.societies.map((compagnySociety) => new Society(compagnySociety))
+        : undefined;
   }
 }
 
@@ -32,7 +33,7 @@ class Compagny extends Society {
     super({
       ...compagny,
       isCompagny: true,
-      societies: compagny.societies
+      societies: compagny.societies,
     });
   }
 }

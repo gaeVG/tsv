@@ -3,7 +3,6 @@ import React from 'react'
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 // DECLARES
 import { IInventory } from '../../../core/declares/inventory';
-import { KeyBoardEnum } from '../../../core/declares/nui';
 // STORES
 import { AppState } from '../../stores/store';
 // VIEWS
@@ -11,9 +10,6 @@ import { InventoryContainer, PlayerComponents, PlayerItemShortcuts } from './vie
 // HOOKS
 import { useNuiEvent } from '../../hooks'
 import { useNuiKey } from '../../hooks';
-import { useWindowEvent } from '@mantine/hooks';
-import { NuiMessageData } from '../../../core/declares/nui';
-
 
 
 function getDisplayInventoryClass(inventory: AppState['inventory']) {

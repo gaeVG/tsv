@@ -85,14 +85,31 @@ abstract class Entrance implements IEntrance {
    * @returns A promise of the updated entrance state
    */
   async unlock(user: IUser): Promise<EntranceStateStype> {
-    Array.isArray(this.target)
-      ? this.target.forEach(
-          (door) => (
-            global.FreezeEntityPosition(door.Handle, false), (this.state = EntranceStateEnum.OPEN)
-          ),
-        )
-      : global.FreezeEntityPosition((this.target as Prop).Handle, false);
-    this.state = EntranceStateEnum.OPEN;
+    try {
+      if (Array.isArray(this.target)) {
+        this.target.forEach(async (door) => {
+          if (!(await freezeTarget(door, true, user))) {
+            throw new EntranceToogleStateError(this);
+          }
+        });
+      } else {
+        if (!(await freezeTarget(this.target, true, user))) {
+          throw new EntranceToogleStateError(this);
+        }
+      }
+
+      this.state = EntranceStateEnum.OPEN;
+    } catch (error) {
+      if (error instanceof Error) {
+        tsv.events.trigger({
+          name: 'sendNotification',
+          module: 'notification',
+          onNet: true,
+          target: user.source,
+          data: [error.message],
+        });
+      }
+    }
 
     return this.state;
   }

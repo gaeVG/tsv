@@ -46,7 +46,7 @@ class ModuleManager {
         if (init instanceof Error) {
           throw init;
         }
-          
+
         moduleInstance.running = true;
         this.manager.push(moduleInstance);
 
@@ -61,7 +61,7 @@ class ModuleManager {
           Log.error({
             ...log,
             message: _t('core.module.manager.loadModules.error', { errorMessage: error.message }),
-          })
+          });
         }
       }
     });

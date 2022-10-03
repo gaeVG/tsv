@@ -3,7 +3,7 @@ import { Crypto } from '../';
 import { UserGroup } from '../../declares/user';
 import { Env } from '../../libs/env';
 import _t from '../../../config/i18n';
-class Command implements ICommand{
+class Command implements ICommand {
   id: string;
   name: string;
   description: string;
@@ -24,39 +24,45 @@ class Command implements ICommand{
     this.handler = () => this.handle(command.handler);
     this.suggestions = command.suggestion;
     this.keyMapper = command.keyMapper;
-    this.key = command.key
-    console.log(this.description)
+    this.key = command.key;
+    console.log(this.description);
   }
 
   private handle = (handler: (args: unknown[]) => void) => {
-    console.log('handle command')
+    console.log('handle command');
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    global.RegisterCommand(this.name, (playerId: number, commandArgs: unknown[], _) => {
-      try {
-        Env.server(() => {
-          if (this.allowConsole === undefined && playerId === 0) {
-            throw new CommandConsoleNotAllowedError(this.name);
-          }
-        })
+    global.RegisterCommand(
+      this.name,
+      (playerId: number, commandArgs: unknown[], _) => {
+        try {
+          Env.server(() => {
+            if (this.allowConsole === undefined && playerId === 0) {
+              throw new CommandConsoleNotAllowedError(this.name);
+            }
+          });
 
-        handler(commandArgs);
-      } catch (error) {
-        if (error instanceof Error) {
-          return error;
+          handler(commandArgs);
+        } catch (error) {
+          if (error instanceof Error) {
+            return error;
+          }
         }
-      }
-    }, true);
+      },
+      true,
+    );
     if (this.keyMapper !== undefined) {
-      console.log('key mapper')
+      console.log('key mapper');
       global.RegisterKeyMapping(this.name, this.description, this.keyMapper, this.key);
     }
 
     if (this.group instanceof Array) {
-      this.group.map((group) => global.ExecuteCommand(`add_ace group.${group} command.${this.name} allow`));
+      this.group.map((group) =>
+        global.ExecuteCommand(`add_ace group.${group} command.${this.name} allow`),
+      );
     } else {
       global.ExecuteCommand(`add_ace group.${this.group} command.${this.name} allow`);
     }
-  }
+  };
 }
 
 export { Command };

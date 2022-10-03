@@ -2,7 +2,7 @@ import { DataSource } from 'typeorm';
 import { MongoConnectionOptions } from 'typeorm/driver/mongodb/MongoConnectionOptions';
 import { Log } from '../../../core/libs/log';
 import { EnumLogContainer, LogData } from '../../../core/declares/log';
-import { Invoices, Parkings, Societies, Users, Vehicles } from './entities';
+import { Invoices, Parkings, Users, Vehicles } from './entities';
 import config from '../../../config';
 
 const _t = config.locale;

@@ -1,5 +1,4 @@
 import { EnumEventTarget } from '../declares/events';
-import _t from '../../config/i18n';
 
 class EnvUnknownError extends Error {
   constructor() {

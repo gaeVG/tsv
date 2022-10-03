@@ -1,12 +1,17 @@
 import { LogData, EnumLogContainer } from '../../declares/log';
-import { InventoryType, InventoryContainerType, IInventory, InventoryItemNotFoundError } from '../../declares/inventory';
+import {
+  InventoryType,
+  InventoryContainerType,
+  IInventory,
+  InventoryItemNotFoundError,
+} from '../../declares/inventory';
 import { ItemType, IItem } from '../../declares/item';
 import { Item } from '../item/item';
 
 const log: LogData = {
   namespace: 'CoreInventory',
   container: EnumLogContainer.Class,
-}
+};
 
 class Inventory implements IInventory {
   container: InventoryContainerType;
@@ -21,7 +26,7 @@ class Inventory implements IInventory {
     return this.items;
   }
 
-  addItem(item: ItemType): boolean { 
+  addItem(item: ItemType): boolean {
     let foundItem = false;
 
     const items = this.items.reduce((inventoryItems, currentItem) => {
@@ -77,17 +82,17 @@ class Inventory implements IInventory {
       }, [] as Item[]);
 
       if (!itemFound) {
-        throw new InventoryItemNotFoundError(this.container, itemUpdate)
+        throw new InventoryItemNotFoundError(this.container, itemUpdate);
       }
     } catch (error) {
-      console.log('une erreur est survenue')
+      console.log('une erreur est survenue');
       if (error instanceof InventoryItemNotFoundError) {
-        return error
+        return error;
       }
     }
   }
-  getItem(item: ItemType) : IItem {
-    return this.items.find(i => {
+  getItem(item: ItemType): IItem {
+    return this.items.find((i) => {
       if (i.name === item.name) {
         if (item.metadata) {
           return JSON.stringify(i.metadata) === JSON.stringify(item.metadata);

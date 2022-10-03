@@ -1,4 +1,4 @@
-import { Color, Vector3, Vector2 } from '../../../libs';
+import { Color, Vector3 } from '../../../libs';
 import { User } from '../../../libs/user';
 import { IBucket } from '../../bucket';
 import { IUser } from '../../user';

@@ -1,4 +1,4 @@
-import { Column, Entity, ObjectID } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 import { Vec4 } from '../../../../core/libs/utils/Vector4';
 import { CharacterDescription, PlayerData, SkinCharacter } from '../../../../core/declares/user';
 import { InventoryType } from '../../../../core/declares/inventory';

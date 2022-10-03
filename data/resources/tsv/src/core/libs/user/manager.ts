@@ -112,14 +112,13 @@ class UserManager {
     return true;
   }
   updateOne(updateUser: IUser): IUser | Error {
-
     try {
-      let userFound : User;
+      let userFound: User;
       this.manager = this.manager.reduce((userManager, currentUser) => {
         if (currentUser.id === updateUser.id) {
           Object.entries(updateUser).forEach(([userKey, userVal]) => {
             currentUser[userKey] = userVal;
-          });          
+          });
           userManager.push(currentUser);
           userFound = currentUser;
         }
@@ -136,7 +135,7 @@ class UserManager {
         location: 'updateOne()',
         message: error instanceof Error ? error.message : (error as string),
       });
-      
+
       return error;
     }
   }

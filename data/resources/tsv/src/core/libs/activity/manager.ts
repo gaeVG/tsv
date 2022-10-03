@@ -24,12 +24,12 @@ class ActivitiesManager {
     this.manager = [];
 
     try {
-      activities.map(activities => this.addOne(activities));
+      activities.map((activities) => this.addOne(activities));
     } catch (error) {
       Log.debug({
         ...log,
         message: _t('core.user.manager.constructor.error', { error: error.message }),
-      })
+      });
     }
     Log.safemode({
       ...log,
@@ -53,9 +53,9 @@ class ActivitiesManager {
 
       const activity = new Activity(addActivity);
       this.manager.push(activity);
-      return activity
+      return activity;
     } catch (error) {
-      return error
+      return error;
     }
   }
   getOnebyId(id: string): Activity | undefined {
@@ -68,7 +68,7 @@ class ActivitiesManager {
     const manager = this.manager.filter((user) => user.id !== removeActivity.id);
 
     if (manager.length === this.manager.length) {
-      new Error(_t('core.user.manager.removeOne.userNotFound', { userId: removeActivity.id }))
+      new Error(_t('core.user.manager.removeOne.userNotFound', { userId: removeActivity.id }));
     }
 
     this.manager = manager;
@@ -77,11 +77,13 @@ class ActivitiesManager {
   updateOne(updateActivity: IActivity): [IActivity, number] | Error {
     try {
       const activityManager = this.getOnebyId(updateActivity.id);
-      if (activityManager === undefined) {  
+      if (activityManager === undefined) {
         throw Error(_t('core.user.manager.updateOne.userNotFound', { userId: updateActivity.id }));
       }
 
-      Object.entries(updateActivity).forEach(([activityKey, activityVal]) => activityManager[activityKey] = activityVal);
+      Object.entries(updateActivity).forEach(
+        ([activityKey, activityVal]) => (activityManager[activityKey] = activityVal),
+      );
 
       this.manager = this.manager.reduce((manager: Activity[], activity: Activity) => {
         if (activityManager.id === activity.id) {
@@ -92,7 +94,7 @@ class ActivitiesManager {
         return manager;
       }, []);
       return [activityManager, this.manager.length];
-    } catch(error) {
+    } catch (error) {
       return error;
     }
   }

@@ -2,7 +2,6 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { GiSpiderMask, GiHand, GiSchoolBag, GiBilledCap, GiArmoredPants, GiFootTrip, GiTShirt, Gi3DGlasses, GiSleevelessJacket } from 'react-icons/gi';
 import { PlayerComponentType } from '../../../../core/declares/inventory';
-import { fetchNui } from '../../../hooks';
 
 function PlayerComponent({ component } : { component: PlayerComponentType }) {
 

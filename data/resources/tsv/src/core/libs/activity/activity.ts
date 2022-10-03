@@ -8,8 +8,8 @@ class Activity implements IActivity {
   roles: [];
   production: ActivityProductionType;
 
-  constructor(activity: { id?: string, name: string }) {
-    this.id = activity.id ? activity.id : Crypto.uuidv4();;
+  constructor(activity: { id?: string; name: string }) {
+    this.id = activity.id ? activity.id : Crypto.uuidv4();
     this.name = activity.name;
   }
 }

@@ -11,6 +11,6 @@ class Env {
     }
     callback();
   }
-};
+}
 
 export { Env };

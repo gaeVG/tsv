@@ -79,7 +79,10 @@ class Thread {
       this.isFull = true;
       Log.warning({
         ...log,
-        message: _t('core.thread.class.tick.isFull', { threadIdentifier: this.identifier, threadFrequency: this.frequency }),
+        message: _t('core.thread.class.tick.isFull', {
+          threadIdentifier: this.identifier,
+          threadFrequency: this.frequency,
+        }),
       });
     }
 

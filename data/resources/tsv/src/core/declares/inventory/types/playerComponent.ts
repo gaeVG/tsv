@@ -7,4 +7,4 @@ type PlayerComponentType = {
   variations?: Array<{ name: string }>;
 };
 
-export { PlayerComponentType };
+export { PlayerComponentType, PlayerVariationType };

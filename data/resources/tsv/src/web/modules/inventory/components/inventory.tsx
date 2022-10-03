@@ -16,7 +16,7 @@ import { AppState } from '../../../stores/store';
 // COMPONENTS
 import { Item } from './item';
 
-function TogglePlayerComponents({ dispatch, inventoryDisplay } : { dispatch: Dispatch<AnyAction>, inventoryDisplay: AppState['inventory']['display']}) {
+function TogglePlayerComponents({ dispatch } : { dispatch: Dispatch<AnyAction>, inventoryDisplay: AppState['inventory']['display']}) {
   return (
     <div id='toggle-player-components'>
       <GiReturnArrow

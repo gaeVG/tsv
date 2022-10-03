@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector, shallowEqual, useDispatch } from "react-redux";
 import { useNuiEvent } from '../../../hooks';
 import { AppState } from '../../../stores';

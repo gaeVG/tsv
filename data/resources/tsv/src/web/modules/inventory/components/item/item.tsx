@@ -1,41 +1,34 @@
 // DEPENDENCIES
-import React, { useEffect, useState, MouseEvent } from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import React, { useEffect, useState } from 'react';
 import { useId } from '@mantine/hooks'
 import { Menu } from '@mantine/core';
 import { showNotification } from '@mantine/notifications';
 // DECLARES
-import { AppReducerActionEnum } from '../../../../../core/declares/nui';
-import { ItemCategoryEnum, ItemType, IItem, ItemShouldNoLongerExistError } from '../../../../../core/declares/item';
+import { /*ItemCategoryEnum,*/ ItemType, IItem, ItemShouldNoLongerExistError } from '../../../../../core/declares/item';
 import { InventoryFromType } from '../../../../../core/declares/inventory';
-// STORES
-import { AppState } from '../../../../stores';
 // HOOKS
 import { fetchNui } from '../../../../hooks';
 // CONFIG
 import config from '../../../../../config';
 
 
-function getItemDnDCategory (item: ItemType): string {
-  let itemDnDCategory: string
+// function getItemDnDCategory (item: ItemType): string {
+//   let itemDnDCategory: string
 
-  Object.values(ItemCategoryEnum).forEach((itemCategory) =>
-    config.items[itemCategory] && config.items[itemCategory].map((itemConfig) => {
-      if (itemConfig.name === item.name) {
-        itemDnDCategory = itemCategory
-      }
-    })
-  )
+//   Object.values(ItemCategoryEnum).forEach((itemCategory) =>
+//     config.items[itemCategory] && config.items[itemCategory].map((itemConfig) => {
+//       if (itemConfig.name === item.name) {
+//         itemDnDCategory = itemCategory
+//       }
+//     })
+//   )
 
-  return itemDnDCategory
-}
+//   return itemDnDCategory
+// }
 
 function Item({ item, from, isSelected } : { item: ItemType, from: InventoryFromType, isSelected?: boolean }) {
-  const { app } : AppState = useSelector((state: AppState) => state, shallowEqual);
   const itemID = useId();
   const itemLabel = config.locale(`module.inventory.items.${item.name}`)
-  const itemCategory = getItemDnDCategory(item)
-  const dispatch = useDispatch();
 
   const [onUseItem, setOnUseItem] = useState(false);
 
@@ -108,27 +101,29 @@ function Item({ item, from, isSelected } : { item: ItemType, from: InventoryFrom
       setOnUseItem(false);
     }
   }
-  const onMouseDown = (event: MouseEvent<HTMLDivElement>) => {
-    event.preventDefault();
+
+  // TODO: Complete Drag and Drop
+  // const onMouseDown = (event: MouseEvent<HTMLDivElement>) => {
+  //   event.preventDefault();
     
-    if (!app.currentDrag) {
-      dispatch({
-        type: AppReducerActionEnum.SET_CURRENT_DRAG,
-        currentDrag: {
-          id: itemID,
-          data: item,
-          type: itemCategory,
-          from: from
-        }
-      });
-    }
-  }
-  const onMouseUp = (event: MouseEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    if (app.currentDrag && app.currentDrag.id === itemID) {
-      dispatch({ type: AppReducerActionEnum.DROP_CURRENT_DRAG });
-    }
-  }
+  //   if (!app.currentDrag) {
+  //     dispatch({
+  //       type: AppReducerActionEnum.SET_CURRENT_DRAG,
+  //       currentDrag: {
+  //         id: itemID,
+  //         data: item,
+  //         type: itemCategory,
+  //         from: from
+  //       }
+  //     });
+  //   }
+  // }
+  // const onMouseUp = (event: MouseEvent<HTMLDivElement>) => {
+  //   event.preventDefault();
+  //   if (app.currentDrag && app.currentDrag.id === itemID) {
+  //     dispatch({ type: AppReducerActionEnum.DROP_CURRENT_DRAG });
+  //   }
+  // }
 
   useEffect(() => {
     if (onUseItem) {

@@ -31,7 +31,10 @@ class SocietiesManager {
     return this.manager;
   }
   addOne(addSociety: SocietyType): ISociety | Error {
-    if ((addSociety.id ? this.getOnebyId(addSociety.id) : this.getOneByName(addSociety.name)) !== undefined) {
+    if (
+      (addSociety.id ? this.getOnebyId(addSociety.id) : this.getOneByName(addSociety.name)) !==
+      undefined
+    ) {
       return new AddOneSocietyError(addSociety);
     }
     const society = addSociety.isCompagny ? new Compagny(addSociety) : new Society(addSociety);
@@ -43,13 +46,13 @@ class SocietiesManager {
     return this.manager.find((user) => user.id === id);
   }
   getOneByName(societyName: string): Society | undefined {
-    return this.manager.find((society) => societyName === society.name)
+    return this.manager.find((society) => societyName === society.name);
   }
   removeOne(removeSociety: ISociety): [ISociety, number] | Error {
     const manager = this.manager.filter((user) => user.id !== removeSociety.id);
 
     if (manager.length === this.manager.length) {
-      new Error(_t('core.user.manager.removeOne.userNotFound', { userId: removeSociety.id }))
+      new Error(_t('core.user.manager.removeOne.userNotFound', { userId: removeSociety.id }));
     }
 
     this.manager = manager;
@@ -57,12 +60,14 @@ class SocietiesManager {
   }
   updateOne(updateSociety: ISociety): [ISociety, number] | Error {
     try {
-      const societyManager = this.getOnebyId(updateSociety.id)
+      const societyManager = this.getOnebyId(updateSociety.id);
       if (societyManager === undefined) {
-        throw Error(_t('core.user.manager.updateOne.userNotFound', { userId: updateSociety.id }))
+        throw Error(_t('core.user.manager.updateOne.userNotFound', { userId: updateSociety.id }));
       }
-      
-      Object.entries(updateSociety).forEach(([activityKey, activityVal]) => societyManager[activityKey] = activityVal);
+
+      Object.entries(updateSociety).forEach(
+        ([activityKey, activityVal]) => (societyManager[activityKey] = activityVal),
+      );
       this.manager = this.manager.reduce((manager, activity) => {
         if (updateSociety.id === activity.id) {
           manager.push(societyManager);
@@ -73,7 +78,7 @@ class SocietiesManager {
       }, []);
 
       return [societyManager, this.manager.length];
-    } catch(error) {
+    } catch (error) {
       return error;
     }
   }

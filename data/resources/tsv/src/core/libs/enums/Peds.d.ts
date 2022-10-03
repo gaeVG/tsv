@@ -738,4 +738,4 @@ export declare enum PedType {
   u_m_y_staggrm_01 = 'u_m_y_staggrm_01',
   u_m_y_tattoo_01 = 'u_m_y_tattoo_01',
   u_m_y_zombie_01 = 'u_m_y_zombie_01',
-};
+}

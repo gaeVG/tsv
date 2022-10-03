@@ -1,17 +1,22 @@
 import { Log } from '../log';
-import { CommandAlreadyExistsError, CommandNotFoundError, CommandType, ICommand } from '../../declares/command';
-import { Command } from "./command";
+import {
+  CommandAlreadyExistsError,
+  CommandNotFoundError,
+  CommandType,
+  ICommand,
+} from '../../declares/command';
+import { Command } from './command';
 import { LogData, EnumLogContainer } from '../../declares/log';
 
 const log: LogData = {
   namespace: 'CoreCommand',
   container: EnumLogContainer.Event,
-}
+};
 
 class CommandManager {
   manager: Command[];
 
-  private addOne(addCommand: CommandType) : ICommand | Error {
+  private addOne(addCommand: CommandType): ICommand | Error {
     try {
       if (this.manager.find((c) => c.name === addCommand.name)) {
         throw new CommandAlreadyExistsError(addCommand.name);
@@ -27,7 +32,7 @@ class CommandManager {
       }
     }
   }
-  private removeOne(removeCommand: ICommand) : Error {
+  private removeOne(removeCommand: ICommand): Error {
     try {
       if (!this.manager.find((c) => c.name === removeCommand.name)) {
         throw new CommandNotFoundError(removeCommand.name);
@@ -67,10 +72,10 @@ class CommandManager {
         Log.error({
           ...log,
           message: error.message,
-        })
+        });
       }
     }
   }
 }
 
-export { CommandManager}
+export { CommandManager };

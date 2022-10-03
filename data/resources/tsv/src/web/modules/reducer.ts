@@ -1,5 +1,4 @@
 import { ModuleReducerActionType, ModuleReducerActionEnum } from '../../core/declares/nui';
-import { NUIModule } from '../../core/declares/module';
 
 const initialState: string[] = [];
 

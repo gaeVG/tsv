@@ -1,7 +1,7 @@
 import { Item } from '../../../../core/libs/item';
 import { tsv } from '../../..';
 import { IItem, ItemType, IUsableItem } from '../../../../core/declares/item';
-import { InventoryContainerType, InventoryFromType } from '../../../../core/declares/inventory';
+import { InventoryFromType } from '../../../../core/declares/inventory';
 
 abstract class UsableItem extends Item implements IUsableItem {
   constructor(item: ItemType) {

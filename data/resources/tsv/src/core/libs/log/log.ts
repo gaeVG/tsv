@@ -1,13 +1,13 @@
 // import { default as config } from '../../../config';
 import { ColorClientConsoleEnum, ColorServerConsoleEnum } from '../../declares/colors';
 import { LogData } from '../../declares/log';
-import { Env } from '../env'
+import { Env } from '../env';
 
 const formatMessage = (log: LogData): string => {
   let sepEnv = '';
   let sufEnv = '';
 
-  Env.client(() => sepEnv = log.isChild ? (log.isLast ? '\tL' : '\tI') : '\tF');
+  Env.client(() => (sepEnv = log.isChild ? (log.isLast ? '\tL' : '\tI') : '\tF'));
   Env.server(() => {
     sepEnv = log.isChild ? (log.isLast ? '\t└' : '\t├') : '\t⁞';
     sufEnv = ColorServerConsoleEnum.RESET;
@@ -31,8 +31,8 @@ class Log {
   }
   static error(log: LogData): void {
     let preEnv = '';
-    Env.client(() => preEnv = `${ColorClientConsoleEnum.RED}[ERROR] `);
-    Env.server(() => preEnv = `💥${ColorServerConsoleEnum.RED}\t`);
+    Env.client(() => (preEnv = `${ColorClientConsoleEnum.RED}[ERROR] `));
+    Env.server(() => (preEnv = `💥${ColorServerConsoleEnum.RED}\t`));
 
     (log.isModuleDisplay === undefined || log.isModuleDisplay) &&
       process.env.NODE_ENV === 'development' &&
@@ -40,8 +40,8 @@ class Log {
   }
   static warning(log: LogData): void {
     let preEnv = '';
-    Env.client(() => preEnv = `${ColorClientConsoleEnum.YELLOW}[WARNING] `);
-    Env.server(() => preEnv = `🧭${ColorServerConsoleEnum.YELLOW}\t`);
+    Env.client(() => (preEnv = `${ColorClientConsoleEnum.YELLOW}[WARNING] `));
+    Env.server(() => (preEnv = `🧭${ColorServerConsoleEnum.YELLOW}\t`));
 
     (log.isModuleDisplay === undefined || log.isModuleDisplay) &&
       process.env.NODE_ENV === 'development' &&
@@ -49,8 +49,8 @@ class Log {
   }
   static confirm(log: LogData): void {
     let preEnv = '';
-    Env.client(() => preEnv = `${ColorClientConsoleEnum.GREEN}[CONFIRM] `);
-    Env.server(() => preEnv = `💚${ColorServerConsoleEnum.GREEN}\t`);
+    Env.client(() => (preEnv = `${ColorClientConsoleEnum.GREEN}[CONFIRM] `));
+    Env.server(() => (preEnv = `💚${ColorServerConsoleEnum.GREEN}\t`));
 
     (log.isModuleDisplay === undefined || log.isModuleDisplay) &&
       process.env.NODE_ENV === 'development' &&
@@ -59,13 +59,12 @@ class Log {
   static safemode(log: LogData): void {
     let preEnv = '';
 
-    Env.client(() => preEnv = `[SAFEMODE] `);
-    Env.server(() => preEnv = `💽\t`);
+    Env.client(() => (preEnv = `[SAFEMODE] `));
+    Env.server(() => (preEnv = `💽\t`));
 
     (log.isModuleDisplay === undefined || log.isModuleDisplay) &&
       process.env.EXECUTION_MODE === 'safemode' &&
       console.log(`${preEnv} ${formatMessage(log)}`);
-
   }
 }
 

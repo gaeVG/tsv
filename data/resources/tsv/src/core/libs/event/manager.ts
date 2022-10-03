@@ -57,15 +57,16 @@ class EventManager {
         emitEventNet.target !== undefined ? emitEventNet.target : -1,
         eventHashName,
         eventHashData,
-      )
+      );
     });
   }
   private emitCallbackNet(emitEventCallbackNet: IEventTrigger): Promise<any> {
-    const data = emitEventCallbackNet.data || []
+    const data = emitEventCallbackNet.data || [];
     const callbackName = `${emitEventCallbackNet.name}-callback-${uuid()}`;
 
     this.emitNet({
-      ...emitEventCallbackNet, data: [...data, callbackName]
+      ...emitEventCallbackNet,
+      data: [...data, callbackName],
     });
 
     return new Promise((resolve) => {
@@ -169,7 +170,9 @@ class EventManager {
       log.location = `onNet('TSeVent')`;
 
       const eventSource = source.toString();
-      const event = this.manager.find((eventManager) => AES.decrypt(eventHashName) === eventManager.name);
+      const event = this.manager.find(
+        (eventManager) => AES.decrypt(eventHashName) === eventManager.name,
+      );
       if (event === undefined) {
         return;
       }
@@ -178,10 +181,10 @@ class EventManager {
       const dataParsed: unknown[] = data !== undefined ? JSON.parse(data) : [];
       const args = event.isCallback
         ? dataParsed.length > 2
-          ? dataParsed.slice(0, -1) 
+          ? dataParsed.slice(0, -1)
           : dataParsed.length === 1
-            ? [] 
-            : [dataParsed[0]]
+          ? []
+          : [dataParsed[0]]
         : dataParsed;
       const eventHandler = event.addEventHandler(eventSource, ...args);
 
