@@ -12,6 +12,12 @@ import { freezeTarget, getTargetHeading } from './function';
 import { EntranceToogleStateError } from '../../../core/declares/entrance/errors/entranceToggleState';
 import { EntranceHeadingError } from '../../../core/declares/entrance/errors/entranceHeading';
 import { tsv } from '../..';
+import { EnumLogContainer, LogData } from '../../../core/declares/log';
+
+const log: LogData = {
+  namespace: 'entrance',
+  container: EnumLogContainer.Class,
+};
 
 abstract class Entrance implements IEntrance {
   id: string;
@@ -122,6 +128,7 @@ class Gate extends Entrance {
    * @returns A promise of the updated entrance state
    */
   async lock(user: IUser): Promise<EntranceStateStype> {
+    log.location = 'lock(Gate)';
     try {
       if (!(await freezeTarget(this.target as Prop, true, user))) {
         throw new EntranceToogleStateError(this);
@@ -129,11 +136,7 @@ class Gate extends Entrance {
       return (this.state = EntranceStateEnum.CLOSE);
     } catch (error) {
       if (error instanceof Error) {
-        tsv.log.error({
-          namespace: 'entrance',
-          container: 'Gate',
-          message: error.message,
-        });
+        tsv.log.error({ ...log, message: error.message });
       }
 
       return (this.state = EntranceStateEnum.OPEN);
@@ -141,7 +144,17 @@ class Gate extends Entrance {
   }
 
   async unlock(user: IUser): Promise<EntranceStateStype> {
-    return this.state;
+    try {
+      if (!(await freezeTarget(this.target as Prop, false, user))) {
+        throw new EntranceToogleStateError(this);
+      }
+
+      return (this.state = EntranceStateEnum.OPEN);
+    } catch (error) {
+      tsv.log.error({ ...log, message: error.message });
+
+      return (this.state = EntranceStateEnum.CLOSE);
+    }
   }
 }
 
