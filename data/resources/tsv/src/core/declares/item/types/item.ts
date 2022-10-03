@@ -1,3 +1,5 @@
+import { ItemStatusEffectType } from '.';
+
 type ItemType = {
   name: string;
   label?: string;
@@ -5,6 +7,7 @@ type ItemType = {
   weight?: number;
   metadata?: unknown;
   props?: string;
+  effect?: ItemStatusEffectType;
 };
 
 export { ItemType };

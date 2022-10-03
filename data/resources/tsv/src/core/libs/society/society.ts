@@ -1,6 +1,5 @@
 import { Crypto } from '..';
-import { Vector3 } from '../utils';
-import { SocietyType } from '../../declares/society';
+import { SocietyBuildingType, SocietyType } from '../../declares/society';
 import _t from '../../../config/i18n';
 import { ActivitiesManager } from '../activity';
 
@@ -9,7 +8,7 @@ class Society {
   name: string;
   label?: string;
   owner: string;
-  building: Vector3[];
+  building: SocietyBuildingType;
   activities?: ActivitiesManager;
   isCompagny: boolean;
   societies?: Society[];

@@ -5,12 +5,18 @@ import { SocietyEnum, SocietyType } from '../../core/declares/society';
 const downtownCab = {
   name: SocietyEnum.DOWNTOWN_CAB,
   owner: SocietyEnum.DOWNTOWN_CAB,
-  building: [
-    new Vector3(0, 0, 0),
-    new Vector3(0, 0, 0),
-    new Vector3(0, 0, 0),
-    new Vector3(0, 0, 0),
-  ],
+  building: {
+    zone: {
+      polygon: [
+        new Vector3(0, 0, 0),
+        new Vector3(0, 0, 0),
+        new Vector3(0, 0, 0),
+        new Vector3(0, 0, 0),
+      ],
+      height: 20,
+    },
+    entrances: [],
+  },
   activities: [
     {
       ...driverActivity,

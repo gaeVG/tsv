@@ -1,5 +1,10 @@
 import { Prop } from '../../../core/libs';
-import { EntranceStateEnum, EntranceStateStype } from '../../../core/declares/entrance';
+import {
+  EntranceStateEnum,
+  EntranceStateStype,
+  IEntrance,
+  DoorType,
+} from '../../../core/declares/entrance';
 import { LogData, EnumLogContainer } from '../../../core/declares/log';
 import { IUser } from '../../../core/declares/user';
 import { default as moduleConfig } from './config';
@@ -11,38 +16,63 @@ const log: LogData = {
   isModuleDisplay: moduleConfig.debug,
 };
 
-function onResourceStop(resourceName: string) {
+/**
+ * Listen function on 'onResourceStop' event
+ * @param resourceName The name of the resource that is stopping
+ */
+function onResourceStop(resourceName: string): void {
   if (resourceName === global.GetCurrentResourceName()) {
     tsv.entrances.All.forEach((entrance) => {
       if (entrance.state === EntranceStateEnum.CLOSE) {
-        entrance.unlock();
+        entrance.unlock({ id: '', source: '-1' });
       }
     });
   }
 }
-
-async function toggleEntrance(
-  source: string,
-  door: Prop | Prop[],
-): Promise<[boolean, EntranceStateStype]> {
+/**
+ * Find the prop inside the GamePool
+ * @param {DoorType} door
+ * @param {IUser} user
+ * @returns The found prop
+ */
+async function getTargetProp(door: DoorType, user: IUser): Promise<Prop | Error> {
   try {
-    const entrance = tsv.entrances.All.find((entrance) => entrance.target === door);
-    if (entrance === undefined) return [false, null];
+    const closestObject = await (tsv.events.trigger({
+      name: 'getClosestObject',
+      module: 'entity',
+      onNet: true,
+      isCallback: true,
+      target: user.source,
+      data: [door],
+    }) as Promise<{ handle: number } | Error>);
 
-    if (entrance.state === EntranceStateEnum.CLOSE) {
-      entrance.unlock();
-    } else {
-      const entraceState = await entrance.lock(tsv.users.getOneBySource(source) as IUser);
-      return [entraceState !== EntranceStateEnum.OPEN, entraceState];
+    if (closestObject instanceof Error) {
+      throw closestObject;
     }
+    return new Prop(closestObject.handle);
   } catch (error) {
-    tsv.log.error({
-      ...log,
-      message: error.message,
-    });
-
-    return [false, null];
+    console.log('une errror');
+    return error;
+  }
+}
+async function toggleEntrance(
+  entrance: IEntrance,
+  state: EntranceStateStype,
+  user: IUser,
+): Promise<boolean | Error> {
+  try {
+    const entranceState =
+      state === EntranceStateEnum.CLOSE ? await entrance.lock(user) : await entrance.unlock(user);
+    return entranceState !== state;
+  } catch (error) {
+    if (error instanceof Error) {
+      tsv.log.error({
+        ...log,
+        message: error.message,
+      });
+    }
+    return error;
   }
 }
 
-export { onResourceStop, toggleEntrance };
+export { onResourceStop, getTargetProp, toggleEntrance };

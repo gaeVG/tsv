@@ -1,4 +1,4 @@
-import { IItem, ItemType, ItemCategoryType } from '../../declares/item';
+import { IItem, ItemType, ItemCategoryType, ItemStatusEffectType } from '../../declares/item';
 import config from '../../../config';
 
 class Item implements IItem {
@@ -9,6 +9,7 @@ class Item implements IItem {
   weight?: number;
   metadata?: unknown;
   props?: string;
+  effect?: ItemStatusEffectType;
 
   constructor(item: ItemType) {
     this.name = item.name;
@@ -27,6 +28,7 @@ class Item implements IItem {
 
       return true;
     });
+    this.effect = item.effect;
   }
 }
 

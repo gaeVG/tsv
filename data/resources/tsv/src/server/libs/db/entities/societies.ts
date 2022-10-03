@@ -1,9 +1,10 @@
 import { Column, Entity, ObjectIdColumn, ObjectID } from 'typeorm';
 import { Activities } from './activities';
 
-import { Vector3 } from '../../../../core/libs';
 import { SocietyType } from '../../../../core/declares/society';
 import { ActivityType } from '../../../../core/declares/activity';
+import { PolyZoneType } from '../../../../core/declares/zone';
+import { EntranceType } from '../../../../core/declares/entrance';
 @Entity()
 class Societies {
   @ObjectIdColumn()
@@ -22,7 +23,7 @@ class Societies {
   isCompagny: boolean;
 
   @Column()
-  building: Vector3[];
+  building: { zone: PolyZoneType; entrances: EntranceType[] };
 
   @Column(() => Activities)
   activites?: Activities[];

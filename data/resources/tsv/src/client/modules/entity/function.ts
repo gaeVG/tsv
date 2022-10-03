@@ -27,14 +27,11 @@ function getClosestObject(_source: string, object: IProp): Prop | Error {
       throw new Error('No prop found');
     }
     prop.IsMissionEntity = true;
-    console.log(prop.Handle);
     return prop;
   } catch (error) {
-    console.log('une erreur');
     return error;
   }
 }
-
 function getGamePool(
   _source: string,
   pool: 'CPed' | 'CObject' | 'CVehicle' | 'CPickup' | 'CRopes',
@@ -58,7 +55,6 @@ function getGamePool(
     return error;
   }
 }
-
 function getEntityHeading(_: string, entity: IEntity): number {
   return Entity.fromHandle(entity.handle).Heading;
 }
@@ -93,9 +89,9 @@ function setEntityArmor(_: string, _entity: IEntity, armor: number): number {
 }
 function setEntityFreezePosition(_: string, _entity: IEntity, freeze: boolean): boolean {
   const entity = Entity.fromHandle(_entity.handle);
-  entity.IsPositionFrozen = freeze;
 
-  return entity.IsPositionFrozen;
+  entity.IsPositionFrozen = freeze;
+  return entity.IsPositionFrozen == freeze;
 }
 
 export {

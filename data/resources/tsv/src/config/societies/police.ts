@@ -6,43 +6,56 @@ import { security as securityActivity, ems as emsActivity } from './activities';
 const police = {
   name: CompagnyEnum.POLICE,
   owner: CompagnyEnum.POLICE,
-  building: [
-    new Vector3(0, 0, 0),
-    new Vector3(0, 0, 0),
-    new Vector3(0, 0, 0),
-    new Vector3(0, 0, 0),
-  ],
+  building: {
+    zone: {
+      name: SocietyEnum.MISSION_ROW,
+      polygon: [
+        new Vector3(0, 0, 0),
+        new Vector3(0, 0, 0),
+        new Vector3(0, 0, 0),
+        new Vector3(0, 0, 0),
+      ],
+      height: 70,
+    },
+    entrances: [],
+  },
   isCompagny: true,
   societies: [
     {
       name: SocietyEnum.MISSION_ROW,
-      building: [
-        new Vector3(390.82, -941.63, 29.42),
-        new Vector3(506.73, -943.37, 26.99),
-        new Vector3(508.29, -1022.76, 28.12),
-        new Vector3(386.33, -1037.27, 29.27),
-      ],
-      entrances: [
-        {
-          doors: [
-            {
-              hash: -1547307588,
-              coords: new Vector4(434.7444, -983.0781, 30.8153, 90.017),
-            },
-            {
-              hash: -1547307588,
-              coords: new Vector4(434.7444, -980.7556, 30.8153, 269.912),
-            },
+      building: {
+        zone: {
+          name: SocietyEnum.MISSION_ROW,
+          polygon: [
+            new Vector3(390.82, -941.63, 23),
+            new Vector3(506.73, -943.37, 23),
+            new Vector3(508.29, -1022.76, 23),
+            new Vector3(386.33, -1037.27, 23),
           ],
+          height: 50,
         },
-        {
-          doors: {
-            hash: -1603817716,
-            coords: new Vector4(488.8948, -1017.21, 27.1458, 90),
+        entrances: [
+          {
+            doors: [
+              {
+                hash: -1547307588,
+                coords: new Vector4(434.7444, -983.0781, 30.8153, 90.017),
+              },
+              {
+                hash: -1547307588,
+                coords: new Vector4(434.7444, -980.7556, 30.8153, 269.912),
+              },
+            ],
           },
-          isGate: true,
-        },
-      ],
+          {
+            doors: {
+              hash: -1603817716,
+              coords: new Vector4(488.8948, -1017.21, 27.1458, 90),
+            },
+            isGate: true,
+          },
+        ],
+      },
       activities: [
         {
           ...securityActivity,

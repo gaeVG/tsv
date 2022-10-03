@@ -4,9 +4,10 @@ import { IBucket } from '../../bucket';
 import { User } from '../../../libs/user';
 
 type PolyZoneType = {
-  name: string;
-  module: string;
+  name?: string;
+  module?: string;
   polygon: Vector3[];
+  height?: number;
   min?: Vector3;
   max?: Vector3;
   center?: Vector3;

@@ -1,5 +1,11 @@
 import { IEventListener } from '../../../core/declares/events';
-import { getInventory, getAllInventories, getItemCount, useItem } from './functions';
+import {
+  getInventory,
+  getAllInventories,
+  getItemCount,
+  canUseItem,
+  consumeItem,
+} from './functions';
 import moduleConfig from './config';
 
 const inventoryEvents: IEventListener[] = [
@@ -25,11 +31,18 @@ const inventoryEvents: IEventListener[] = [
     handler: getAllInventories,
   },
   {
-    name: 'useItem',
+    name: 'canUseItem',
     module: moduleConfig.name,
     onNet: true,
     isCallback: true,
-    handler: useItem,
+    handler: canUseItem,
+  },
+  {
+    name: 'consumeItem',
+    module: moduleConfig.name,
+    onNet: true,
+    isCallback: true,
+    handler: consumeItem,
   },
 ];
 

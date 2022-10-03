@@ -9,22 +9,34 @@ import {
 const ems = {
   name: CompagnyEnum.EMS,
   owner: CompagnyEnum.EMS,
-  building: [
-    new Vector3(0, 0, 0),
-    new Vector3(0, 0, 0),
-    new Vector3(0, 0, 0),
-    new Vector3(0, 0, 0),
-  ],
-  isCompagny: true,
-  societies: [
-    {
-      name: SocietyEnum.PILLBOX,
-      building: [
+  building: {
+    zone: {
+      polygon: [
         new Vector3(0, 0, 0),
         new Vector3(0, 0, 0),
         new Vector3(0, 0, 0),
         new Vector3(0, 0, 0),
       ],
+      height: 20,
+    },
+    entrances: [],
+  },
+  isCompagny: true,
+  societies: [
+    {
+      name: SocietyEnum.PILLBOX,
+      building: {
+        zone: {
+          polygon: [
+            new Vector3(0, 0, 0),
+            new Vector3(0, 0, 0),
+            new Vector3(0, 0, 0),
+            new Vector3(0, 0, 0),
+          ],
+          height: 20,
+        },
+        entrances: [],
+      },
       activities: [
         {
           ...emsActivity,

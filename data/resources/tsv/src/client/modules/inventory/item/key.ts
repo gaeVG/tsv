@@ -1,7 +1,11 @@
-import { Model, Vector3, World } from '../../../../core/libs';
+import { Model, Vector3, World, Prop } from '../../../../core/libs';
 import { ItemType } from '../../../../core/declares/item';
 import { EnumLogContainer, LogData } from '../../../../core/declares/log';
-import { DoorType, EntranceStateStype } from '../../../../core/declares/entrance';
+import {
+  DoorType,
+  EntranceStateEnum,
+  EntranceStateStype,
+} from '../../../../core/declares/entrance';
 import { UsableItem } from './usableItem';
 import moduleConfig from '../config';
 import { tsv } from '../../..';
@@ -20,43 +24,73 @@ class Key extends UsableItem {
     this.metadata = item.metadata as DoorType | DoorType[];
   }
 
-  use() {
+  async use() {
+    log.location = 'use(key)';
+
     try {
-      const toggleEntrance = tsv.events.trigger({
+      tsv.log.debug({
+        ...log,
+        message: 'Trigger the server callback event to attempt to open a entrance',
+      });
+      log.isChild = true;
+
+      let entranceState: EntranceStateStype;
+      let entranceDoor: DoorType | DoorType[];
+
+      if (Array.isArray(this.metadata)) {
+        entranceDoor = this.metadata.reduce((entrance, currentData) => {
+          const object = World.getClosestObject(
+            new Model(currentData.hash),
+            new Vector3(currentData.coords.x, currentData.coords.y, currentData.coords.z),
+            3,
+            false,
+          );
+
+          entranceState = object.IsPositionFrozen
+            ? EntranceStateEnum.OPEN
+            : EntranceStateEnum.CLOSE;
+
+          return [...entrance, { hash: object.Model.Hash }];
+        }, [] as DoorType[]);
+      } else {
+        const coords = new Vector3(
+          this.metadata.coords.x,
+          this.metadata.coords.y,
+          this.metadata.coords.z,
+        );
+        const prop = World.getAllProps().find(
+          (poolProp) => coords.distance(poolProp.Position) <= 1,
+        );
+
+        entranceState = prop.IsPositionFrozen ? EntranceStateEnum.OPEN : EntranceStateEnum.CLOSE;
+        entranceDoor = { hash: prop.Model.Hash };
+      }
+
+      const isEntranceStateChange = await (tsv.events.trigger({
         name: 'toggleEntrance',
         module: 'entrance',
         onNet: true,
         isCallback: true,
-        data: Array.isArray(this.metadata)
-          ? this.metadata.map((door) =>
-              World.getClosestObject(
-                new Model(door.hash),
-                new Vector3(door.coords.x, door.coords.y, door.coords.z),
-                3,
-                false,
-              ),
-            )
-          : [
-              World.getClosestObject(
-                new Model(this.metadata.hash),
-                new Vector3(this.metadata.coords.x, this.metadata.coords.y, this.metadata.coords.z),
-                3,
-                false,
-              ),
-            ],
-      }) as Promise<[boolean, EntranceStateStype]>;
+        data: [entranceDoor, entranceState],
+      }) as Promise<boolean | Error>);
 
-      toggleEntrance.then(([isEntranceStateChange, entranceState]) => {
-        if (isEntranceStateChange) {
-          console.log(entranceState);
-        }
-      });
+      if (typeof isEntranceStateChange === 'object') {
+        throw new Error('Unable to change the entrance state');
+      }
+
+      console.log(isEntranceStateChange);
+
+      // if (isEntranceStateChange) {
+      //   console.log(entranceState);
+      // }
     } catch (error) {
-      console.log(error.message);
-      tsv.log.error({
-        ...log,
-        message: error.message,
-      });
+      if (error instanceof Error) {
+        tsv.log.error({
+          ...log,
+          message: error.message,
+        });
+      }
+      return error;
     }
   }
 }

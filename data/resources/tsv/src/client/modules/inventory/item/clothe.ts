@@ -1,4 +1,5 @@
-import { ItemType } from '../../../../core/declares/item';
+import { InventoryFromType } from '../../../../core/declares/inventory';
+import { ItemType, IItem } from '../../../../core/declares/item';
 import { UsableItem } from './usableItem';
 
 class Clothe extends UsableItem {
@@ -6,8 +7,17 @@ class Clothe extends UsableItem {
     super(item);
   }
 
-  use() {
-    console.log(`Je mets ${this.name}`);
+  async use(container: InventoryFromType): Promise<IItem | Error> {
+    try {
+      const clothe = await this.consumeItem(container);
+      if (clothe instanceof Error) {
+        throw clothe;
+      }
+
+      console.log(`Je mets ${this.name}`);
+    } catch (error) {
+      return error;
+    }
   }
 }
 

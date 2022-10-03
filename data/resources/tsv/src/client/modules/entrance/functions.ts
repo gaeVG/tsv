@@ -19,7 +19,6 @@ function getEntranceDoors(_source: string, doors: DoorType | DoorType[]) {
       new Model(doors.hash),
       new Vector3(doors.coords.x, doors.coords.y, doors.coords.z),
     );
-    prop.IsMissionEntity = true;
     target = prop;
   }
 
