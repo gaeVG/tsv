@@ -91,7 +91,7 @@ const inventoryReducer = (
       } else if (action.display.module !== undefined) {
         !action.display.module &&
           fetchNui({
-            name: 'hideInventory',
+            name: 'closeInventory',
             module: 'inventory',
           });
       }

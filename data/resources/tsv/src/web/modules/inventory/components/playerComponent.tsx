@@ -35,11 +35,6 @@ function PlayerComponent({ component } : { component: PlayerComponentType }) {
       type: 'SET_DISPLAY',
       display: { module: false,}
     });
-
-    fetchNui({
-      name: 'closeInventory',
-      module: 'inventory',
-    });
   };
 
   return (

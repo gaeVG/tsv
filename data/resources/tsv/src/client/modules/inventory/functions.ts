@@ -12,8 +12,6 @@ import {
 import { IInventory, InventoryFromType } from '../../../core/declares/inventory';
 import { Player, Ped } from '../../../core/libs';
 import { Wait } from '../../../core/libs';
-import {} from '../../../core/declares/item/enum/clothe';
-import { InventoryContainerType } from '../../../core/declares/inventory';
 import { Clothe, Drink, Food, Weapon, Key } from './item';
 import moduleConfig from './config';
 import { tsv } from '../../';
@@ -61,12 +59,10 @@ async function openInventory() {
   });
 
   tsv.nui.listen({
-    name: 'close-inventory',
+    name: 'closeInventory',
     module: 'inventory',
     removeAfterTriggered: true,
-    handler: () => {
-      global.SetNuiFocus(false, false);
-    },
+    handler: () => global.SetNuiFocus(false, false),
   });
   tsv.nui.listen({
     name: 'display-character',
@@ -128,7 +124,6 @@ function getItemClass(item: IItem): IUsableItem | Error {
 }
 async function useItem([container, usingItem]: [InventoryFromType, IItem]): Promise<IItem | Error> {
   log.location = 'useItem()';
-
   const item = getItemClass(usingItem) as IUsableItem;
   if (item instanceof Error) return item;
   tsv.log.debug({ ...log, message: `Using item ${item.name}` });

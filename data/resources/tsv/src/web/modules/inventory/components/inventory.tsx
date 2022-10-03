@@ -25,7 +25,6 @@ function TogglePlayerComponents({ dispatch, inventoryDisplay } : { dispatch: Dis
         onClick={() => dispatch({
           type: 'SET_DISPLAY',
           display: {
-            ...inventoryDisplay,
             playerComponents: false,
             targetInventory: false,
           }
@@ -37,7 +36,6 @@ function TogglePlayerComponents({ dispatch, inventoryDisplay } : { dispatch: Dis
         onClick={() => dispatch({
           type: 'SET_DISPLAY',
           display: {
-            ...inventoryDisplay,
             playerComponents: true,
             targetInventory: false,
           }
@@ -49,7 +47,6 @@ function TogglePlayerComponents({ dispatch, inventoryDisplay } : { dispatch: Dis
         onClick={() => dispatch({
           type: 'SET_DISPLAY',
           display: {
-            ...inventoryDisplay,
             playerComponents: false,
             targetInventory: true,
           }
