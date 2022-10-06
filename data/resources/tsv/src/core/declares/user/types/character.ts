@@ -1,3 +1,4 @@
+import { AccountType } from '../../account';
 import { SkinCharacter } from '.';
 import { Vec4 } from '../../../libs/utils/Vector4';
 import { InventoryType } from '../../inventory';
@@ -18,9 +19,10 @@ type UserCharacter = {
   isDead: boolean;
   status?: { name: string; value: unknown }[];
   inventories?: Array<InventoryType>;
+  accounts: Array<AccountType>;
   licenses?: [];
   activities?: { for: string; job: string; role: string }[];
-  experiences?: [];
+  experiences?: { name: string; total: number }[];
 };
 
 export { UserCharacter, CharacterDescription };

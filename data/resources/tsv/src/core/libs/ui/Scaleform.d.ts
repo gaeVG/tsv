@@ -44,7 +44,7 @@ export declare class Scaleform {
    * @param name Name of the function
    * @param args Additional arguments
    */
-  callFunction(name: string, ...args: unknown[]): void;
+  callFunction(name: string, ...args: unknown[]): void | number;
   /**
    * Calls a void method on the scaleform.
    *
@@ -129,4 +129,5 @@ export declare class Scaleform {
   render3D(position: Vector3, rotation: Vector3, scale: Vector3): Promise<void>;
   render3DAdditive(position: Vector3, rotation: Vector3, scale: Vector3): Promise<void>;
   load(): Promise<boolean>;
+  waitingFor(): Promise<void>;
 }

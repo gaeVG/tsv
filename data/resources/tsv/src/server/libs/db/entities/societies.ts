@@ -1,5 +1,6 @@
 import { Column, Entity, ObjectIdColumn, ObjectID } from 'typeorm';
 import { Activities } from './activities';
+import { Accounts } from './accounts';
 
 import { SocietyType } from '../../../../core/declares/society';
 import { ActivityType } from '../../../../core/declares/activity';
@@ -17,7 +18,7 @@ class Societies {
   name: string;
 
   @Column()
-  label: string;
+  label?: string;
 
   @Column()
   isCompagny: boolean;
@@ -30,6 +31,9 @@ class Societies {
 
   @Column(() => Societies)
   societies?: Societies[];
+
+  @Column(() => Accounts)
+  account?: Accounts;
 
   constructor(society: SocietyType) {
     this.id = new ObjectID();

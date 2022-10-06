@@ -4,3 +4,4 @@ export { Societies } from './societies';
 export { Vehicles } from './vehicles';
 export { Parkings } from './parkings';
 export { Invoices } from './invoices';
+export { Accounts } from './accounts';

@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+import { Wait } from '../utils';
 /**
  * Scaleforms will automatically load when calling any of the render functions.
  *
@@ -77,6 +78,8 @@ export class Scaleform {
    * @param args Additional arguments
    */
   callFunction(name, ...args) {
+    const returnResult = args[args.length -1] === 'returnResult';
+
     BeginScaleformMovieMethod(this.handle, name);
     args.forEach((arg) => {
       switch (typeof arg) {
@@ -84,6 +87,9 @@ export class Scaleform {
           PushScaleformMovieFunctionParameterInt(arg);
           break;
         case 'string':
+          if (arg === 'returnResult') {
+            break;
+          }
           PushScaleformMovieFunctionParameterString(arg);
           break;
         case 'boolean':
@@ -97,6 +103,10 @@ export class Scaleform {
           );
       }
     });
+
+    if (returnResult) {
+      return EndScaleformMovieMethodReturnValue();
+    }
     EndScaleformMovieMethod();
   }
   /**
@@ -307,5 +317,14 @@ export class Scaleform {
         }, 0);
       }
     });
+  }
+  waitingFor() {
+    return new Promise(async (resolve) => {
+      while (!IsScaleformMovieMethodReturnValueReady(this.handle)) {
+        await Wait(0)
+      }
+
+      resolve();
+    });  
   }
 }

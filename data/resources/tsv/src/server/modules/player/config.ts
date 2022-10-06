@@ -31,6 +31,12 @@ export default {
         ],
       },
     ],
+    accounts: [
+      {
+        name: 'mzb',
+        amount: 1500,
+      },
+    ],
     status: [
       {
         name: StatusEnum.HEALTH,

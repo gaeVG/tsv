@@ -5,6 +5,8 @@ enum ItemCategoryEnum {
   COMPONENT = 'component',
   CLOTHE = 'clothe',
   HARDWARE = 'hardware',
+  MONEY = 'money',
+  CARD = 'card',
 }
 
 export { ItemCategoryEnum };

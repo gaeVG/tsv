@@ -1,12 +1,12 @@
 import { Column, Entity } from 'typeorm';
 import { Vec4 } from '../../../../core/libs/utils/Vector4';
 import { CharacterDescription, PlayerData, SkinCharacter } from '../../../../core/declares/user';
-import { InventoryType } from '../../../../core/declares/inventory';
-
+import { Accounts } from './accounts';
+import { UserCharacter } from '../../../../core/declares/user';
 @Entity()
 class UserCharacters {
   @Column()
-  description?: CharacterDescription;
+  description: CharacterDescription;
 
   @Column()
   skin?: SkinCharacter;
@@ -18,19 +18,22 @@ class UserCharacters {
   isDead: boolean;
 
   @Column()
-  status: { name: string; value: unknown }[];
+  status: UserCharacter['status'];
 
   @Column()
-  inventories?: Array<InventoryType>;
+  inventories?: UserCharacter['inventories'];
 
   @Column()
-  licenses?: [];
+  licenses?: UserCharacter['licenses'];
 
   @Column()
-  activities?: PlayerData['activities'];
+  activities?: UserCharacter['activities'];
+
+  @Column(() => Accounts)
+  accounts?: Accounts[];
 
   @Column()
-  experiences?: { name: string; total: number }[];
+  experiences?: UserCharacter['experiences'];
 }
 
 export { UserCharacters };

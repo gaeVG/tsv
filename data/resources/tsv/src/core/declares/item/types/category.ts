@@ -6,6 +6,8 @@ type ItemCategoryType =
   | ItemCategoryEnum.RESSOURCE
   | ItemCategoryEnum.WEAPON
   | ItemCategoryEnum.CLOTHE
-  | ItemCategoryEnum.HARDWARE;
+  | ItemCategoryEnum.HARDWARE
+  | ItemCategoryEnum.MONEY
+  | ItemCategoryEnum.CARD;
 
 export { ItemCategoryType };

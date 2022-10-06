@@ -10,12 +10,17 @@ import {
 } from '../../../core/declares/user';
 import { LogData, EnumLogContainer } from '../../../core/declares/log';
 import { IAdaptativeCard } from '../../../core/declares/cards';
-import { Users as UsersEntity, UserCharacters as CharactersEntity } from '../../libs/db/entities';
+import { BucketDimension } from '../../../core/declares/bucket';
+import { User } from '../../../core/libs/user';
+import {
+  Users as UsersEntity,
+  UserCharacters as CharactersEntity,
+  Accounts,
+} from '../../libs/db/entities';
 import { Player } from '../../../core/libs';
 import moduleConfig from './config';
 import { tsv } from '../../../server';
-import { User } from '../../../core/libs/user';
-import { BucketDimension } from '../../../core/declares/bucket';
+import { AccountType } from '../../../core/declares/account';
 
 const log: LogData = {
   namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,
@@ -25,22 +30,35 @@ const log: LogData = {
 
 async function createPlayerOnDB(source: string): Promise<UsersEntity> {
   log.location = 'createPlayerOnDB()';
+  const characterDefault = moduleConfig.userCharacterDefault;
 
   try {
     tsv.log.safemode({
       ...log,
       message: tsv.locale('module.player.createPlayerOnDB.creatingUser'),
     });
-    const characterDefault = moduleConfig.userCharacterDefault;
+
     const user = new UsersEntity();
+    // Set up user global data
     user.auth = getIdentifiers(source) as UserIdentifier;
     user.group = UserGroupEnum.USER;
     const character = new CharactersEntity();
+    // Set up character global data
     character.description = characterDefault.description;
     character.position = characterDefault.position;
     character.isDead = false;
+    // Set up character status
     character.status = characterDefault.status;
+    // Set up character inventories
     character.inventories = characterDefault.inventories;
+    // Set up character accounts
+    character.accounts = characterDefault.accounts.map((account) => {
+      const newAccount = new Accounts();
+      newAccount.from = 'mzb';
+      newAccount.amount = account.amount;
+      return newAccount;
+    });
+
     user.characters = [character];
 
     return tsv.orm.dataSource.manager.save(user);
@@ -102,8 +120,23 @@ async function onPlayerJoined(source: string): Promise<[IUser, boolean, UserChar
     }) as User;
 
     const userCharacters = userFromDB.characters.reduce((characters, character) => {
-      return [...characters, character as UserCharacter];
+      return [
+        ...characters,
+        {
+          ...character,
+          accounts: character.accounts.reduce((accounts, account) => {
+            return [
+              ...accounts,
+              {
+                name: account.from,
+                amount: account.amount,
+              },
+            ];
+          }, [] as AccountType[]),
+        },
+      ];
     }, [] as UserCharacter[]);
+
     return [user, isNewPlayer, userCharacters];
   } catch (error) {
     if (error instanceof Error) {
@@ -314,7 +347,7 @@ function getIdentifiers(source: string): UserIdentifier | Error {
   log.isChild = true;
 
   const playerIdentifiers = getPlayerIdentifiers(source).reduce((identifiers, identifier) => {
-    const identifierSplit: string = identifier.split(':')[1];
+    const identifierSplit = identifier.split(':')[1];
 
     if (
       identifier.startsWith(UserIdentifierEnum.FIVEM) &&
