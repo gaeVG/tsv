@@ -1,19 +1,22 @@
 // Native wrapper
-import { Player, Fading, Model, Vector3, Wait } from '@native//';
+import { Model } from '@native/Model';
+import { Player } from '@native/models';
+import { Fading } from '@native/ui';
+import { Vector3, Wait } from '@native/utils';
 // Declarations
 import { UserCharacter } from '@declares/user';
 import { IUser } from '@declares/user';
 import { LogData, EnumLogContainer } from '@declares/log';
 // Module
-import moduleConfig from './config';
+import config from './config';
 // Core
 import { tsv } from '@tsv';
 
 // Log variable
 const log: LogData = {
-  namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,
+  namespace: `Module${config.moduleName.charAt(0).toUpperCase() + config.moduleName.slice(1)}`,
   container: EnumLogContainer.Function,
-  isModuleDisplay: moduleConfig.debug,
+  isModuleDisplay: config.debug,
 };
 
 /**

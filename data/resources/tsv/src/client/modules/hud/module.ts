@@ -3,26 +3,26 @@ import { IModule } from '@declares/module';
 import { LogData, EnumLogContainer } from '@declares/log';
 // Module
 import { hudEvents } from './events';
-import moduleConfig from './config';
+import config from './config';
 // Core
 import { tsv } from '@tsv';
 
 // Log variable
 const log: LogData = {
-  namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,
+  namespace: `Module${config.moduleName.charAt(0).toUpperCase() + config.moduleName.slice(1)}`,
   container: EnumLogContainer.Module,
 };
 
 // HUD module description
 const HudModule: IModule = {
-  name: moduleConfig.name,
+  name: config.moduleName,
   init(): Error {
     log.location = 'init()';
 
     try {
       tsv.log.safemode({
         ...log,
-        message: tsv.locale('module.global.init.start', { moduleName: moduleConfig.name }),
+        message: tsv.locale('module.global.init.start', { moduleName: config.moduleName }),
       });
 
       hudEvents.map((event) => tsv.events.listen(event));
@@ -31,7 +31,7 @@ const HudModule: IModule = {
     } finally {
       tsv.log.safemode({
         ...log,
-        message: tsv.locale('module.global.init.complete', { moduleName: moduleConfig.name }),
+        message: tsv.locale('module.global.init.complete', { moduleName: config.moduleName }),
         isLast: true,
       });
     }

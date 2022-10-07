@@ -1,7 +1,10 @@
 // Dependencies
 import { DiceRoll } from '@dice-roller/rpg-dice-roller';
 // Native wrapper
-import { VehicleHash, Player, Model, Ped, Vector3 } from '@native//';
+import { Model } from '@native/Model';
+import { Player, Ped } from '@native/models';
+import { VehicleHash } from '@native/hashes';
+import { Vector3 } from '@native/utils';
 // Declarations
 import { ActivityEnum } from '@declares/activity';
 import { DriverActivityMissionEnum } from '@declares/activity';

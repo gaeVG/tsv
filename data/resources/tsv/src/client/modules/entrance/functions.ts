@@ -1,5 +1,8 @@
 // Native wrapper
-import { World, Model, Vector3, Prop } from '@native//';
+import { Model } from '@native/Model';
+import { World } from '@native/World';
+import { Prop } from '@native/models';
+import { Vector3 } from '@native/utils';
 // Declarations
 import { DoorType } from '@declares/entrance';
 // Core

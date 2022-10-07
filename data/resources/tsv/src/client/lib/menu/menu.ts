@@ -1,5 +1,5 @@
 // Native wrapper
-import { Game } from '@native//';
+import { Game } from '@native/Game';
 // Declarations
 import {
   ButtonMenuType,

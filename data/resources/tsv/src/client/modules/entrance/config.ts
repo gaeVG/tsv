@@ -1,4 +1,4 @@
 export default {
-  name: 'entrance',
+  moduleName: 'entrance',
   debug: process.env.DEBUG_MODULES.split(', ').includes('entrance'),
 };

@@ -1,5 +1,5 @@
-// Dependencies
-import { Ped, Player } from '@native//';
+// Native wrapper
+import { Ped, Player } from '@native/models';
 // Declarations
 import {
   ActivityEnum,
@@ -10,6 +10,7 @@ import { IUser } from '@declares/user';
 import { LogData, EnumLogContainer } from '@declares/log';
 // Module
 import { Activity } from '..';
+// Activity
 import { driverEvents } from './events';
 import { PedCabRide } from './missions';
 // Core

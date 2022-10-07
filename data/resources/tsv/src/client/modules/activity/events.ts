@@ -1,7 +1,7 @@
 // Declarations
 import { IEventListener } from '@declares/events';
 // Module
-import moduleConfig from './config';
+import config from './config';
 // Core
 import { tsv } from '@tsv';
 
@@ -9,7 +9,7 @@ import { tsv } from '@tsv';
 const activityEvents: IEventListener[] = [
   {
     name: 'addActivity',
-    module: moduleConfig.name,
+    module: config.moduleName,
     handler: tsv.activities.addActivity,
   },
 ];

@@ -2,20 +2,20 @@
 import { EnumLogContainer, LogData } from '@declares/log';
 import { IModule } from '@declares/module';
 // Module
-import config from './config';
 import { loadingActivities } from './functions';
+import config from './config';
 // Core
 import { tsv } from '@tsv';
 
 // Log variable
 const log: LogData = {
-  namespace: `Module${config.name.charAt(0).toUpperCase() + config.name.slice(1)}`,
+  namespace: `Module${config.moduleName.charAt(0).toUpperCase() + config.moduleName.slice(1)}`,
   container: EnumLogContainer.Module,
   isModuleDisplay: config.debug,
 };
 
 const ActivityModule: IModule = {
-  name: config.name,
+  name: config.moduleName,
   init(): Error {
     log.location = 'init()';
 
@@ -27,7 +27,7 @@ const ActivityModule: IModule = {
       tsv.log.safemode({
         ...log,
         message: tsv.locale('module.global.init.complete', {
-          moduleName: config.name,
+          moduleName: config.moduleName,
         }),
         isLast: true,
       });

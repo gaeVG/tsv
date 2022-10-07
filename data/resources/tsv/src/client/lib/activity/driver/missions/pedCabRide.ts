@@ -1,5 +1,8 @@
 // Native wrapper
-import { Control, Game, InputMode, Ped, Player, Vector3 } from '@native//';
+import { Game } from '@native/Game';
+import { Control, InputMode } from '@native/enums';
+import { Ped, Player } from '@native/models';
+import { Vector3 } from '@native/utils';
 // Declarations
 import {
   ActivityMissionStateEnum,

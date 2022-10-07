@@ -13,12 +13,12 @@ const entranceEvents: IEventListener[] = [
   {
     // onResourceStop event : native event when server resource stop
     name: ServerEventNativeEnum.onResourceStop,
-    module: config.name,
+    module: config.moduleName,
     handler: onResourceStop,
   },
   {
     name: 'toggleEntrance',
-    module: config.name,
+    module: config.moduleName,
     onNet: true,
     isCallback: true,
     handler: async (

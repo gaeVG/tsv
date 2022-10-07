@@ -19,15 +19,15 @@ import { User } from '@libs/user';
 // Server librairies
 import { Users as UsersEntity, UserCharacters as CharactersEntity } from '../../libs/db/entities';
 // Module
-import moduleConfig from './config';
+import config from './config';
 // Core
 import { tsv } from '@tsv';
 
 // Log variable
 const log: LogData = {
-  namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,
+  namespace: `Module${config.moduleName.charAt(0).toUpperCase() + config.moduleName.slice(1)}`,
   container: EnumLogContainer.Function,
-  isModuleDisplay: moduleConfig.debug,
+  isModuleDisplay: config.debug,
 };
 
 /**
@@ -43,7 +43,7 @@ async function createPlayerOnDB(source: string): Promise<UsersEntity> {
       ...log,
       message: tsv.locale('module.player.createPlayerOnDB.creatingUser'),
     });
-    const characterDefault = moduleConfig.userCharacterDefault;
+    const characterDefault = config.userCharacterDefault;
     const user = new UsersEntity();
     user.auth = getIdentifiers(source) as UserIdentifier;
     user.group = UserGroupEnum.USER;

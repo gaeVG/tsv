@@ -1,5 +1,7 @@
 // Native wrapper
-import { Model, Vector3, World } from '@native//';
+import { Model } from '@native/Model';
+import { World } from '@native/World';
+import { Vector3 } from '@native/utils';
 // Declarations
 import { ItemType } from '@declares/item';
 import { EnumLogContainer, LogData } from '@declares/log';
@@ -13,7 +15,7 @@ import { tsv } from '@tsv';
 
 // Log variable
 const log: LogData = {
-  namespace: moduleConfig.name,
+  namespace: moduleConfig.moduleName,
   container: EnumLogContainer.Class,
   isModuleDisplay: moduleConfig.debug,
 };

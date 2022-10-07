@@ -1,5 +1,5 @@
 // Native wrapper
-import { Ped, Player } from '@native//';
+import { Ped, Player } from '@native/models';
 import { Vec3 } from '@native/utils/Vector3';
 // Declarations
 import { IUser } from '@declares/user';

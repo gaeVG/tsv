@@ -1,10 +1,12 @@
-import { Vector4 } from '@native//';
+// Native wrapper
+import { Vector4 } from '@native/utils';
+// Declarations
 import { SkinCharacter, UserCharacter } from '@declares/user';
 import { InventoryContainerEnum } from '@declares/inventory';
 import { StatusEnum } from '@declares/status';
 
 export default {
-  name: 'player',
+  moduleName: 'player',
   debug: process.env.DEBUG_MODULES.split(', ').includes('player'),
   userCharacterDefault: {
     description: {

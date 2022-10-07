@@ -1,10 +1,14 @@
 // Native wrapper
-import { Player, World, Vector3, Bone, Model, Wait } from '@native//';
+import { Model } from '@native/Model';
+import { World } from '@native/World';
+import { Bone } from '@native/enums';
+import { Player } from '@native/models';
+import { Vector3, Wait } from '@native/utils';
 // Declarations
 import { ItemType, IItem, ItemShouldNoLongerExistError } from '@declares/item';
 import { InventoryFromType } from '@declares/inventory';
 import { EnumLogContainer, LogData } from '@declares/log';
-// Abstract class
+// Ubsable item abstract class
 import { UsableItem } from './usableItem';
 // Module
 import moduleConfig from '../config';
@@ -13,7 +17,7 @@ import { tsv } from '@tsv';
 
 // Log variable
 const log: LogData = {
-  namespace: moduleConfig.name,
+  namespace: moduleConfig.moduleName,
   container: EnumLogContainer.Class,
   isModuleDisplay: moduleConfig.debug,
 };

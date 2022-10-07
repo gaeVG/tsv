@@ -11,7 +11,7 @@ import { tsv } from '@tsv';
 
 // Log variable
 const log: LogData = {
-  namespace: config.name,
+  namespace: config.moduleName,
   container: EnumLogContainer.Function,
   isModuleDisplay: config.debug,
 };

@@ -1,4 +1,4 @@
 export default {
-  name: 'character',
+  moduleName: 'character',
   debug: process.env.DEBUG_MODULES.split(', ').includes('character'),
 };

@@ -10,14 +10,14 @@ import { tsv } from '@tsv';
 
 // Log variable
 const log: LogData = {
-  namespace: `Module${config.name.charAt(0).toUpperCase() + config.name.slice(1)}`,
+  namespace: `Module${config.moduleName.charAt(0).toUpperCase() + config.moduleName.slice(1)}`,
   container: EnumLogContainer.Module,
   isModuleDisplay: config.debug,
 };
 
 // Character module description
 const CharacterModule: IModule = {
-  name: config.name,
+  name: config.moduleName,
   init(): Error {
     log.location = tsv.locale('module.global.init.location');
 
