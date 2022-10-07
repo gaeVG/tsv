@@ -1,5 +1,8 @@
+// Dependencies
 import { Column, Entity, ObjectIdColumn, ObjectID } from 'typeorm';
-import { UserIdentifier, UserGroup } from '../../../../core/declares/user';
+// Declarations
+import { UserIdentifier, UserGroup } from '@declares/user';
+// User character entity
 import { UserCharacters } from './characters';
 
 @Entity()

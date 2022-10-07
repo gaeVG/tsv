@@ -1,14 +1,17 @@
-import { IStatus, StatusEnum } from '../../../declares/status';
+// Declarations
+import { IStatus, StatusEnum } from '@declares/status';
+// Status abstract class
 import { Status } from '../status';
-import config from '../../../../config';
+// Locale import
+import status from '@config/status';
 
 class Feed extends Status {
   constructor(value?: number) {
     super({
-      value: value || config.status[StatusEnum.HUNGER].max,
+      value: value || status[StatusEnum.HUNGER].max,
       name: StatusEnum.HUNGER,
-      max: config.status[StatusEnum.HUNGER].max,
-      consume: config.status[StatusEnum.HUNGER].consume,
+      max: status[StatusEnum.HUNGER].max,
+      consume: status[StatusEnum.HUNGER].consume,
     } as IStatus);
   }
 }

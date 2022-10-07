@@ -1,7 +1,10 @@
-import { IEventListener } from '../../../core/declares/events';
+// Declarations
+import { IEventListener } from '@declares/events';
+// Module
 import { onEnter, onLeave } from './functions';
 import moduleConfig from './config';
 
+// Zone module events descriptions
 const zoneEvents: IEventListener[] = [
   {
     name: 'onEnter',

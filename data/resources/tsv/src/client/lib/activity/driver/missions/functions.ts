@@ -1,6 +1,10 @@
+// Dependencies
 import { DiceRoll } from '@dice-roller/rpg-dice-roller';
-import { VehicleNoSeatAvaibleError } from '../../../../../core/declares/activity';
-import { BlipColor, Ped, Vehicle, VehicleSeat } from '../../../../../core/libs';
+// Native wrapper
+import { Ped, Vehicle } from '@native/models';
+import { BlipColor, VehicleSeat } from '@native/enums';
+// Declarations
+import { VehicleNoSeatAvaibleError } from '@declares/activity';
 
 function getSeatPassenger(vehicle: Vehicle): number | Error {
   if (vehicle.PassengerCount === vehicle.PassengerCapacity) {

@@ -1,8 +1,12 @@
-import { Vector3 } from '../../core/libs/utils/Vector3';
-import { Crypto } from '../../core/libs/utils/Crypto';
-import { SocietyEnum, SocietyType } from '../../core/declares/society';
+// Native wrapper
+import { Vector3 } from '@native/utils/Vector3';
+import { Crypto } from '@native/utils/Crypto';
+// Declarations
+import { SocietyEnum, SocietyType } from '@declares/society';
+// Activities config
 import { banker as bankerActivity } from './activities';
 
+// Pacific Standard society description
 const pacificStandard = {
   id: Crypto.uuidv4(),
   name: SocietyEnum.PACIFIC_STANDARD,

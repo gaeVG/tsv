@@ -257,7 +257,9 @@ export class Weapon {
    * @constructor
    */
   public get IsMk2(): boolean {
-    return Array.from(enumValues(Mk2WeaponHash)).some(x => (x as number) === (this.hash as number));
+    return Array.from(enumValues(Mk2WeaponHash)).some(
+      (x) => (x as number) === (this.hash as number),
+    );
   }
 
   /**

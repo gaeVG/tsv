@@ -1,7 +1,8 @@
+// Core class
 import { Core } from '../core';
-import { NUIManager } from './lib';
-import { MenuManager } from './lib';
-import { ActivityManager } from './lib/activity';
+// Client libs
+import { NUIManager, MenuManager, ActivityManager } from './lib';
+
 class Client extends Core {
   nui: NUIManager;
   menus: MenuManager;
@@ -9,6 +10,7 @@ class Client extends Core {
 
   constructor() {
     super();
+
     this.nui = new NUIManager();
     this.menus = new MenuManager();
     this.activities = new ActivityManager();

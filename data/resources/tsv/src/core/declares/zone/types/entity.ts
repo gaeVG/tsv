@@ -1,6 +1,8 @@
-import { Entity } from '../../../libs/models/Entity';
-import { Color } from '../../../libs/utils/Color';
-import { User } from '../../../libs/user';
+// Native wrapper
+import { Entity } from '@native/models/Entity';
+import { Color } from '@native/utils/Color';
+// Declarations
+import { IUser } from '@declares/user';
 
 type EntityZoneType = {
   name: string;
@@ -14,8 +16,8 @@ type EntityZoneType = {
     wall: Color;
   };
 
-  onEnter?: (user: User) => void;
-  onLeave?: (user: User) => void;
+  onEnter?: (user: IUser) => void;
+  onLeave?: (user: IUser) => void;
 };
 
 export { EntityZoneType };

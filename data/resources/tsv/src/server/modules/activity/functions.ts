@@ -1,17 +1,23 @@
-import { Prop } from '../../../core/libs';
-import { IUser } from '../../../core/declares/user';
-import { ISociety, SocietyType } from '../../../core/declares/society';
-import { LogData, EnumLogContainer } from '../../../core/declares/log';
-import { EntranceStateEnum, IEntrance } from '../../../core/declares/entrance';
+// Native wrapper
+import { Prop } from '@native/models';
+// Declarations
+import { IUser } from '@declares/user';
+import { ISociety, SocietyType } from '@declares/society';
+import { LogData, EnumLogContainer } from '@declares/log';
+import { EntranceStateEnum, IEntrance } from '@declares/entrance';
+// Module
 import { getTargetProp, toggleEntrance } from '../entrance';
-import moduleConfig from './config';
-import appConfig from '../../../config';
-import { tsv } from '../..';
+import config from './config';
+// Societies config
+import societies from '@config/societies';
+// Core
+import { tsv } from '@tsv';
 
+// Log variable
 const log: LogData = {
-  namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,
+  namespace: `Module${config.name.charAt(0).toUpperCase() + config.name.slice(1)}`,
   container: EnumLogContainer.Function,
-  isModuleDisplay: moduleConfig.debug,
+  isModuleDisplay: config.debug,
 };
 
 /**
@@ -22,7 +28,7 @@ async function loadingActivities(): Promise<Error> {
   log.location = 'loadingActivities()';
 
   try {
-    appConfig.societies.forEach((society) => {
+    societies.forEach((society) => {
       const societyManager = tsv.societies.addOne(society) as ISociety;
 
       if (societyManager.isCompagny && society.societies.length > 0) {

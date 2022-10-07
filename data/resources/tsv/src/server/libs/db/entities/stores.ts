@@ -1,5 +1,7 @@
+// Dependencies
 import { Column, Entity, ObjectIdColumn, ObjectID } from 'typeorm';
-import { ZoneType } from '../../../../core/declares/zone';
+// Declarations
+import { ZoneType } from '@declares/zone';
 
 @Entity()
 class Compagnies {

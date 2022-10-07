@@ -19,7 +19,7 @@ import { PointF, Vector3 } from '../utils';
  */
 export class Scaleform {
   public static render2DMasked(scaleform1: Scaleform, scaleform2: Scaleform): Promise<void> {
-    return new Promise(async resolve => {
+    return new Promise(async (resolve) => {
       if (scaleform1.IsLoaded && scaleform2.IsLoaded) {
         global.DrawScaleformMovieFullscreenMasked(
           scaleform1.Handle,
@@ -89,7 +89,7 @@ export class Scaleform {
    */
   public callFunction(name: string, ...args: unknown[]): void {
     global.BeginScaleformMovieMethod(this.handle, name);
-    args.forEach(arg => {
+    args.forEach((arg) => {
       switch (typeof arg) {
         case 'number':
           global.PushScaleformMovieFunctionParameterInt(arg);
@@ -138,7 +138,15 @@ export class Scaleform {
     param4 = '',
     param5 = '',
   ): void {
-    global.CallScaleformMovieMethodWithString(this.handle, name, param1, param2, param3, param4, param5);
+    global.CallScaleformMovieMethodWithString(
+      this.handle,
+      name,
+      param1,
+      param2,
+      param3,
+      param4,
+      param5,
+    );
   }
 
   /**
@@ -159,7 +167,15 @@ export class Scaleform {
     param4 = -1.0,
     param5 = -1.0,
   ): void {
-    global.CallScaleformMovieMethodWithNumber(this.handle, name, param1, param2, param3, param4, param5);
+    global.CallScaleformMovieMethodWithNumber(
+      this.handle,
+      name,
+      param1,
+      param2,
+      param3,
+      param4,
+      param5,
+    );
   }
 
   /**
@@ -230,7 +246,7 @@ export class Scaleform {
   }
 
   public render2D(): Promise<void> {
-    return new Promise(async resolve => {
+    return new Promise(async (resolve) => {
       if (this.IsLoaded) {
         global.DrawScaleformMovieFullscreen(this.handle, 255, 255, 255, 255, 0);
       } else {
@@ -241,7 +257,7 @@ export class Scaleform {
   }
 
   public render2DScreenSpace(location: PointF, size: PointF): Promise<void> {
-    return new Promise(async resolve => {
+    return new Promise(async (resolve) => {
       if (this.IsLoaded) {
         const x = location.x; /* UI.Screen.Width*/
         const y = location.y; /* UI.Screen.Height*/
@@ -268,7 +284,7 @@ export class Scaleform {
   }
 
   public render3D(position: Vector3, rotation: Vector3, scale: Vector3): Promise<void> {
-    return new Promise(async resolve => {
+    return new Promise(async (resolve) => {
       if (this.IsLoaded) {
         global.DrawScaleformMovie_3dNonAdditive(
           this.handle,
@@ -294,7 +310,7 @@ export class Scaleform {
   }
 
   public render3DAdditive(position: Vector3, rotation: Vector3, scale: Vector3): Promise<void> {
-    return new Promise(async resolve => {
+    return new Promise(async (resolve) => {
       if (this.IsLoaded) {
         global.DrawScaleformMovie_3d(
           this.handle,
@@ -320,7 +336,7 @@ export class Scaleform {
   }
 
   public load(): Promise<boolean> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       if (this.IsLoaded) {
         resolve(true);
       } else {

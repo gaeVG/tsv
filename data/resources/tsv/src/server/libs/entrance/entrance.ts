@@ -1,19 +1,23 @@
-import { Prop } from '../../../core/libs';
-import { Crypto } from '../../../core/libs';
+// Native wrapper
+import { Prop, Crypto } from '@native//';
+// Declarations
 import {
   EntranceType,
   DoorType,
   IEntrance,
   EntranceStateStype,
   EntranceStateEnum,
-} from '../../../core/declares/entrance';
-import { IUser } from '../../../core/declares/user';
+} from '@declares/entrance';
+import { EntranceToogleStateError } from '@declares/entrance/errors/entranceToggleState';
+import { EntranceHeadingError } from '@declares/entrance/errors/entranceHeading';
+import { IUser } from '@declares/user';
+import { EnumLogContainer, LogData } from '@declares/log';
+// Server libs
 import { freezeTarget, getTargetHeading } from './function';
-import { EntranceToogleStateError } from '../../../core/declares/entrance/errors/entranceToggleState';
-import { EntranceHeadingError } from '../../../core/declares/entrance/errors/entranceHeading';
-import { tsv } from '../..';
-import { EnumLogContainer, LogData } from '../../../core/declares/log';
+// Core
+import { tsv } from '@tsv';
 
+// Log variable
 const log: LogData = {
   namespace: 'entrance',
   container: EnumLogContainer.Class,

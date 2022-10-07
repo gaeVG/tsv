@@ -1,7 +1,11 @@
-import { Vector3 } from '../../core/libs/utils/Vector3';
-import { mechanic } from './activities';
+// Native wrapper
+import { Vector3 } from '@native/utils/Vector3';
+// Declarations
 import { SocietyEnum, SocietyType } from '../../core/declares/society';
+// Activities config
+import { mechanic } from './activities';
 
+// Bennys society description
 const bennys = {
   name: SocietyEnum.BENNYS,
   owner: SocietyEnum.BENNYS,

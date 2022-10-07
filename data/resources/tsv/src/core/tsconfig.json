@@ -2,7 +2,11 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "*": ["types/*"]
+      "@libs*": ["./libs*"],
+      "@native*": ["./libs/native*"],
+      "@declares*": ["./declares*"],
+      "@utils": ["./utils"],
+      "@config*": ["../config*"]
     },
     "outDir": "../../dist",
     "sourceMap": true,
@@ -19,6 +23,6 @@
     "resolveJsonModule": true,
     "esModuleInterop": true
   },
-  "include": ["./**/*", "../config/**/*"],
+  "include": ["./**/*", "../config/**/*", "@citizenfx/server", "@citizenfx/client"],
   "exclude": ["**/node_modules", "**/__tests__/*"]
 }

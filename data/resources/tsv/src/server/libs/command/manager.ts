@@ -1,9 +1,12 @@
-import { LogData, EnumLogContainer } from '../../../core/declares/log';
-import { ICommand } from '../../../core/declares/command';
-import { Log } from '../../../core/libs/log';
+// Declarations
+import { LogData, EnumLogContainer } from '@declares/log';
+import { ICommand } from '@declares/command';
+// Core libs
+import { Log } from '@libs/log';
+// Core
+import { tsv } from '@tsv';
 
-import { tsv } from '../../../server';
-
+// Log variable
 const log: LogData = {
   namespace: 'CoreCommand',
   container: EnumLogContainer.Class,

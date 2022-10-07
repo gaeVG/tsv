@@ -1,5 +1,7 @@
-import { uuid } from '../../utils/uuid';
-import { IStatus } from '../../declares/status';
+// Declarations
+import { IStatus } from '@declares/status';
+// Utils
+import { uuid } from '@utils';
 
 class Status implements IStatus {
   identifier: string;

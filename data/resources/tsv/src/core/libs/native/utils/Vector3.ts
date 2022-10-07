@@ -34,7 +34,7 @@ export class Vector3 implements Vec3 {
    * ```
    */
   public static fromArrays(primitives: [number, number, number][] | number[][]): Vector3[] {
-    return primitives.map(prim => new Vector3(prim[0], prim[1], prim[2]));
+    return primitives.map((prim) => new Vector3(prim[0], prim[1], prim[2]));
   }
 
   public static clone(v1: Vec3): Vector3 {

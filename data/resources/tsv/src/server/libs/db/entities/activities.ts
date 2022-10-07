@@ -1,5 +1,8 @@
+// Dependencies
 import { Column, Entity, ObjectIdColumn, ObjectID } from 'typeorm';
-import { ActivityType, ActivityProductionType } from '../../../../core/declares/activity';
+// Declarations
+import { ActivityType, ActivityProductionType } from '@declares/activity';
+// Entities roles
 import { Roles } from './roles';
 
 @Entity()

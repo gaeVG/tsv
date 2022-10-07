@@ -1,4 +1,5 @@
-import { InventoryContainerEnum } from '../enum';
+// Declarations
+import { InventoryContainerEnum } from '@declares/inventory';
 
 type InventoryContainerType =
   | InventoryContainerEnum.BAG

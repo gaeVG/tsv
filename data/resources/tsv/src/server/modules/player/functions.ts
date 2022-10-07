@@ -1,3 +1,6 @@
+// Dependencies
+import { Player } from '@native/index';
+// Declarations
 import {
   UserCharacter,
   IUser,
@@ -7,22 +10,31 @@ import {
   UserNotFoundError,
   UserMissingIdentifierError,
   UserGroupEnum,
-} from '../../../core/declares/user';
-import { LogData, EnumLogContainer } from '../../../core/declares/log';
-import { IAdaptativeCard } from '../../../core/declares/cards';
+} from '@declares/user';
+import { LogData, EnumLogContainer } from '@declares/log';
+import { IAdaptativeCard } from '@declares/cards';
+import { BucketDimension } from '@declares/bucket';
+// Core libraries
+import { User } from '@libs/user';
+// Server librairies
 import { Users as UsersEntity, UserCharacters as CharactersEntity } from '../../libs/db/entities';
-import { Player } from '../../../core/libs';
+// Module
 import moduleConfig from './config';
-import { tsv } from '../../../server';
-import { User } from '../../../core/libs/user';
-import { BucketDimension } from '../../../core/declares/bucket';
+// Core
+import { tsv } from '@tsv';
 
+// Log variable
 const log: LogData = {
   namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,
   container: EnumLogContainer.Function,
   isModuleDisplay: moduleConfig.debug,
 };
 
+/**
+ * Create a new player on the database
+ * @param source - Player source
+ * @returns {Promise<UsersEntity>} User entity
+ */
 async function createPlayerOnDB(source: string): Promise<UsersEntity> {
   log.location = 'createPlayerOnDB()';
 
@@ -51,6 +63,11 @@ async function createPlayerOnDB(source: string): Promise<UsersEntity> {
     });
   }
 }
+/**
+ * Get user from database
+ * @param playerSource - Player source
+ * @returns {Promise<[UsersEntity, boolean]>} User entity and boolean if user is new
+ */
 async function getUserFromDB(playerSource: string): Promise<[UsersEntity, boolean]> {
   let userFromDB = await tsv.orm.dataSource.getMongoRepository(UsersEntity).findOneBy({
     [`auth.${process.env.IDENTIFIER_TYPE}`]: (getIdentifiers(playerSource) as UserIdentifier)[
@@ -72,6 +89,11 @@ async function getUserFromDB(playerSource: string): Promise<[UsersEntity, boolea
 
   return [userFromDB, false];
 }
+/**
+ * Function behind the event `onPlayerJoined`, triggered when a player client is connected
+ * @param source - Player source
+ * @returns {Promise<IUser, boolean, UserCharacter} User from DB, boolean if user is new, and user characters from DB
+ */
 async function onPlayerJoined(source: string): Promise<[IUser, boolean, UserCharacter[]]> {
   log.location = 'onPlayerJoined()';
   tsv.log.debug({
@@ -104,6 +126,9 @@ async function onPlayerJoined(source: string): Promise<[IUser, boolean, UserChar
     const userCharacters = userFromDB.characters.reduce((characters, character) => {
       return [...characters, character as UserCharacter];
     }, [] as UserCharacter[]);
+
+    tsv.buckets.addUserIntoBucket(user);
+
     return [user, isNewPlayer, userCharacters];
   } catch (error) {
     if (error instanceof Error) {
@@ -118,6 +143,13 @@ async function onPlayerJoined(source: string): Promise<[IUser, boolean, UserChar
     }
   }
 }
+/**
+ * Function behind the event `playerConnecting`, triggered when a player is connecting on the server
+ * @param source - Player source
+ * @param playerName - Player name
+ * @param setKickReason - Function to set kick reason
+ * @param deferrals - Function to set deferrals
+ */
 async function playerConnecting(
   source: string,
   playerName: string,
@@ -231,6 +263,10 @@ async function playerConnecting(
     deferrals.done(error.message);
   }
 }
+/**
+ * Function behind the event `playerDropped`, triggered when a player is dropped from the server
+ * @param source - Player source
+ */
 async function playerDropped(source: string): Promise<void> {
   log.location = 'playerDropped()';
   tsv.log.debug({
@@ -260,6 +296,10 @@ async function playerDropped(source: string): Promise<void> {
     }
   }
 }
+/**
+ * Function behind the event `CEventNetworkHostSession`, triggered when a player is connecting and is the only one on the server
+ * @param source - Player source
+ */
 async function playerHosting(source: string): Promise<void> {
   log.location = 'playerHosting()';
   let user: IUser;
@@ -285,7 +325,12 @@ async function playerHosting(source: string): Promise<void> {
     });
   }
 }
-
+/**
+ * Function behind the event `onPlayerSpawn`, triggered when a player is spawned
+ * @param _
+ * @param user
+ * @returns
+ */
 function onPlayerSpawn(_: any, user: IUser): IUser | Error {
   try {
     tsv.buckets.addUserIntoBucket(user, { id: BucketDimension.MAIN });
@@ -305,6 +350,11 @@ function onPlayerSpawn(_: any, user: IUser): IUser | Error {
     return error;
   }
 }
+/**
+ * Get user identifiers from source
+ * @param source - Player source
+ * @returns {UserIdentifier | Error} User identifiers
+ */
 function getIdentifiers(source: string): UserIdentifier | Error {
   log.location = 'getIdentifiers()';
   tsv.log.safemode({

@@ -1,8 +1,10 @@
-import { Vec4 } from '../../../libs/utils/Vector4';
-import { InventoryType } from '../../inventory';
-import { PlayerStatus } from '../../status';
-import { IZone } from '../../zone';
-import { SkinCharacter } from '.';
+// Native wrapper
+import { Vec4 } from '@native/utils/Vector4';
+// Declarations
+import { InventoryType } from '@declares/inventory';
+import { PlayerStatus } from '@declares/status';
+import { IZone } from '@declares/zone';
+import { SkinCharacter } from '@declares/user';
 
 type PlayerData = {
   isDead: boolean;

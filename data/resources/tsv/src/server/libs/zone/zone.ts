@@ -1,10 +1,12 @@
-import { Entity, Vector3, Crypto, Color, Vector2 } from '../../../core/libs';
-import { User } from '../../../core/libs/user';
-import { Bucket } from '../bucket';
-import { IUser } from '../../../core/declares/user';
-import { IZone, ZoneType } from '../../../core/declares/zone';
-import { PolyZoneType, EntityZoneType, CircleZoneType } from '../../../core/declares/zone';
-import { tsv } from '../..';
+// Native wrapper
+import { Entity } from '@native/models';
+import { Vector3, Vector2, Crypto, Color } from '@native/utils';
+// Declarations
+import { IZone, ZoneType, PolyZoneType, EntityZoneType, CircleZoneType } from '@declares/zone';
+import { IUser } from '@declares/user';
+import { IBucket } from '@declares/bucket';
+// Core
+import { tsv } from '@tsv';
 
 abstract class Zone implements IZone {
   id: string;
@@ -24,11 +26,11 @@ abstract class Zone implements IZone {
     outline: Color;
     wall: Color;
   };
-  bucket?: Bucket;
+  bucket?: IBucket;
   users?: IUser[];
 
-  onEnter?: (user: User) => void;
-  onLeave?: (user: User) => void;
+  onEnter?: (user: IUser) => void;
+  onLeave?: (user: IUser) => void;
 
   constructor(zone: ZoneType) {
     this.id = Crypto.uuidv4();
@@ -52,7 +54,7 @@ abstract class Zone implements IZone {
 
     // this.bucket = zone.bucket && zone.bucket;
     this.users = [];
-    this.onEnter = (user: User) => {
+    this.onEnter = (user: IUser) => {
       //this.bucket !== undefined && this.bucket.addUser(user);
       this.addOneUser(user);
 
@@ -66,7 +68,7 @@ abstract class Zone implements IZone {
       zone.onEnter && zone.onEnter(user);
     };
 
-    this.onLeave = (user: User) => {
+    this.onLeave = (user: IUser) => {
       //this.bucket && this.bucket.removeUser(user);
       this.removeOneUser(user);
 

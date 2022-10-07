@@ -1,4 +1,7 @@
-import { LogData, EnumLogContainer } from '../../../core/declares/log';
+// Native wrapper
+import { Player, Ped, Wait } from '@native//';
+// Declarations
+import { LogData, EnumLogContainer } from '@declares/log';
 import {
   IItem,
   ItemFoodEnum,
@@ -8,14 +11,15 @@ import {
   ItemClotheLegsEnum,
   UnknownItemError,
   ItemDrinkEnum,
-} from '../../../core/declares/item';
-import { IInventory, InventoryFromType } from '../../../core/declares/inventory';
-import { Player, Ped } from '../../../core/libs';
-import { Wait } from '../../../core/libs';
+} from '@declares/item';
+import { IInventory, InventoryFromType } from '@declares/inventory';
+// Module
 import { Clothe, Drink, Food, Weapon, Key } from './item';
 import moduleConfig from './config';
-import { tsv } from '../../';
+// Core
+import { tsv } from '@tsv';
 
+// Log variable
 const log: LogData = {
   namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,
   container: EnumLogContainer.Function,

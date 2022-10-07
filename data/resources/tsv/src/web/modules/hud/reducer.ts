@@ -1,4 +1,4 @@
-import { IStatus } from '../../../core/declares/status';
+import { IStatus } from '@declares/status';
 
 const initialState: {
   vehicle: {

@@ -1,11 +1,11 @@
-// DECLARES
-import { IEventListener } from '../../../core/declares/events';
-// CONFIG
+// Declarations
+import { IEventListener } from '@declares/events';
+// Module
 import moduleConfig from './config';
-// TSP
-import { tsv } from '../..';
+// Core
+import { tsv } from '@tsv';
 
-// List of all activities events
+// Activities events descriptions
 const activityEvents: IEventListener[] = [
   {
     name: 'addActivity',

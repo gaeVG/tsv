@@ -22,15 +22,15 @@ export class VehicleWindowCollection {
 
   public getAllWindows(): (VehicleWindow | null | undefined)[] {
     return Object.keys(VehicleWindowIndex)
-      .filter(key => !isNaN(Number(key)))
-      .map(key => {
+      .filter((key) => !isNaN(Number(key)))
+      .map((key) => {
         const index = Number(key);
         if (this.hasWindow(index)) {
           return this.getWindow(index);
         }
         return null;
       })
-      .filter(w => w);
+      .filter((w) => w);
   }
 
   public get AreAllWindowsIntact(): boolean {
@@ -38,13 +38,13 @@ export class VehicleWindowCollection {
   }
 
   public rollDownAllWindows(): void {
-    this.getAllWindows().forEach(window => {
+    this.getAllWindows().forEach((window) => {
       window?.rollDown();
     });
   }
 
   public rollUpAllWindows(): void {
-    this.getAllWindows().forEach(window => {
+    this.getAllWindows().forEach((window) => {
       window?.rollUp();
     });
   }

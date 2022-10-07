@@ -1,12 +1,17 @@
-import { Model, Player, Vector3, Wait, World } from '../../../../core/libs';
-import { ItemType, IItem, ItemShouldNoLongerExistError } from '../../../../core/declares/item';
-import { EnumLogContainer, LogData } from '../../../../core/declares/log';
+// Native wrapper
+import { Bone, Model, Player, Vector3, Wait, World } from '@native/index';
+// Declarations
+import { ItemType, IItem, ItemShouldNoLongerExistError } from '@declares/item';
+import { EnumLogContainer, LogData } from '@declares/log';
+import { InventoryFromType } from '@declares/inventory';
+// Abstract class
 import { UsableItem } from './usableItem';
+// Module
 import moduleConfig from '../config';
-import { tsv } from '../../..';
-import { Bone } from '../../../../core/libs/enums/Bone';
-import { InventoryFromType } from '../../../../core/declares/inventory';
+// Core
+import { tsv } from '@tsv';
 
+// Log variable
 const log: LogData = {
   namespace: moduleConfig.name,
   container: EnumLogContainer.Class,

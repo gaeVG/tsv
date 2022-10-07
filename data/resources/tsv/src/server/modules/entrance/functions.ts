@@ -1,19 +1,19 @@
-import { Prop } from '../../../core/libs';
-import {
-  EntranceStateEnum,
-  EntranceStateStype,
-  IEntrance,
-  DoorType,
-} from '../../../core/declares/entrance';
-import { LogData, EnumLogContainer } from '../../../core/declares/log';
-import { IUser } from '../../../core/declares/user';
-import { default as moduleConfig } from './config';
-import { tsv } from '../../';
+// Native wrapper
+import { Prop } from '@native/models';
+// Declarations
+import { EntranceStateEnum, EntranceStateStype, IEntrance, DoorType } from '@declares/entrance';
+import { LogData, EnumLogContainer } from '@declares/log';
+import { IUser } from '@declares/user';
+// Module
+import config from './config';
+// Core
+import { tsv } from '@tsv';
 
+// Log variable
 const log: LogData = {
-  namespace: moduleConfig.name,
+  namespace: config.name,
   container: EnumLogContainer.Function,
-  isModuleDisplay: moduleConfig.debug,
+  isModuleDisplay: config.debug,
 };
 
 /**

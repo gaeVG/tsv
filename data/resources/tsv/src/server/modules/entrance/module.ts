@@ -1,19 +1,20 @@
-// DECLARES
-import { EnumLogContainer, LogData } from '../../../core/declares/log';
-import { IModule } from '../../../core/declares/module';
-// CONFIG
+// Declarations
+import { EnumLogContainer, LogData } from '@declares/log';
+import { IModule } from '@declares/module';
+// Module
 import moduleConfig from './config';
-// EVENTS
 import { entranceEvents } from './events';
-// CORE
-import { tsv } from '../..';
+// Core
+import { tsv } from '@tsv';
 
+// Log variable
 const log: LogData = {
   namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,
   container: EnumLogContainer.Module,
   isModuleDisplay: moduleConfig.debug,
 };
 
+// Entrance module description
 const EntranceModule: IModule = {
   name: moduleConfig.name,
   init(): Error {

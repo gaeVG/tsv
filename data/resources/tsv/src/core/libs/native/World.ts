@@ -914,7 +914,7 @@ export abstract class World {
     const handles: number[] = GetGamePool('CObject');
     const props: Prop[] = [];
 
-    handles.forEach(handle => props.push(new Prop(handle)));
+    handles.forEach((handle) => props.push(new Prop(handle)));
 
     return props;
   }
@@ -928,7 +928,7 @@ export abstract class World {
     const handles: number[] = GetAllRopes();
     const props: Rope[] = [];
 
-    handles.forEach(handle => props.push(new Rope(handle)));
+    handles.forEach((handle) => props.push(new Rope(handle)));
 
     return props;
   }
@@ -942,7 +942,7 @@ export abstract class World {
     const handles: number[] = GetGamePool('CPed');
     const peds: Ped[] = [];
 
-    handles.forEach(handle => peds.push(new Ped(handle)));
+    handles.forEach((handle) => peds.push(new Ped(handle)));
 
     return peds;
   }
@@ -956,7 +956,7 @@ export abstract class World {
     const handles: number[] = GetGamePool('CVehicle');
     const vehicles: Vehicle[] = [];
 
-    handles.forEach(handle => vehicles.push(new Vehicle(handle)));
+    handles.forEach((handle) => vehicles.push(new Vehicle(handle)));
 
     return vehicles;
   }
@@ -993,7 +993,7 @@ export abstract class World {
     const handles: number[] = GetGamePool('CPickup');
     const pickups: Pickup[] = [];
 
-    handles.forEach(handle => pickups.push(new Pickup(handle)));
+    handles.forEach((handle) => pickups.push(new Pickup(handle)));
 
     return pickups;
   }

@@ -1,13 +1,16 @@
-import { IStatus, StatusEnum } from '../../../declares/status';
+// Declarations
+import { IStatus, StatusEnum } from '@declares/status';
+// Status abstract class
 import { Status } from '../status';
-import config from '../../../../config';
+// Status config
+import configStatus from '@config/status';
 
 class Health extends Status {
   constructor(value?: number) {
     super({
-      value: value || config.status[StatusEnum.HEALTH].max,
+      value: value || configStatus[StatusEnum.HEALTH].max,
       name: StatusEnum.HEALTH,
-      max: config.status[StatusEnum.HEALTH].max,
+      max: configStatus[StatusEnum.HEALTH].max,
     } as IStatus);
   }
 }

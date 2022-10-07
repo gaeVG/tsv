@@ -49,15 +49,15 @@ export class VehicleModCollection {
 
   public getAllMods(): (VehicleMod | null | undefined)[] {
     return Object.keys(VehicleModType)
-      .filter(key => !isNaN(Number(key)))
-      .map(key => {
+      .filter((key) => !isNaN(Number(key)))
+      .map((key) => {
         const index = Number(key);
         if (this.hasVehicleMod(index)) {
           return this.getMod(index);
         }
         return null;
       })
-      .filter(m => m);
+      .filter((m) => m);
   }
 
   public get WheelType(): VehicleWheelType {
@@ -198,8 +198,8 @@ export class VehicleModCollection {
     }
     let on = true;
     Object.keys(VehicleNeonLight)
-      .filter(key => !isNaN(Number(key)))
-      .forEach(key => {
+      .filter((key) => !isNaN(Number(key)))
+      .forEach((key) => {
         if (!on) {
           return;
         }
@@ -210,8 +210,8 @@ export class VehicleModCollection {
 
   public setAllNeonLightsOn(on: boolean): void {
     Object.keys(VehicleNeonLight)
-      .filter(key => !isNaN(Number(key)))
-      .forEach(key => {
+      .filter((key) => !isNaN(Number(key)))
+      .forEach((key) => {
         this.setNeonLightsOn(Number(key), on);
       });
   }
@@ -219,8 +219,8 @@ export class VehicleModCollection {
   public get HasAllNeonLights(): boolean {
     return (
       Object.keys(VehicleNeonLight)
-        .filter(key => !isNaN(Number(key)))
-        .findIndex(light => !this.hasNeonLight(Number(light))) === -1
+        .filter((key) => !isNaN(Number(key)))
+        .findIndex((light) => !this.hasNeonLight(Number(light))) === -1
     );
   }
 

@@ -72,7 +72,14 @@ export class Rope {
    * @param position Location where the rope is to be attached.
    */
   public attachEntity(entity: Entity, position: Vector3): void {
-    global.AttachRopeToEntity(this.handle, entity.Handle, position.x, position.y, position.z, false);
+    global.AttachRopeToEntity(
+      this.handle,
+      entity.Handle,
+      position.x,
+      position.y,
+      position.z,
+      false,
+    );
   }
 
   /**

@@ -1,7 +1,11 @@
-import { tsv } from '../..';
-import { CommandType } from '../../../core/declares/command';
+// Declarations
+import { CommandType } from '@declares/command';
+// Module
 import moduleConfig from './config';
+// Core
+import { tsv } from '@tsv';
 
+// Player module commands descriptions
 const playerCommands = [
   {
     name: 'open-personnal-menu',

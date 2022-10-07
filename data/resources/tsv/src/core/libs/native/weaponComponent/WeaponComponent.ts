@@ -136,7 +136,7 @@ export class WeaponComponent {
       return ComponentAttachmentPoint.Invalid;
     }
 
-    if (componentHashes.every(x => x !== componentHash)) {
+    if (componentHashes.every((x) => x !== componentHash)) {
       return ComponentAttachmentPoint.Invalid;
     }
 

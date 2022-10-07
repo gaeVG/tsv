@@ -1,15 +1,15 @@
-// DEPENDENCIES
-import React from 'react'
-import { useSelector, shallowEqual, useDispatch } from "react-redux";
-// TYPES
-import { AppState } from '../../../../stores';
-// COMPONENTS
+// Dependencies
+import React from 'react';
+import { useSelector, shallowEqual, useDispatch } from 'react-redux';
+// Components
 import { RingProgress, Text } from '@mantine/core';
 // HOOKS
-import { useNuiEvent } from '../../../../hooks';
+import { useNuiEvent } from '@hooks';
+// Stores
+import { AppState } from '@store';
 
 function SpeedoMeter() {
-  const { hud } : AppState = useSelector((state: AppState) => state, shallowEqual);
+  const { hud }: AppState = useSelector((state: AppState) => state, shallowEqual);
   const dispatch = useDispatch();
 
   useNuiEvent('update-speedometer', ({ vehicleSpeed }: { vehicleSpeed: number }) => {
@@ -17,8 +17,8 @@ function SpeedoMeter() {
       type: 'SET_SPEEDOMETER',
       vehicle: {
         speedometer: {
-          vehicleSpeed: vehicleSpeed
-        }
+          vehicleSpeed: vehicleSpeed,
+        },
       },
     });
   });
@@ -35,13 +35,15 @@ function SpeedoMeter() {
           </Text>
         }
         sections={[
-          { value: 30, color: null, },
-          { value: ((Math.abs(Math.floor(hud.vehicle.speedometer.vehicleSpeed)) / 280) * 100), color: 'cyan' },
+          { value: 30, color: null },
+          {
+            value: (Math.abs(Math.floor(hud.vehicle.speedometer.vehicleSpeed)) / 280) * 100,
+            color: 'cyan',
+          },
         ]}
-      >
-      </RingProgress>
+      ></RingProgress>
     </article>
-  )
+  );
 }
 
 export { SpeedoMeter };

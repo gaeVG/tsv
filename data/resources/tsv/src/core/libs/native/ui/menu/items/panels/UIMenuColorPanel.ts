@@ -61,7 +61,7 @@ export class UIMenuColorPanel extends AbstractUIMenuPanel {
     }
     this._colors = value;
     this._bar = [];
-    const colorRectangles = value.slice(0, this._total).map(color => {
+    const colorRectangles = value.slice(0, this._total).map((color) => {
       return new Rectangle(new Point(0, 0), new Size(44.5, 44.5), color);
     });
     this._bar.push(...colorRectangles);
@@ -74,7 +74,7 @@ export class UIMenuColorPanel extends AbstractUIMenuPanel {
   }
 
   public set Color(value: Color) {
-    const index = this._colors.findIndex(c => {
+    const index = this._colors.findIndex((c) => {
       return c.a === value.a && c.r === value.r && c.g === value.g && c.b === value.b;
     });
     if (index !== -1) {
@@ -126,7 +126,7 @@ export class UIMenuColorPanel extends AbstractUIMenuPanel {
     this._leftArrow.pos.Y = y + 15;
     this._rightArrow.pos.Y = y + 15;
     this._text.pos.Y = y + 15;
-    this._bar.forEach(async colorRect => {
+    this._bar.forEach(async (colorRect) => {
       colorRect.pos.Y = y + 55;
     });
   }

@@ -1,18 +1,22 @@
-import { IModule } from '../../../core/declares/module';
-import { LogData, EnumLogContainer } from '../../../core/declares/log';
+// Declarations
+import { IModule } from '@declares/module';
+import { LogData, EnumLogContainer } from '@declares/log';
+// Module
 import { playerEvents } from './events';
-import { playerThreads } from './threads';
 import { playerCommands } from './commands';
 import { playerMenus } from './menus';
-import { tsv } from '../..';
 import moduleConfig from './config';
+// Core
+import { tsv } from '@tsv';
 
+// Log variable
 const log: LogData = {
   namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,
   container: EnumLogContainer.Module,
   isModuleDisplay: moduleConfig.debug,
 };
 
+// Player module description
 const PlayerModule: IModule = {
   name: moduleConfig.name,
   init(): Error {
@@ -25,7 +29,6 @@ const PlayerModule: IModule = {
       });
 
       playerEvents.forEach((event) => tsv.events.listen(event));
-      playerThreads.forEach((thread) => tsv.threads.createThread(thread));
       playerCommands.forEach((command) => tsv.commands.register(command));
       playerMenus.forEach((menu) => tsv.menus.createMenu(menu));
     } catch (error) {

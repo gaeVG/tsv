@@ -1,15 +1,16 @@
-// DEPENDENCIES
+// Dependencies
 import React from 'react';
 import { createRoot } from 'react-dom/client';
+// Providers
 import { Provider } from 'react-redux';
 import { MantineProvider } from '@mantine/core';
 import { NotificationsProvider } from '@mantine/notifications';
-// COMPONENTS
+// Components
 import App from './app';
-// STYLES
+// Styles
 import './styles/main.scss';
-// STORES
-import { appStore } from './stores/store'
+// Stores
+import { appStore } from '@store';
 
 const container = document.getElementById('root');
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -21,5 +22,5 @@ root.render(
         <App />
       </NotificationsProvider>
     </MantineProvider>
-  </Provider>
+  </Provider>,
 );

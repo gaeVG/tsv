@@ -1,7 +1,7 @@
-import { Vector4 } from '../../../core/libs';
-import { SkinCharacter, UserCharacter } from '../../../core/declares/user';
-import { InventoryContainerEnum } from '../../../core/declares/inventory';
-import { StatusEnum } from '../../../core/declares/status';
+import { Vector4 } from '@native//';
+import { SkinCharacter, UserCharacter } from '@declares/user';
+import { InventoryContainerEnum } from '@declares/inventory';
+import { StatusEnum } from '@declares/status';
 
 export default {
   name: 'player',

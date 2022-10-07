@@ -1,7 +1,10 @@
+// Dependencies
 import { Column, Entity } from 'typeorm';
-import { Vec4 } from '../../../../core/libs/utils/Vector4';
-import { CharacterDescription, PlayerData, SkinCharacter } from '../../../../core/declares/user';
-import { InventoryType } from '../../../../core/declares/inventory';
+// Native wrapper
+import { Vec4 } from '@native/utils/Vector4';
+// Declarations
+import { CharacterDescription, PlayerData, SkinCharacter } from '@declares/user';
+import { InventoryType } from '@declares/inventory';
 
 @Entity()
 class UserCharacters {

@@ -1,6 +1,6 @@
-// DEPENDENCIES
-import { NUIModule } from '../../../core/declares/nui';
-// IMPORTS
+// Declarations
+import { NUIModule } from '@declares/nui';
+// Module
 import { characterRender } from './render';
 
 export default {

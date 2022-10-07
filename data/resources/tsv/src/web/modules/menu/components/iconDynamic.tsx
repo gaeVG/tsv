@@ -1,22 +1,22 @@
 // Dependencies
 import { useEffect, useState } from 'react';
-// DECLARES
-import { IconLibraryEnum } from '../../../../core/declares/nui';
-// ICONS
+// Declarations
+import { IconLibraryEnum } from '@declares/nui';
+// Icons
 import FaIcons from 'react-icons/fa';
 import AiIcons from 'react-icons/ai';
 import IoIcons from 'react-icons/io';
 import MdIcons from 'react-icons/md';
 import TiIcons from 'react-icons/ti';
 
-type LibraryIconType = 
+type LibraryIconType =
   | typeof FaIcons
   | typeof AiIcons
   | typeof IoIcons
   | typeof MdIcons
   | typeof TiIcons;
 
-function getIconLibrary (iconLibrary: string) {
+function getIconLibrary(iconLibrary: string) {
   switch (iconLibrary) {
     case IconLibraryEnum.FontAwesome:
       return FaIcons;
@@ -35,7 +35,22 @@ function getIconLibrary (iconLibrary: string) {
   }
 }
 
-function DynamicIcon ({ library, icon, size, color } : { library: string, icon: string, size: number, color: string }) {
+/**
+ * Dynamically display icons from the icon library
+ * @param
+ * @returns
+ */
+function DynamicIcon({
+  library,
+  icon,
+  size,
+  color,
+}: {
+  library: string;
+  icon: string;
+  size: number;
+  color: string;
+}) {
   const [libraryIcon, setLibraryIcon] = useState<LibraryIconType>();
   const [iconComponent, setIconComponent] = useState<JSX.Element>();
 
@@ -57,11 +72,14 @@ function DynamicIcon ({ library, icon, size, color } : { library: string, icon: 
     }
   }, [iconComponent]);
 
-  return (iconComponent && (iconComponent.props = {
-    ...iconComponent.props,
-    size,
-    color
-  }))
+  return (
+    iconComponent &&
+    (iconComponent.props = {
+      ...iconComponent.props,
+      size,
+      color,
+    })
+  );
 }
 
 export { DynamicIcon };

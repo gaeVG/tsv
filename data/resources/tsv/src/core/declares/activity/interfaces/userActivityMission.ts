@@ -1,17 +1,20 @@
-import { IUser } from '../../user';
-import { Ped } from '../../../libs';
-import { Vec3 } from '../../../libs/utils/Vector3';
-import { ActivityMissionStateType } from '../types';
+// Native wrapper
+import { Ped } from '@native/models/ped';
+import { Vec3 } from '@native/utils/vector3';
+// Declarations
+import { IUser } from '@declares/user';
+// Activity declarations
+import { ActivityMissionStateType } from '..';
 
 interface IUserActivityMission {
   config: any;
   name: string;
-  state: ActivityMissionStateType;
   target: Ped | IUser;
   targetPed: Ped;
   location: Vec3;
   time: Date;
   payload: unknown;
+  state: ActivityMissionStateType;
   available: boolean;
 
   tick(): void;

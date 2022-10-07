@@ -1,4 +1,5 @@
-import { ActivityProductionType, IUserActivityMission } from '../';
+// Activity declarations
+import { ActivityProductionType, IUserActivityMission } from '..';
 
 interface IUserActivity {
   id: string;

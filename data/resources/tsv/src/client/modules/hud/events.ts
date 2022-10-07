@@ -1,15 +1,21 @@
-import { EnumLogContainer, LogData } from '../../../core/declares/log';
-import { IEventListener, ClientEventNativeEnum } from '../../../core/declares/events';
-import { Wait } from '../../../core/libs';
+// Native wrapper
+import { Wait } from '@native//';
+// Declarations
+import { EnumLogContainer, LogData } from '@declares/log';
+import { IEventListener, ClientEventNativeEnum } from '@declares/events';
+// Module
 import moduleConfig from './config';
-import { tsv } from '../../index';
+// Core
+import { tsv } from '@tsv';
 
+// Log variable
 const log: LogData = {
   namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,
   container: EnumLogContainer.Event,
   isModuleDisplay: moduleConfig.debug,
 };
 
+// HUD module events descriptions
 const hudEvents: IEventListener[] = [
   {
     name: 'setRadarCircular',

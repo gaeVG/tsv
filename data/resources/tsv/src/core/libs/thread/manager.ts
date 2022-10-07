@@ -1,9 +1,12 @@
-import { EnumLogContainer, LogData } from '../../declares/log';
-import { ThreadModule } from '../../declares/threads';
-import { Log } from '../log';
-import _t from '../../../config/i18n';
-
+// Declarations
+import { EnumLogContainer, LogData } from '@declares/log';
+import { ThreadModule } from '@declares/threads';
+// Core libs
+import { Log } from '@libs/log';
+// Thread class
 import { Thread } from './threads';
+// Locale import
+import _t from '@config/i18n';
 
 const log: LogData = {
   namespace: 'CoreThread',

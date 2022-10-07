@@ -1,4 +1,5 @@
-import { Vector4 } from '../../../libs/utils';
+// Native wrapper
+import { Vector4 } from '@native/utils';
 
 type DoorType = {
   hash: number;

@@ -1,15 +1,20 @@
-import { IModule } from '../../../core/declares/module';
-import { LogData, EnumLogContainer } from '../../../core/declares/log';
-import { tsv } from '../../../client';
+// Declarations
+import { IModule } from '@declares/module';
+import { LogData, EnumLogContainer } from '@declares/log';
+// Module
 import { vehicleEvents } from './events';
 import moduleConfig from './config';
+// Core
+import { tsv } from '@tsv';
 
+// Log variable
 const log: LogData = {
   namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,
   container: EnumLogContainer.Module,
   isModuleDisplay: moduleConfig.debug,
 };
 
+// Vehicle module description
 const VehicleModule: IModule = {
   name: moduleConfig.name,
   init(): Error {

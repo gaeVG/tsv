@@ -231,7 +231,7 @@ export class Menu {
   }
 
   public set CurrentItem(value: UIMenuItem) {
-    const index = this.items.findIndex(i => i.id === value.id);
+    const index = this.items.findIndex((i) => i.id === value.id);
     if (index !== -1) {
       this.CurrentSelection = index;
     }
@@ -292,7 +292,7 @@ export class Menu {
     this._descriptionBar.size.width = width;
     this._descriptionRectangle.size.width = width;
 
-    this.items.forEach(item => {
+    this.items.forEach((item) => {
       item.formatDescription();
     });
   }
@@ -352,7 +352,7 @@ export class Menu {
       items = [items];
     }
 
-    items.forEach(item => {
+    items.forEach((item) => {
       item.offset = this._offset;
       item.parent = this;
       item.formatDescription();
@@ -367,7 +367,7 @@ export class Menu {
     if (typeof itemOrIndex === 'number') {
       this.items = this.items.filter((i, index) => index !== itemOrIndex);
     } else {
-      this.items = this.items.filter(i => i.id !== itemOrIndex.id);
+      this.items = this.items.filter((i) => i.id !== itemOrIndex.id);
     }
     this.refreshIndex();
   }
@@ -515,7 +515,8 @@ export class Menu {
   public isMouseInBounds(pos: Point, size: Size, drawOffset = true): boolean {
     const resolution = Menu.screenResolution;
     const cX = (global.GetControlNormal(0, Control.CursorX) * resolution.width) / resolution.width;
-    const cY = (global.GetControlNormal(0, Control.CursorY) * resolution.height) / resolution.height;
+    const cY =
+      (global.GetControlNormal(0, Control.CursorY) * resolution.height) / resolution.height;
     let x = pos.X / resolution.width;
     let y = pos.Y / resolution.height;
     const w = size.width / resolution.width;
@@ -821,7 +822,7 @@ export class Menu {
   }
 
   private _isThereAnyItemExcludingSeparators(): boolean {
-    return !!this.items.filter(item => !(item instanceof UIMenuSeparatorItem)).length;
+    return !!this.items.filter((item) => !(item instanceof UIMenuSeparatorItem)).length;
   }
 
   private _playSoundAndReleaseId(sound: string, set?: string): void {

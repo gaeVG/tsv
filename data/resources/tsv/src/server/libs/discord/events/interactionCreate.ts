@@ -1,5 +1,6 @@
-import { tsv } from '../../../index';
-//import { EnumLogContainer } from '../../../../core/declares/log';
+//import { EnumLogContainer } from '@declares/log';
+// Core
+import { tsv } from '@tsv';
 
 async function interactionCreate(interaction) {
   if (!interaction.isCommand()) return;

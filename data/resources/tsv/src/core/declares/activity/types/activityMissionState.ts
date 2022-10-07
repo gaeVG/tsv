@@ -1,3 +1,4 @@
+// Activity declarations
 import { ActivityMissionStateEnum } from '..';
 
 type ActivityMissionStateType =

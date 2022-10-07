@@ -1,18 +1,28 @@
-import { LogData, EnumLogContainer } from '../../../core/declares/log';
-import { InventoryContainerType, InventoryFromType } from '../../../core/declares/inventory';
-import { IInventory } from '../../../core/declares/inventory';
-import { IUser, UserNotFoundError } from '../../../core/declares/user';
-import { IItem, ItemShouldNoLongerExistError } from '../../../core/declares/item';
-import moduleConfig from './config';
-import { tsv } from '../..';
+// Declarations
+import { LogData, EnumLogContainer } from '@declares/log';
+import { InventoryContainerType, InventoryFromType } from '@declares/inventory';
+import { IInventory } from '@declares/inventory';
+import { IUser, UserNotFoundError } from '@declares/user';
+import { IItem, ItemShouldNoLongerExistError } from '@declares/item';
+// Module
+import config from './config';
+// Core
+import { tsv } from '@tsv';
 
+// Log variable
 const log: LogData = {
-  namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,
+  namespace: `Module${config.moduleName.charAt(0).toUpperCase() + config.moduleName.slice(1)}`,
   container: EnumLogContainer.Function,
-  isModuleDisplay: moduleConfig.debug,
+  isModuleDisplay: config.debug,
 };
 
-function getAllInventories(source: string, target?: string): IInventory[] | undefined {
+/**
+ * Recover all the inventories of the target, or by default those of the player
+ * @param {string} source - Source of the player
+ * @param {string} target - Source of the optionnal target
+ * @returns {IInventory[] | Error} Return the inventories of the target, or by default those of the player
+ */
+function getAllInventories(source: string, target?: string): IInventory[] | Error {
   try {
     let tspUser: IUser;
     if (target !== undefined) {
@@ -27,8 +37,16 @@ function getAllInventories(source: string, target?: string): IInventory[] | unde
       ...log,
       message: error instanceof Error ? error.message : error,
     });
+    return error;
   }
 }
+/**
+ * Recover the inventory of the target, or by default the inventory of the player
+ * @param {string} source - Source of the player
+ * @param {InventoryContainerType} container - Container of the inventory to recover
+ * @param {string} target - Source of the optionnal target
+ * @returns {IInventory | Error} Return the inventory of the target, or by default the inventory of the player
+ */
 function getInventory(
   source: string,
   container: InventoryContainerType,
@@ -50,6 +68,7 @@ function getInventory(
     });
   }
 }
+// TODO: Recover target inventory item from other source than the player
 function getItemCount(
   source: string,
   from: InventoryFromType,
@@ -79,6 +98,13 @@ function getItemCount(
     return new Error('Item not found');
   }
 }
+/**
+ * Consume an item from the source inventory
+ * @param source
+ * @param inventoryItem
+ * @param from
+ * @returns
+ */
 function consumeItem(source: string, inventoryItem: IItem, from: InventoryFromType): IItem | Error {
   log.location = 'useItem()';
   try {
@@ -113,6 +139,13 @@ function consumeItem(source: string, inventoryItem: IItem, from: InventoryFromTy
     return error;
   }
 }
+/**
+ * Check if the source inventory contains the item
+ * @param source
+ * @param item
+ * @param container
+ * @returns
+ */
 function canUseItem(source: string, item: IItem, container: InventoryFromType): boolean | Error {
   try {
     return getItemCount(source, container, item) > 0;

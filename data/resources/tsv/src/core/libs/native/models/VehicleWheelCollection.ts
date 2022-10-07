@@ -19,25 +19,25 @@ export class VehicleWheelCollection {
 
   public getAllWheels(): (VehicleWheel | null | undefined)[] {
     return Object.keys(VehicleWheelIndex)
-      .filter(key => !isNaN(Number(key)))
-      .map(key => {
+      .filter((key) => !isNaN(Number(key)))
+      .map((key) => {
         const index = Number(key);
         if (this.hasWheel(index)) {
           return this.getWheel(index);
         }
         return null;
       })
-      .filter(w => w);
+      .filter((w) => w);
   }
 
   public burstAllWheels(): void {
-    this.getAllWheels().forEach(wheel => {
+    this.getAllWheels().forEach((wheel) => {
       wheel?.burst();
     });
   }
 
   public fixAllWheels(): void {
-    this.getAllWheels().forEach(wheel => {
+    this.getAllWheels().forEach((wheel) => {
       wheel?.fix();
     });
   }

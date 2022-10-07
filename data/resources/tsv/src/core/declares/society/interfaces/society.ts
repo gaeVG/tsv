@@ -1,5 +1,7 @@
-import { ActivitiesManager } from '../../../libs/activity';
-import { SocietyBuildingType } from '../types';
+// Declarations
+import { SocietyBuildingType } from '@declares/society';
+// Core libs
+import { ActivitiesManager } from '@libs/activity';
 
 interface ISociety {
   id: string;

@@ -1,20 +1,24 @@
-import { tsv } from '../..';
-import { DoorType, EntranceStateStype } from '../../../core/declares/entrance';
-import { IEventListener, ServerEventNativeEnum } from '../../../core/declares/events';
-import { default as moduleConfig } from './config';
+// Declarations
+import { DoorType, EntranceStateStype } from '@declares/entrance';
+import { IEventListener, ServerEventNativeEnum } from '@declares/events';
+import { IUser } from '@declares/user';
+// Module
 import { onResourceStop, toggleEntrance } from './functions';
-import { IUser } from '../../../core/declares/user';
+import config from './config';
+// Core
+import { tsv } from '@tsv';
 
+// Entrance module events description
 const entranceEvents: IEventListener[] = [
   {
     // onResourceStop event : native event when server resource stop
     name: ServerEventNativeEnum.onResourceStop,
-    module: moduleConfig.name,
+    module: config.name,
     handler: onResourceStop,
   },
   {
     name: 'toggleEntrance',
-    module: moduleConfig.name,
+    module: config.name,
     onNet: true,
     isCallback: true,
     handler: async (

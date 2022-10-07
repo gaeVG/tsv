@@ -1,5 +1,7 @@
+// Dependencies
 import cryptoJS from 'crypto-js';
 
+// Secret key from env configuration
 const SECRET_KEY = process.env.SECRET_KEY;
 
 class AES {

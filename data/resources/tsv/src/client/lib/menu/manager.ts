@@ -1,8 +1,12 @@
-import { IMenu, MenuType } from '../../../core/declares/menu';
+// Declarations
+import { IMenu, MenuType } from '@declares/menu';
+import { LogData, EnumLogContainer } from '@declares/log';
+// Core lib
+import { Log } from '@libs/log';
+// Menu lib
 import { Menu } from './menu';
-import { Log } from '../../../core/libs/log';
-import { LogData, EnumLogContainer } from '../../../core/declares/log';
 
+// Log variable
 const log: LogData = {
   namespace: 'MenuManager',
   container: EnumLogContainer.Manager,

@@ -1,5 +1,6 @@
-import { ItemType } from '../../item';
-import { InventoryContainerType } from './container';
+// Declarations
+import { ItemType } from '@declares/item';
+import { InventoryContainerType } from '@declares/inventory';
 
 type InventoryType = {
   container: InventoryContainerType;

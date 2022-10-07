@@ -1,5 +1,7 @@
-import { ActivityEnum } from '../../../core/declares/activity';
+// Declarations
+import { ActivityEnum } from '@declares/activity';
 
+// Management activity description
 const management = {
   name: ActivityEnum.MANAGEMENT,
   roles: [

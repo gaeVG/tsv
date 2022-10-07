@@ -1,3 +1,6 @@
+// Native wrapper
+import { Game } from '@native//';
+// Declarations
 import {
   ButtonMenuType,
   IMenu,
@@ -6,14 +9,15 @@ import {
   TypeMenuType,
   TypeButtonMenuType,
   TypeButtonMenuEnum,
-} from '../../../core/declares/menu';
-import { NUIMessage } from '../../../core/declares/nui';
-import { Log } from '../../../core/libs/log';
-import { EnumLogContainer, LogData } from '../../../core/declares/log';
-import { tsv } from '../..';
-import { Game } from '../../../core/libs';
-import { IconType } from '../../../core/declares/nui';
+} from '@declares/menu';
+import { IconType, NUIMessage } from '@declares/nui';
+import { EnumLogContainer, LogData } from '@declares/log';
+// Core lib
+import { Log } from '@libs/log';
+// Core
+import { tsv } from '@tsv';
 
+// Log variable
 const log: LogData = {
   namespace: 'Menu',
   container: EnumLogContainer.Class,

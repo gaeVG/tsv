@@ -1,7 +1,10 @@
-import { IEventListener } from '../../../core/declares/events';
-import { IStatus } from '../../../core/declares/status';
-import { tsv } from '../../';
+// Declarations
+import { IEventListener } from '@declares/events';
+import { IStatus } from '@declares/status';
+// Core
+import { tsv } from '@tsv';
 
+// Status module events descriptions
 const statusEvents: IEventListener[] = [
   {
     name: 'playerStatusUpdate',

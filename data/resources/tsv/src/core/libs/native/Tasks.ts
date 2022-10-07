@@ -138,7 +138,7 @@ export class Tasks {
   public followPointRoute(points: Vector3[]): void {
     TaskFlushRoute();
 
-    points.forEach(point => TaskExtendRoute(point.x, point.y, point.z));
+    points.forEach((point) => TaskExtendRoute(point.x, point.y, point.z));
 
     TaskFollowPointRoute(this.ped.Handle, 1, 0);
   }

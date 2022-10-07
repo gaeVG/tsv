@@ -7,6 +7,7 @@ const buildPath = path.resolve(__dirname, '../dist/');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const DotEnv = require('dotenv-webpack');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 const server = {
   entry: './server',
@@ -37,6 +38,13 @@ const server = {
     minimize: process.env.NODE_ENV === 'production' ? true : false,
   },
   resolve: {
+    plugins: [
+      // Resolve paths from tsconfig.json
+      new TsconfigPathsPlugin({
+        configFile: path.resolve('./server/tsconfig.json'),
+      }),
+    ],
+
     extensions: ['.tsx', '.ts', '.js'],
     fallback: {
       path: require.resolve('path-browserify'),
@@ -83,11 +91,16 @@ const client = {
     new ESLintPlugin(),
     new DotEnv(),
   ],
-
   optimization: {
     minimize: false,
   },
   resolve: {
+    plugins: [
+      // Resolve paths from tsconfig.json
+      new TsconfigPathsPlugin({
+        configFile: path.resolve('./client/tsconfig.json'),
+      }),
+    ],
     extensions: ['.tsx', '.ts', '.js'],
     fallback: {
       path: require.resolve('path-browserify'),
@@ -109,6 +122,12 @@ const web = {
     filename: 'ui.js',
   },
   resolve: {
+    plugins: [
+      // Resolve paths from tsconfig.json
+      new TsconfigPathsPlugin({
+        configFile: path.resolve('./web/tsconfig.json'),
+      }),
+    ],
     extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
   },
   module: {
@@ -223,4 +242,4 @@ const loadscreen = {
   ],
 };
 
-module.exports = [server, client, web, loadscreen];
+module.exports = [server, client, web /*loadscreen*/];

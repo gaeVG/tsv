@@ -30,7 +30,7 @@ export class Vector4 implements Vec4 {
    * ```
    */
   public static fromArrays(primitives: [number, number, number, number][] | number[][]): Vector4[] {
-    return primitives.map(prim => new Vector4(prim[0], prim[1], prim[2], prim[3]));
+    return primitives.map((prim) => new Vector4(prim[0], prim[1], prim[2], prim[3]));
   }
 
   public static clone(v1: Vec4): Vector4 {

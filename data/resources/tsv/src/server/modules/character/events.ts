@@ -1,6 +1,9 @@
-import { IEventListener } from '../../../core/declares/events';
+// Declarations
+import { IEventListener } from '@declares/events';
+// Module
 import { setCharacter, setNewCharacterIntoBucket } from './functions';
 
+// Character module events description
 const characterEvents: IEventListener[] = [
   {
     name: 'setCharacter',

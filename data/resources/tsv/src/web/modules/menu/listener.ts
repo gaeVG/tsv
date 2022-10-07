@@ -1,4 +1,4 @@
-import { NUIModuleListener } from '../modules';
+import { NUIModuleListener } from '@declares/nui';
 
 const listeners: NUIModuleListener[] = [];
 

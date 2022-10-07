@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react'
+// Dependencies
+import React from 'react';
+// Hooks
+import { useEffect, useState } from 'react';
 
 function characterRender() {
   const [test, setTest] = useState('rien');
   useEffect(() => {
     setTimeout(() => {
       setTest('un test');
-    }, 3000)
-  }, [])
+    }, 3000);
+  }, []);
 
   return (
     <>
@@ -16,6 +19,6 @@ function characterRender() {
       </div>
     </>
   );
-};
+}
 
 export { characterRender };

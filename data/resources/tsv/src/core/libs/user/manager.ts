@@ -1,11 +1,14 @@
+// Declarations
+import { IUser, UserNotFoundError } from '@declares/user';
+import { EnumLogContainer, LogData } from '@declares/log';
+// Core libs
+import { Log } from '@libs/log';
+// User class
 import { User } from './user';
-import { IUser, UserNotFoundError } from '../../declares/user';
-import { EnumLogContainer, LogData } from '../../declares/log';
-import { Log } from '../log';
-import config from '../../../config';
+// Locale import
+import _t from '@config/i18n';
 
-const _t = config.locale;
-
+// Log variable
 const log: LogData = {
   namespace: 'CoreUser',
   container: EnumLogContainer.Manager,

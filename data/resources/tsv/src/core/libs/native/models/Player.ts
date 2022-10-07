@@ -77,7 +77,7 @@ export class Player {
   }
 
   public removeStateListener(tgtCookie: number): void {
-    this.stateBagCookies = this.stateBagCookies.filter(cookie => {
+    this.stateBagCookies = this.stateBagCookies.filter((cookie) => {
       const isCookie = cookie == tgtCookie;
       if (isCookie) RemoveStateBagChangeHandler(cookie);
       return isCookie;

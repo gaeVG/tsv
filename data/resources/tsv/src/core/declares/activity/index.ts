@@ -3,9 +3,10 @@ export {
   ActivityRoleType,
   ActivityProductionType,
   ActivityMissionType,
+  ActivityMissionStateType,
   UserActivityType,
 } from './types';
-export { IActivity, IUserActivity, IUserActivityMission } from './interfaces';
+export { IActivity, IUserActivity, IActivityRole, IUserActivityMission } from './interfaces';
 export {
   ActivityEnum,
   ActivityMissionStateEnum,

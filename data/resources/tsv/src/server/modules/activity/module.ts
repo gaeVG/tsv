@@ -1,21 +1,21 @@
-// DECLARES
-import { EnumLogContainer, LogData } from '../../../core/declares/log';
-import { IModule } from '../../../core/declares/module';
-// CONFIG
-import moduleConfig from './config';
-// MODULE
+// Declarations
+import { EnumLogContainer, LogData } from '@declares/log';
+import { IModule } from '@declares/module';
+// Module
+import config from './config';
 import { loadingActivities } from './functions';
-// CORE
-import { tsv } from '../..';
+// Core
+import { tsv } from '@tsv';
 
+// Log variable
 const log: LogData = {
-  namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,
+  namespace: `Module${config.name.charAt(0).toUpperCase() + config.name.slice(1)}`,
   container: EnumLogContainer.Module,
-  isModuleDisplay: moduleConfig.debug,
+  isModuleDisplay: config.debug,
 };
 
 const ActivityModule: IModule = {
-  name: moduleConfig.name,
+  name: config.name,
   init(): Error {
     log.location = 'init()';
 
@@ -27,7 +27,7 @@ const ActivityModule: IModule = {
       tsv.log.safemode({
         ...log,
         message: tsv.locale('module.global.init.complete', {
-          moduleName: moduleConfig.name,
+          moduleName: config.name,
         }),
         isLast: true,
       });

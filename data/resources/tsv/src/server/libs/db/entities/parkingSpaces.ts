@@ -1,5 +1,8 @@
+// Dependencies
 import { Column, Entity, ObjectIdColumn, ObjectID } from 'typeorm';
-import { Vector4 } from '../../../../core/libs';
+// Native wrapper
+import { Vector4 } from '@native/utils';
+// Vehicle entity
 import { Vehicles } from './vehicles';
 
 @Entity()

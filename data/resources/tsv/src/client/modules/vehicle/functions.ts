@@ -1,17 +1,23 @@
-import { Player, Scaleform, Vehicle } from '../../../core/libs';
-import { tsv } from '../..';
-import { LogData } from '../../../core/declares/log';
+// Native wrapper
+import { Player, Scaleform, Vehicle } from '@native//';
+// Declarations
+import { LogData } from '@declares/log';
+// Module
 import moduleConfig from './config';
+// Core
+import { tsv } from '@tsv';
 
-let streetName1: number, streetName2: number;
-let streetHashName1: string, streetHashName2: string;
-let previousHashName1: string, previousHashName2: string;
-
+// Log variables
 const log: LogData = {
   namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,
   container: 'function',
   isModuleDisplay: moduleConfig.debug,
 };
+
+// Streets names
+let streetName1: number, streetName2: number;
+let streetHashName1: string, streetHashName2: string;
+let previousHashName1: string, previousHashName2: string;
 
 async function setDisplayRadar() {
   log.location = 'setDisplayRadar()';

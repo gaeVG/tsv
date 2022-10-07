@@ -1,6 +1,8 @@
-import { IUser } from '../../user';
-import { Ped } from '../../../libs';
-import { Vec3 } from '../../../libs/utils/Vector3';
+// Native wrapper
+import { Ped } from '@native/models/Ped';
+import { Vec3 } from '@native/utils/Vector3';
+// Declarations
+import { IUser } from '@declares/user';
 
 type ActivityMissionType = {
   name: string;

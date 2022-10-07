@@ -1,14 +1,19 @@
-import { ThreadModule } from '../../../core/declares/threads';
-import { EnumLogContainer, LogData } from '../../../core/declares/log';
+// Declarations
+import { ThreadModule } from '@declares/threads';
+import { EnumLogContainer, LogData } from '@declares/log';
+// Modules
 import moduleConfig from './config';
-import { tsv } from '../..';
+// Core
+import { tsv } from '@tsv';
 
+// Log variable
 const log: LogData = {
   namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,
   container: EnumLogContainer.Thread,
   isModuleDisplay: moduleConfig.debug,
 };
 
+// Zone module threads descriptions
 const zoneThreads: ThreadModule[] = [
   {
     name: 'zoneTick',

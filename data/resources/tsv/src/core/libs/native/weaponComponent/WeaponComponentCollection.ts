@@ -45,7 +45,7 @@ export class WeaponComponentCollection implements Iterable<WeaponComponent> {
    * @param componentHash
    */
   public get(componentHash: WeaponComponentHash): WeaponComponent {
-    if (this.AllWeaponComponentHashes.some(x => x === componentHash)) {
+    if (this.AllWeaponComponentHashes.some((x) => x === componentHash)) {
       let component = this.components.get(componentHash);
 
       if (!component) {
@@ -206,9 +206,9 @@ export class WeaponComponentCollection implements Iterable<WeaponComponent> {
   private getComponentHashesByAttachmentPoints(
     ...attachmentPoints: ComponentAttachmentPoint[]
   ): WeaponComponentHash[] {
-    return this.AllWeaponComponentHashes.filter(hash =>
+    return this.AllWeaponComponentHashes.filter((hash) =>
       attachmentPoints.some(
-        attachmentPoint => ComponentAttachmentPointByHash.get(hash) === attachmentPoint,
+        (attachmentPoint) => ComponentAttachmentPointByHash.get(hash) === attachmentPoint,
       ),
     );
   }

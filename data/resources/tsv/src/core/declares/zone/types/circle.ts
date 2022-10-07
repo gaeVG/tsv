@@ -1,6 +1,7 @@
-import { Vector3 } from '../../../libs/utils/Vector3';
-import { Color } from '../../../libs/utils/Color';
-import { User } from '../../../libs/user';
+// Declarations
+import { Color, Vector3 } from '@native/utils';
+// Declarations
+import { IUser } from '@declares/user';
 
 type CircleZoneType = {
   name: string;
@@ -14,8 +15,8 @@ type CircleZoneType = {
     wall: Color;
   };
 
-  onEnter?: (user: User) => void;
-  onLeave?: (user: User) => void;
+  onEnter?: (user: IUser) => void;
+  onLeave?: (user: IUser) => void;
 };
 
 export { CircleZoneType };

@@ -1,16 +1,19 @@
-// DEPENDENCIES
-import React from 'react'
-// COMPONENT
+// Dependencies
+import React from 'react';
+// Views
 import { Status, Vehicle } from './views';
 
+/**
+ * Display HUD view
+ * @returns
+ */
 function Hud() {
-
   return (
-    <section id='head-up-display'>
+    <section id="head-up-display">
       <Status />
-      <Vehicle  />
+      <Vehicle />
     </section>
   );
 }
 
-export { Hud }
+export { Hud };

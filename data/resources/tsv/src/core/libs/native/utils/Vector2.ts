@@ -28,7 +28,7 @@ export class Vector2 implements Vec2 {
    * ```
    */
   public static fromArrays(primitives: [number, number][] | number[][]): Vector2[] {
-    return primitives.map(prim => new Vector2(prim[0], prim[1]));
+    return primitives.map((prim) => new Vector2(prim[0], prim[1]));
   }
 
   public static clone(v1: Vec2): Vector2 {

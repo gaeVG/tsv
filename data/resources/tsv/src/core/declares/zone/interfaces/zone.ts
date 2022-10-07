@@ -1,7 +1,9 @@
-import { Color, Vector3 } from '../../../libs';
-import { User } from '../../../libs/user';
-import { IBucket } from '../../bucket';
-import { IUser } from '../../user';
+// Native wrapper
+import { Color, Vector3 } from '@native/utils';
+// Declarations
+import { IBucket } from '@declares/bucket';
+import { IUser } from '@declares/user';
+import { User } from '@libs/user';
 
 interface IZone {
   id: string;

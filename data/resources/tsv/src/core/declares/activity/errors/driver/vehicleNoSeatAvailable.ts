@@ -1,4 +1,5 @@
-import { Vehicle } from '../../../../libs';
+// Native wrapper
+import { Vehicle } from '@native/models/Vehicle';
 
 class VehicleNoSeatAvaibleError extends Error {
   constructor(vehicle: Vehicle) {

@@ -1,16 +1,21 @@
+// Dependencies
+import { Ped, Player } from '@native//';
+// Declarations
 import {
   ActivityEnum,
   UserActivityType,
   DriverActivityTargetTooFarAwayError,
-} from '../../../../core/declares/activity';
-import { LogData, EnumLogContainer } from '../../../../core/declares/log';
-import { Ped, Player } from '../../../../core/libs';
+} from '@declares/activity';
+import { IUser } from '@declares/user';
+import { LogData, EnumLogContainer } from '@declares/log';
+// Module
 import { Activity } from '..';
 import { driverEvents } from './events';
-import { tsv } from '../../..';
-import { IUser } from '../../../../core/declares/user';
 import { PedCabRide } from './missions';
+// Core
+import { tsv } from '@tsv';
 
+// Log variable
 const log: LogData = {
   namespace: 'Activity',
   container: EnumLogContainer.Manager,

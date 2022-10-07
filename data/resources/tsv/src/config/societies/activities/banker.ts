@@ -1,5 +1,7 @@
-import { ActivityEnum } from '../../../core/declares/activity';
+// Declarations
+import { ActivityEnum } from '@declares/activity';
 
+// Banker activity description
 const banker = {
   name: ActivityEnum.BANKER,
   roles: [

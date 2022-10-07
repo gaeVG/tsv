@@ -1,10 +1,12 @@
-import { Crypto } from '../../../core/libs';
+// Declarations
 import {
   ActivityProductionType,
   IUserActivity,
   IUserActivityMission,
   UserActivityType,
-} from '../../../core/declares/activity';
+} from '@declares/activity';
+// Core utils
+import { uuid } from '@utils';
 
 abstract class Activity implements IUserActivity {
   id: string;
@@ -16,7 +18,7 @@ abstract class Activity implements IUserActivity {
   currentMission: IUserActivityMission;
 
   constructor(activity: UserActivityType) {
-    this.id = Crypto.uuidv4();
+    this.id = uuid();
     this.job = activity.job;
     this.society = activity.for;
     this.role = activity.role;

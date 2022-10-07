@@ -35,7 +35,7 @@ export abstract class Screen {
 
     global.BeginTextCommandPrint('CELL_EMAIL_BCON');
 
-    strings.forEach(element => {
+    strings.forEach((element) => {
       global.AddTextComponentSubstringPlayerName(element);
     });
 
@@ -47,7 +47,7 @@ export abstract class Screen {
 
     global.BeginTextCommandDisplayHelp('CELL_EMAIL_BCON');
 
-    strings.forEach(element => {
+    strings.forEach((element) => {
       global.AddTextComponentSubstringPlayerName(element);
     });
 
@@ -59,7 +59,7 @@ export abstract class Screen {
 
     global.SetNotificationTextEntry('CELL_EMAIL_BCON');
 
-    strings.forEach(element => {
+    strings.forEach((element) => {
       global.AddTextComponentSubstringPlayerName(element);
     });
 
@@ -83,7 +83,7 @@ export abstract class Screen {
 
     global.SetNotificationTextEntry('CELL_EMAIL_BCON');
 
-    strings.forEach(element => {
+    strings.forEach((element) => {
       global.AddTextComponentSubstringPlayerName(element);
     });
 

@@ -1,13 +1,12 @@
 {
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": ".",
     "paths": {
       "@libs*": ["../core/libs*"],
       "@native*": ["../core/libs/native*"],
       "@declares*": ["../core/declares*"],
-      "@utils": ["../core/utils"],
-      "@config*": ["../config*"],
-      "@tsv": ["./index.ts"]
+      "@utils*": ["../core/utils*"],
+      "@config*": ["../config*"]
     },
     "outDir": "../../dist",
     "sourceMap": true,
@@ -15,14 +14,15 @@
     "allowJs": true,
     "module": "commonjs",
     "target": "es6",
-    "lib": ["dom", "dom.iterable", "esnext", "es2017"],
-    "removeComments": true,
-    "types": ["@types/node", "@citizenfx/client"],
+    "allowSyntheticDefaultImports": true,
+    "lib": ["esnext", "es2017", "dom"],
+    "types": ["@types/node", "@citizenfx/server", "@citizenfx/client"],
     "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "experimentalDecorators": true
+    "esModuleInterop": true
   },
-  "include": ["./**/*", "../core/**/*"],
+  "include": ["./**/*", "../config/**/*", "@citizenfx/server", "@citizenfx/client"],
   "exclude": ["**/node_modules", "**/__tests__/*"]
 }

@@ -1,5 +1,6 @@
-import { PolyZoneType } from '../../zone';
-import { EntranceType } from '../../entrance';
+// Declarations
+import { PolyZoneType } from '@declares/zone';
+import { EntranceType } from '@declares/entrance';
 
 type SocietyBuildingType = {
   zone: PolyZoneType;

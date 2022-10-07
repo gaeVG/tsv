@@ -1,13 +1,18 @@
+// Declarations
 import { EnumLogContainer, LogData } from '../core/declares/log';
-import { UserManager } from '../core/libs/user';
-import { SocietiesManager } from '../core/libs/society';
+// Core libs
+import { UserManager } from '@libs/user';
+import { SocietiesManager } from '@libs/society';
+// Server libs
 import { EntranceManager } from './libs/entrance';
 import { DBManager } from './libs/db';
 import { BucketManager } from './libs/bucket';
 import { DiscordApp } from './libs/discord';
 import { ZoneManager } from './libs/zone';
+// Core class
 import { Core } from '../core';
 
+// Log variable
 const log: LogData = {
   namespace: 'Server',
   container: EnumLogContainer.Class,

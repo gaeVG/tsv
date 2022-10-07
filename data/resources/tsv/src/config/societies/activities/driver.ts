@@ -1,5 +1,7 @@
-import { ActivityEnum, DriverActivityMissionEnum } from '../../../core/declares/activity';
+// Declarations
+import { ActivityEnum, DriverActivityMissionEnum } from '@declares/activity';
 
+// Driver activity description
 const driver = {
   name: ActivityEnum.DRIVER,
   roles: [

@@ -22,31 +22,31 @@ export class VehicleDoorCollection {
 
   public getAllDoors(): (VehicleDoor | null | undefined)[] {
     return Object.keys(VehicleDoorIndex)
-      .filter(key => !isNaN(Number(key)))
-      .map(key => {
+      .filter((key) => !isNaN(Number(key)))
+      .map((key) => {
         const index = Number(key);
         if (this.hasDoor(index)) {
           return this.getDoors(index);
         }
         return null;
       })
-      .filter(d => d);
+      .filter((d) => d);
   }
 
   public openAllDoors(loose?: boolean, instantly?: boolean): void {
-    this.getAllDoors().forEach(door => {
+    this.getAllDoors().forEach((door) => {
       door?.open(loose, instantly);
     });
   }
 
   public closeAllDoors(instantly?: boolean): void {
-    this.getAllDoors().forEach(door => {
+    this.getAllDoors().forEach((door) => {
       door?.close(instantly);
     });
   }
 
   public breakAllDoors(stayInTheWorld?: boolean): void {
-    this.getAllDoors().forEach(door => {
+    this.getAllDoors().forEach((door) => {
       door?.break(stayInTheWorld);
     });
   }

@@ -42,7 +42,7 @@ export class UIMenuStatisticsPanel extends AbstractUIMenuPanel {
     if (typeof itemOrIndex === 'number') {
       this._items = this._items.filter((i, index) => index !== itemOrIndex);
     } else {
-      this._items = this._items.filter(i => i.id !== itemOrIndex.id);
+      this._items = this._items.filter((i) => i.id !== itemOrIndex.id);
     }
   }
 
@@ -55,7 +55,7 @@ export class UIMenuStatisticsPanel extends AbstractUIMenuPanel {
       item.activeBar.pos.Y = yOffset;
       item.text.pos.Y = yOffset - 12;
       if (this._divider) {
-        item.divider.forEach(async divider => {
+        item.divider.forEach(async (divider) => {
           divider.pos.Y = yOffset;
         });
       }

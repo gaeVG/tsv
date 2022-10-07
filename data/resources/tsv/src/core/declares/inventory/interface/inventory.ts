@@ -1,5 +1,6 @@
-import { IItem, ItemType } from '../../item';
-import { InventoryContainerType } from '..';
+// Declarations
+import { IItem, ItemType } from '@declares/item';
+import { InventoryContainerType } from '@declares/inventory';
 
 interface IInventory {
   container: InventoryContainerType;

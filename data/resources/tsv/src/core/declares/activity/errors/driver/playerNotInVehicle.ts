@@ -1,5 +1,7 @@
-import { ErrorCodeEnum } from '../../../../declares/errors';
-import { Player } from '../../../../libs';
+// Native wrapper
+import { Player } from '@native/models/Player';
+// Declarations
+import { ErrorCodeEnum } from '@declares/errors';
 
 class DriverActivityPlayerNotInVehicleError extends Error {
   constructor(player: Player) {

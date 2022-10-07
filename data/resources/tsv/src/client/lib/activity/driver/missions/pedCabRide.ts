@@ -1,16 +1,21 @@
-import { Control, Game, InputMode } from '../../../../../core/libs';
-import { ActivityMission } from '../..';
+// Native wrapper
+import { Control, Game, InputMode, Ped, Player, Vector3 } from '@native//';
+// Declarations
 import {
   ActivityMissionStateEnum,
   DriverActivityMissionEnum,
   DriverActivityPlayerNotInVehicleError,
-} from '../../../../../core/declares/activity';
-import { EnumLogContainer, LogData } from '../../../../../core/declares/log';
-import { Ped, Player, Vector3 } from '../../../../../core/libs';
-import { driver as driverConfig } from '../../../../../config/societies/activities/driver';
+} from '@declares/activity';
+import { EnumLogContainer, LogData } from '@declares/log';
+// Application config
+import { driver as driverConfig } from '@config/societies/activities/driver';
+// Module
 import { getSeatPassenger, setPed } from './functions';
-import { tsv } from '../../../..';
+import { ActivityMission } from '../..';
+// Core
+import { tsv } from '@tsv';
 
+// Log variable
 const log: LogData = {
   namespace: 'PedCabRide',
   container: EnumLogContainer.Class,

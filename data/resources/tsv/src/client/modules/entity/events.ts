@@ -1,4 +1,5 @@
-import { IEventListener } from '../../../core/declares/events';
+// Declarations
+import { IEventListener } from '@declares/events';
 import {
   getGamePool,
   getClosestObject,
@@ -9,6 +10,7 @@ import {
   setEntityFreezePosition,
 } from './function';
 
+// Entity module events descriptions
 const entityEvents: IEventListener[] = [
   {
     name: 'getGamePool',

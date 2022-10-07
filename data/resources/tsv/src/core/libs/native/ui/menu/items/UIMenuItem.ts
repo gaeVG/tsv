@@ -547,7 +547,7 @@ export class UIMenuItem {
       throw new Error('This item does not support panels');
     }
     const panels = Array.isArray(panel) ? panel : [panel];
-    panels.forEach(p => {
+    panels.forEach((p) => {
       p.ParentItem = this;
     });
     this._panels.push(...panels);
@@ -557,7 +557,7 @@ export class UIMenuItem {
     if (!this.supportsPanels) {
       throw new Error('This item does not support panels');
     }
-    const index = this._panels.findIndex(p => p.id === panel.id);
+    const index = this._panels.findIndex((p) => p.id === panel.id);
     return index !== -1 ? index : 0;
   }
 
@@ -568,7 +568,7 @@ export class UIMenuItem {
     if (typeof panelOrIndex === 'number') {
       this._panels = this._panels.filter((p, index) => index !== panelOrIndex);
     } else {
-      this._panels = this._panels.filter(p => p.id !== panelOrIndex.id);
+      this._panels = this._panels.filter((p) => p.id !== panelOrIndex.id);
     }
   }
 

@@ -59,7 +59,7 @@ export class UIMenuListItem extends UIMenuItem {
   }
 
   public set SelectedItem(value: ListItem) {
-    const index = this.Items.findIndex(i => i.id === value.id);
+    const index = this.Items.findIndex((i) => i.id === value.id);
     if (index >= 0) {
       this.Index = index;
     }

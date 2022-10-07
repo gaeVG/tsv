@@ -1,17 +1,19 @@
-// DEPENDENCIES
+// Dependencies
 import React, { useEffect, useState } from 'react';
+// Declarations
+import { StatusEnum } from '@declares/status';
+// Hooks
 import { useSelector, shallowEqual } from 'react-redux';
-// COMPONENTS
+// Components
 import { RingProgress } from '@mantine/core';
-// ICONS
+// Icons
 import { FcLike, FcFeedIn, FcChargeBattery } from 'react-icons/fc';
 import { IoIosWater } from 'react-icons/io';
+// Store
+import { AppState } from '@store';
 
-import { AppState } from '../../../../stores';
-import { StatusEnum } from '../../../../../core/declares/status';
-
-function getBorderColorByValue(statusValue: number) : string {
-  if (status === undefined) return "black"
+function getBorderColorByValue(statusValue: number): string {
+  if (status === undefined) return 'black';
 
   if (statusValue > 100) {
     return 'green';
@@ -25,7 +27,7 @@ function getBorderColorByValue(statusValue: number) : string {
     return 'red';
   }
 }
-function getStatusValuePercent(statusValue: number) : number {
+function getStatusValuePercent(statusValue: number): number {
   return Math.floor(statusValue / 1000);
 }
 
@@ -35,12 +37,16 @@ function BasicNeeds() {
   const [thirstStatusValue, setThirstStatusValue] = useState(0);
 
   useEffect(() => {
-    const hungerStatus = status.basicNeeds.status.find(status => status.name === StatusEnum.HUNGER);
+    const hungerStatus = status.basicNeeds.status.find(
+      (status) => status.name === StatusEnum.HUNGER,
+    );
     if (hungerStatus !== undefined) {
       setHungerStatusValue(getStatusValuePercent(hungerStatus.value as number));
     }
 
-    const thirstStatus = status.basicNeeds.status.find(status => status.name === StatusEnum.THRIST);
+    const thirstStatus = status.basicNeeds.status.find(
+      (status) => status.name === StatusEnum.THRIST,
+    );
     if (thirstStatus !== undefined) {
       setThirstStatusValue(getStatusValuePercent(thirstStatus.value as number));
     }
@@ -52,28 +58,20 @@ function BasicNeeds() {
         <RingProgress
           size={40}
           thickness={2}
-          label={
-            <FcLike size={18} />
-          }
-          sections={
-            [
-              { value: 90, color: 'cyan' }
-            ]
-          }
+          label={<FcLike size={18} />}
+          sections={[{ value: 90, color: 'cyan' }]}
           className="progress"
         />
         {/* HUNGER STATUS */}
         <RingProgress
           size={40}
           thickness={2}
-          label={
-            <FcFeedIn size={18} />
-          }
+          label={<FcFeedIn size={18} />}
           sections={[
-            { 
+            {
               value: hungerStatusValue || 0,
-              color: getBorderColorByValue(hungerStatusValue)
-            }
+              color: getBorderColorByValue(hungerStatusValue),
+            },
           ]}
           className="progress"
         />
@@ -81,33 +79,25 @@ function BasicNeeds() {
         <RingProgress
           size={40}
           thickness={2}
-          label={
-            <IoIosWater size={18} style={{ color: '#0be3af' }} />
-          }
+          label={<IoIosWater size={18} style={{ color: '#0be3af' }} />}
           sections={[
-            { 
+            {
               value: thirstStatusValue || 0,
-              color: getBorderColorByValue(thirstStatusValue)
-            }
+              color: getBorderColorByValue(thirstStatusValue),
+            },
           ]}
           className="progress"
         />
         <RingProgress
           size={40}
           thickness={2}
-          label={
-            <FcChargeBattery size={18} />
-          }
-          sections={
-            [
-              { value: 15, color: '#b72339' }
-            ]
-          }
+          label={<FcChargeBattery size={18} />}
+          sections={[{ value: 15, color: '#b72339' }]}
           className="progress"
         />
       </article>
     )
-  )
+  );
 }
 
 export { BasicNeeds };

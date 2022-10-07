@@ -1,5 +1,7 @@
-import _t from '../../../../config/i18n';
-import { IUser } from '../../../../core/declares/user';
+// Declarations
+import { IUser } from '@declares/user';
+// Locale import
+import _t from '@config/i18n';
 
 class AddOneUserBucketAlreadyExistError extends Error {
   constructor(user: IUser) {

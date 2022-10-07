@@ -1,15 +1,19 @@
-import { EnumLogContainer, LogData } from '../../../core/declares/log';
+// Declarations
+import { EnumLogContainer, LogData } from '@declares/log';
 import {
   UserActivityDuplicateError,
   UserActivityType,
   ActivityEnum,
   UnknownActivityError,
   IUserActivity,
-} from '../../../core/declares/activity';
+} from '@declares/activity';
+// Module
 import { Activity } from './activity';
 import { Security, Driver } from '.';
-import { tsv } from '../..';
+// Core
+import { tsv } from '@tsv';
 
+// Log variable
 const log: LogData = {
   namespace: 'Actvitiy',
   container: EnumLogContainer.Manager,

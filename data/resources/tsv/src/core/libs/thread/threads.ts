@@ -1,11 +1,17 @@
-import { ThreadModule as ThreadModuleType } from '../../declares/threads';
-import { EnumLogContainer, LogData } from '../../declares/log';
+// Native wrapper
+import { Wait } from '@native//';
+// Declarations
+import { ThreadModule as ThreadModuleType } from '@declares/threads';
+import { EnumLogContainer, LogData } from '@declares/log';
+// Core utils
 import { uuid } from '../../utils/uuid';
-import { Benchmark } from '../benchmark';
-import { Log } from '../log';
-import { Wait } from '..';
-import _t from '../../../config/i18n';
+// Core libs
+import { Benchmark } from '@libs/benchmark';
+import { Log } from '@libs/log';
+// Locale import
+import _t from '@config/i18n';
 
+// Log variable
 const log: LogData = {
   namespace: _t('CoreThread'),
   container: EnumLogContainer.Class,

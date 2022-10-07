@@ -1,5 +1,5 @@
-import { IActivityRole } from '.';
-import { ActivityProductionType } from '../';
+// Activity declarations
+import { ActivityProductionType, IActivityRole } from '..';
 
 interface IActivity {
   id: string;

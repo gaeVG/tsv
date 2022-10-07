@@ -1,14 +1,17 @@
-import { Player } from '..';
+// Native wrapper
+import { Player } from '@native/models';
+// Declarations
 import {
   CharacterDescription,
   IUser,
   UserGroup,
   UserIdentifier,
   UserIdentifierEnum,
-} from '../../declares/user';
-import { StatusManager } from '../status';
-import { InventoryManager } from '../inventory';
-import { UserActivityType } from '../../declares/activity';
+} from '@declares/user';
+import { UserActivityType } from '@declares/activity';
+// Managers
+import { StatusManager } from '@libs/status';
+import { InventoryManager } from '@libs/inventory';
 
 class User extends Player implements IUser {
   id: string;

@@ -1,6 +1,9 @@
-import { tsv } from '../..';
-import { IUser } from '../../../core/declares/user';
-import { Prop } from '../../../core/libs';
+// Native wrapper
+import { Prop } from '@native/models';
+// Declarations
+import { IUser } from '@declares/user';
+// Core
+import { tsv } from '@tsv';
 
 /**
  * Triggers a client event to get the target heading

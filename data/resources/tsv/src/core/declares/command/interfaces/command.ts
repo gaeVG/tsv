@@ -1,5 +1,6 @@
-import { UserGroup } from '../../../declares/user';
-import { ICommandArgument } from '.';
+// Declarations
+import { UserGroup } from '@declares/user';
+import { ICommandArgument } from '@declares/command';
 
 interface ICommand {
   id?: string;

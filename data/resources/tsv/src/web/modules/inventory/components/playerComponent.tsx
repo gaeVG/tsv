@@ -1,10 +1,23 @@
+// Dependencies
 import React from 'react';
+// Declarations
+import { PlayerComponentType } from '@declares/inventory';
+// Hooks
 import { useDispatch } from 'react-redux';
-import { GiSpiderMask, GiHand, GiSchoolBag, GiBilledCap, GiArmoredPants, GiFootTrip, GiTShirt, Gi3DGlasses, GiSleevelessJacket } from 'react-icons/gi';
-import { PlayerComponentType } from '../../../../core/declares/inventory';
+// Components
+import {
+  GiSpiderMask,
+  GiHand,
+  GiSchoolBag,
+  GiBilledCap,
+  GiArmoredPants,
+  GiFootTrip,
+  GiTShirt,
+  Gi3DGlasses,
+  GiSleevelessJacket,
+} from 'react-icons/gi';
 
-function PlayerComponent({ component } : { component: PlayerComponentType }) {
-
+function PlayerComponent({ component }: { component: PlayerComponentType }) {
   const dispatch = useDispatch();
   const componentIcon = (componentName: string) => {
     switch (componentName) {
@@ -26,21 +39,24 @@ function PlayerComponent({ component } : { component: PlayerComponentType }) {
         return <GiHand size={32} />;
       case 'bag':
         return <GiSchoolBag size={32} />;
-    };
+    }
   };
 
   const closeInventory = () => {
     dispatch({
       type: 'SET_DISPLAY',
-      display: { module: false,}
+      display: { module: false },
     });
   };
 
   return (
-    <div className={`playerComponent playerComponent-${component.name} remove-component`} onClick={closeInventory}>
+    <div
+      className={`playerComponent playerComponent-${component.name} remove-component`}
+      onClick={closeInventory}
+    >
       {componentIcon(component.name)}
     </div>
-  )
+  );
 }
 
 export { PlayerComponent };

@@ -1,4 +1,5 @@
-import { InventoryContainerType } from '..';
+// Declarations
+import { InventoryContainerType } from '@declares/inventory';
 
 type InventoryFromType = {
   owner: number | 'player' | 'shopSection';

@@ -1,10 +1,11 @@
-// DEPENDENCIES
+// Dependencies
 import React, { useEffect, useState } from 'react';
-// DECLARES
-import { MenuProps } from '../../../../core/declares/nui';
-// HOOKS
-import { useNuiEvent } from '../../../hooks';
+// Declarations
+import { MenuProps } from '@declares/nui';
+// Hooks
 import { useDebouncedValue, useId } from '@mantine/hooks';
+import { useNuiEvent } from '@hooks';
+// Components
 import { ExitButton } from '../components';
 
 function MenuDefault({ title, buttons }: MenuProps) {

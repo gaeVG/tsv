@@ -1,7 +1,11 @@
-import { IEventListener, ClientEventNativeEnum } from '../../../core/declares/events';
-import { Vehicle } from '../../../core/libs';
+// Native wrapper
+import { Vehicle } from '@native//';
+// Declarations
+import { IEventListener, ClientEventNativeEnum } from '@declares/events';
+// Module
 import { playerEnteredVehicle } from './functions';
 
+// Vehicle module events descriptions
 const vehicleEvents: IEventListener[] = [
   {
     name: ClientEventNativeEnum.gameEventTriggered,

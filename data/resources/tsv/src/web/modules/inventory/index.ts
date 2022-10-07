@@ -1,4 +1,4 @@
-import { NUIModule } from '../../../core/declares/nui';
+import { NUIModule } from '@declares/nui';
 import { inventoryRender } from './render';
 
 export default {

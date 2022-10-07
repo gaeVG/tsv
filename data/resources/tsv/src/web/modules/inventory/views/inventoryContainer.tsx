@@ -1,41 +1,51 @@
-// DEPENDENCIES
-import React, { useEffect } from "react";
-import { useSelector, shallowEqual } from 'react-redux';
-import { useDispatch } from "react-redux";
-// DECLARES
-import { ItemCategoryEnum } from "../../../../core/declares/item";
-import { AppReducerActionEnum, DnDItemEnum } from '../../../../core/declares/nui';
-// COMPONENTS
-import { Inventory } from '../components/inventory';
-// HOOKS
+// Dependencies
+import React from 'react';
+// Declarations
+import { ItemCategoryEnum } from '@declares/item';
+import { AppReducerActionEnum, DnDItemEnum } from '@declares/nui';
+// Hooks
+import { useEffect } from 'react';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useHover } from '@mantine/hooks';
-// STORE
-import { AppState } from "../../../stores/store";
+// Components
+import { Inventory } from '../components/inventory';
+// Store
+import { AppState } from '@store';
 
-function getSplitInventoryClass(inventory: AppState['inventory']) {
-  let className: string
+/**
+ * Format the inventory class name based on the split inventory
+ * @param {AppState['inventory']} inventory - The inventory state
+ * @returns {string} The inventory class name
+ */
+function getSplitInventoryClass(inventory: AppState['inventory']): string {
+  let className: string;
   if (inventory.targetInventory !== undefined) {
-    className = 'split-for-'
+    className = 'split-for-';
 
     if (inventory.display.targetInventory) {
-      className += 'target'
+      className += 'target';
     } else if (inventory.display.playerComponents) {
-      className += 'player-components'
+      className += 'player-components';
     } else {
-      className = ''
+      className = '';
     }
   }
 
-  return className !== undefined ? className : ''
+  return className !== undefined ? className : '';
 }
 
-const inventoryDnDItems: DnDItemEnum[] = Object.values(ItemCategoryEnum).map((itemCategory) => (itemCategory as unknown) as DnDItemEnum);
+const inventoryDnDItems: DnDItemEnum[] = Object.values(ItemCategoryEnum).map(
+  (itemCategory) => itemCategory as unknown as DnDItemEnum,
+);
 
-function InventoryContainer ({ owner }: { owner: 'player' | number | 'shopSection'}) {
+/**
+ * Inventory container view to display the inventory interface
+ */
+function InventoryContainer({ owner }: { owner: 'player' | number | 'shopSection' }) {
   const { app, inventory }: AppState = useSelector((state: AppState) => state, shallowEqual);
   const { hovered, ref } = useHover();
   const dispatch = useDispatch();
-  
+
   const onMouseUp = () => {
     if (owner !== 'player') {
       if (
@@ -49,9 +59,9 @@ function InventoryContainer ({ owner }: { owner: 'player' | number | 'shopSectio
           return;
         }
       }
-      dispatch({ type: AppReducerActionEnum.REMOVE_CURRENT_DRAG })
+      dispatch({ type: AppReducerActionEnum.REMOVE_CURRENT_DRAG });
     }
-  }
+  };
 
   useEffect(() => {
     if (hovered) {
@@ -64,46 +74,40 @@ function InventoryContainer ({ owner }: { owner: 'player' | number | 'shopSectio
                 ...app.currentDrag,
                 target: {
                   owner: owner,
-                  container: inventory.playerInventories[1].container
-                }
-              }
-            })
+                  container: inventory.playerInventories[1].container,
+                },
+              },
+            });
           }
         }
       }
     }
-  }, [hovered])
+  }, [hovered]);
 
-	return (
-		<div
+  return (
+    <div
       key={`inventory-${owner}`}
       id={`inventory-${owner}`}
       ref={ref}
       onMouseUp={onMouseUp}
-      className={
-        `inventory ${owner === 'player' ? owner : 'target'} ${owner === 'player' ? getSplitInventoryClass(inventory) : ''}`
-      }>
-      
-      {owner === 'player' && (
-        <div id="toggle-player-components" />
+      className={`inventory ${owner === 'player' ? owner : 'target'} ${
+        owner === 'player' ? getSplitInventoryClass(inventory) : ''
+      }`}
+    >
+      {owner === 'player' && <div id="toggle-player-components" />}
+      {owner === 'player' ? (
+        inventory.playerInventories.map((i) => (
+          <Inventory key={`player-inventory-${i.container}`} currentInventory={i} owner={owner} />
+        ))
+      ) : (
+        <Inventory
+          key={`target-${owner}-inventory-${inventory.playerInventories[0].container}`}
+          currentInventory={inventory.playerInventories[0]}
+          owner={owner}
+        />
       )}
-      {
-        owner === 'player'
-          ? inventory.playerInventories.map((i) =>
-              <Inventory
-                key={`player-inventory-${i.container}`}
-                currentInventory={i}
-                owner={owner}
-              />
-            )
-          : <Inventory
-              key={`target-${owner}-inventory-${inventory.playerInventories[0].container}`}
-              currentInventory={inventory.playerInventories[0]}
-              owner={owner}
-            />
-      }
-		</div>
-	)
+    </div>
+  );
 }
 
-export { InventoryContainer }
+export { InventoryContainer };

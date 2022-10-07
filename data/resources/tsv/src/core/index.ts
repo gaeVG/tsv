@@ -1,13 +1,19 @@
+// Dependencies
 import { TFunction } from 'i18next';
-import { EnumLogContainer, LogData } from './declares/log';
-import { Log } from './libs/log';
-import { EventManager } from './libs/event';
-import { ModuleManager } from './libs/module';
-import { ThreadManager } from './libs/thread';
-import { CallbackManager } from './libs/callback';
-import { CommandManager } from './libs/command';
-import config from '../config';
+// Declarations
+import { EnumLogContainer, LogData } from '@declares/log';
+// Managers
+import { EventManager } from '@libs/event';
+import { ModuleManager } from '@libs/module';
+import { ThreadManager } from '@libs/thread';
+import { CallbackManager } from '@libs/callback';
+import { CommandManager } from '@libs/command';
+// Log
+import { Log } from '@libs/log';
+// Locale import
+import _t from '@config/i18n';
 
+// Log variable
 const log: LogData = {
   namespace: 'MainCore',
   container: EnumLogContainer.Class,
@@ -23,7 +29,7 @@ class Core {
   readonly commands = new CommandManager();
 
   constructor() {
-    this.locale = config.locale;
+    this.locale = _t;
     this.log = Log;
     this.events = new EventManager();
     this.modules = new ModuleManager();

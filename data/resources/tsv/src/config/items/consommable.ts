@@ -1,5 +1,7 @@
-import { ItemType, ItemFoodEnum, ItemDrinkEnum } from '../../core/declares/item';
-import _t from '../i18n';
+// Declarations
+import { ItemType, ItemFoodEnum, ItemDrinkEnum } from '@declares/item';
+// Config
+import _t from '@config/i18n';
 
 export default [
   // Food items

@@ -1,4 +1,5 @@
-import { ErrorCodeEnum } from '../../errors';
+// Declarations
+import { ErrorCodeEnum } from '@declares/errors';
 
 class EntranceNotFoundError extends Error {
   constructor(entranceId: string) {

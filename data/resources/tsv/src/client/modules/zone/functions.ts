@@ -1,6 +1,8 @@
-import { IZone } from '../../../core/declares/zone';
-
-import { Player, Vector3, Color, World } from '../../../core/libs';
+// Native wrapper
+import { Player, Vector3, Color, World } from '@native//';
+// Declarations
+import { IZone } from '@declares/zone';
+// Core
 import { tsv } from '../..';
 
 let currentZone: IZone;
