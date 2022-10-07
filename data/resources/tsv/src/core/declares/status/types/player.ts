@@ -1,4 +1,4 @@
-type PlayerStatus = {
+type PlayerStatusType = {
   name: string;
   value: unknown;
   min?: number;
@@ -7,4 +7,4 @@ type PlayerStatus = {
   duration?: number;
 };
 
-export { PlayerStatus };
+export { PlayerStatusType };

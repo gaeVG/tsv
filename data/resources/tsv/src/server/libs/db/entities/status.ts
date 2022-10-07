@@ -2,7 +2,7 @@
 import { Column, Entity, ObjectID, ObjectIdColumn } from 'typeorm';
 import { ObjectID as ObjectId } from 'mongodb';
 // Declarations
-import { PlayerStatus } from '@declares/status';
+import { PlayerStatusType } from '@declares/status';
 
 @Entity()
 class Status {
@@ -15,7 +15,7 @@ class Status {
   @Column()
   value: unknown;
 
-  constructor(status: PlayerStatus) {
+  constructor(status: PlayerStatusType) {
     this.id = new ObjectId();
     this.name = status.name;
     this.value = status.value;

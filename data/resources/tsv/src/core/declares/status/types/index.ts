@@ -1,1 +1,1 @@
-export { PlayerStatus } from './player';
+export { PlayerStatusType } from './player';

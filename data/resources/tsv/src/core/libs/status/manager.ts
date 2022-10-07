@@ -1,5 +1,5 @@
 // Declarations
-import { IStatus, PlayerStatus, StatusEnum } from '@declares/status';
+import { IStatus, PlayerStatusType, StatusEnum } from '@declares/status';
 import { LogData, EnumLogContainer } from '@declares/log';
 // Status abstract class
 import { Status } from './status';
@@ -29,8 +29,9 @@ class StatusManager {
     this.addOne(new Thrist());
   }
 
-  constructor(status: PlayerStatus[]) {
+  constructor(status: PlayerStatusType[]) {
     log.location = _t('global.location.constructor');
+
     this.manager = [];
     status.length > 0
       ? status.map((status) => {
@@ -55,7 +56,7 @@ class StatusManager {
     return this.manager.length;
   }
 
-  addOne(addStatus: PlayerStatus): IStatus | null {
+  addOne(addStatus: PlayerStatusType): IStatus | null {
     let status: Status;
     Log.safemode({
       ...log,
