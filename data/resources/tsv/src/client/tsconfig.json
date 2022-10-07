@@ -2,7 +2,12 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "*": ["types/*"]
+      "@libs*": ["../core/libs*"],
+      "@native*": ["../core/libs/native*"],
+      "@declares*": ["../core/declares*"],
+      "@utils": ["../core/utils"],
+      "@config*": ["../config*"],
+      "@tsv": ["./index.ts"]
     },
     "outDir": "../../dist",
     "sourceMap": true,

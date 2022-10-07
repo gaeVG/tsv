@@ -1,6 +1,8 @@
-import { Prop } from '../../../libs/models/prop';
-import { EntranceStateStype, DoorType } from '..';
-import { IUser } from '../../user';
+// Native wrapper
+import { Prop } from '@native/models/prop';
+// Declarations
+import { IUser } from '@declares/user';
+import { EntranceStateStype, DoorType } from '@declares/entrance';
 
 interface IEntrance {
   id: string;

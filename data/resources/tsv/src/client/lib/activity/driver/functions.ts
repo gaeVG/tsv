@@ -1,19 +1,38 @@
+// Dependencies
 import { DiceRoll } from '@dice-roller/rpg-dice-roller';
-import { VehicleHash, Player, Model, Ped, Vector3 } from '../../../../core/libs';
+// Native wrapper
+import { Model } from '@native/Model';
+import { Player, Ped } from '@native/models';
+import { VehicleHash } from '@native/hashes';
+import { Vector3 } from '@native/utils';
+// Declarations
+import { ActivityEnum } from '@declares/activity';
+import { DriverActivityMissionEnum } from '@declares/activity';
+import { EnumLogContainer, LogData } from '@declares/log';
+// App config
+import { driver as driverConfig } from '@config/societies/activities/driver';
+// Module
 import { Driver } from './activity';
-import { tsv } from '../../../';
-import { ActivityEnum } from '../../../../core/declares/activity';
-import { driver as driverConfig } from '../../../../config/societies/activities/driver';
-import { DriverActivityMissionEnum } from '../../../../core/declares/activity';
-import { EnumLogContainer, LogData } from '../../../../core/declares/log';
+// Core
+import { tsv } from '@tsv';
 
+// Log variable
 const log: LogData = {
   namespace: 'DriverActivity',
   container: EnumLogContainer.Function,
 };
 
+// Vehicles driver hash
 const vehicleDriverHash = [VehicleHash.Taxi];
 
+/**
+ * Function behind the native `populationPedCreating` event checking the conditions necessary to start the activity
+ * @param _source The source of the event
+ * @param x The x position of the ped
+ * @param y The y position of the ped
+ * @param z The z position of the ped
+ * @param pedModel The model of the ped
+ */
 function populationPedCreating(_source: string, x: number, y: number, z: number, pedModel: string) {
   const player = new Player();
   if (

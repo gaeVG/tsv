@@ -1,4 +1,5 @@
-import { ActivityProductionEnum } from '../enums';
+// Activity declarations
+import { ActivityProductionEnum } from '..';
 
 type ActivityProductionType =
   | ActivityProductionEnum.PUBLIC

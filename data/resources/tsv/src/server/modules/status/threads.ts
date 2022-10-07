@@ -1,15 +1,21 @@
-import { ThreadModule } from '../../../core/declares/threads';
-import { EnumLogContainer, LogData } from '../../../core/declares/log';
-import { Feed, Thrist } from '../../../core/libs/status/needs';
-import moduleConfig from './config';
-import { tsv } from '../..';
+// Declarations
+import { ThreadModule } from '@declares/threads';
+import { EnumLogContainer, LogData } from '@declares/log';
+// Basic needs classes
+import { Feed, Thrist } from '@libs/status/needs';
+// Module
+import config from './config';
+// Core
+import { tsv } from '@tsv';
 
+// Log variable
 const log: LogData = {
-  namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,
+  namespace: `Module${config.name.charAt(0).toUpperCase() + config.name.slice(1)}`,
   container: EnumLogContainer.Thread,
-  isModuleDisplay: moduleConfig.debug,
+  isModuleDisplay: config.debug,
 };
 
+// Status module threads descriptions
 const statusThreads: ThreadModule[] = [
   {
     name: 'statusTick',

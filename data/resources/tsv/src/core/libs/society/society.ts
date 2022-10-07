@@ -1,6 +1,10 @@
-import { Crypto } from '..';
-import { SocietyBuildingType, SocietyType } from '../../declares/society';
-import _t from '../../../config/i18n';
+// Native wrapper
+import { Crypto } from '@native/utils';
+// Declarations
+import { SocietyBuildingType, SocietyType } from '@declares/society';
+// Locale import
+import _t from '@config/i18n';
+// Activities manager
 import { ActivitiesManager } from '../activity';
 
 class Society {

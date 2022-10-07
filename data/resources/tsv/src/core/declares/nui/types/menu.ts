@@ -1,4 +1,5 @@
-import { TypeMenuType, IMenuButton } from '../../menu';
+// Declarations
+import { TypeMenuType, IMenuButton } from '@declares/menu';
 
 type MenuProps = {
   type?: TypeMenuType;

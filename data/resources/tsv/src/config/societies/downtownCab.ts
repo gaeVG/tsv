@@ -1,7 +1,11 @@
-import { Vector3 } from '../../core/libs/utils/Vector3';
+// Native wrapper
+import { Vector3 } from '@native/utils/Vector3';
+// Declarations
+import { SocietyEnum, SocietyType } from '@declares/society';
+// Activities config
 import { driver as driverActivity } from './activities/driver';
-import { SocietyEnum, SocietyType } from '../../core/declares/society';
 
+// Downtown Cab society description
 const downtownCab = {
   name: SocietyEnum.DOWNTOWN_CAB,
   owner: SocietyEnum.DOWNTOWN_CAB,

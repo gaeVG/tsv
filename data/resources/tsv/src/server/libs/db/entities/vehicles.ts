@@ -1,5 +1,8 @@
+// Dependencies
 import { Column, Entity, ObjectIdColumn, ObjectID } from 'typeorm';
-import { Vector4 } from '../../../../core/libs';
+// Declarations
+import { Vector4 } from '@native/utils';
+// Invoices entity
 import { Invoices } from './invoices';
 
 @Entity()

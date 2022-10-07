@@ -1,25 +1,42 @@
-import { LogData, EnumLogContainer } from '../../../core/declares/log';
-import { AddOneUserBucketAlreadyExistError, IBucket } from '../../../core/declares/bucket';
-import { UserCharacter, UserNotFoundError } from '../../../core/declares/user';
-import { IUser } from '../../../core/declares/user';
-import { Crypto, Vector4 } from '../../../core/libs';
-import { StatusManager } from '../../../core/libs/status';
-import { InventoryManager } from '../../../core/libs/inventory';
-import moduleConfig from './config';
-import { tsv } from '../../../server';
+// Native wrapper
+import { Vector4 } from '@native/utils';
+// Declarations
+import { LogData, EnumLogContainer } from '@declares/log';
+import { AddOneUserBucketAlreadyExistError } from '@declares/bucket';
+import { UserCharacter, UserNotFoundError } from '@declares/user';
+import { IUser } from '@declares/user';
+// Managers
+import { StatusManager } from '@libs/status';
+import { InventoryManager } from '@libs/inventory';
+// Module
+import config from './config';
+// Core
+import { tsv } from '@tsv';
 
+// Log variable
 const log: LogData = {
-  namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,
+  namespace: `Module${config.moduleName.charAt(0).toUpperCase() + config.moduleName.slice(1)}`,
   container: EnumLogContainer.Function,
-  isModuleDisplay: moduleConfig.debug,
+  isModuleDisplay: config.debug,
 };
 
-function setCharacter(_: any, user: IUser, character: UserCharacter): IUser | Error {
+/**
+ * Update the character from the server
+ * @param {string} _playerSource - Source of the player
+ * @param {IUser} user - User object to update
+ * @param {UserCharacter} character - Character object to update
+ * @returns {IUser | Error} Return the user object updated
+ */
+function setCharacter(
+  _playerSource: string,
+  setUser: IUser,
+  character: UserCharacter,
+): IUser | Error {
   log.location = 'setCharacter()';
 
   try {
-    const updatedUser = tsv.users.updateOne({
-      id: user.id,
+    return tsv.users.updateOne({
+      id: setUser.id,
       position: new Vector4(
         character.position.x,
         character.position.y,
@@ -31,31 +48,35 @@ function setCharacter(_: any, user: IUser, character: UserCharacter): IUser | Er
       status: character.status.length > 0 && new StatusManager(character.status),
       activities: character.activities,
     });
-    return updatedUser;
   } catch (error) {
     if (error instanceof UserNotFoundError && process.env.NODE_ENV !== 'safemode') {
-      global.DropPlayer(user.source, error.message);
+      global.DropPlayer(setUser.source, error.message);
     }
     return error;
   }
 }
-function setNewCharacterIntoBucket(source: string, user: IUser): IBucket | Error {
+/**
+ * Put the player in a specific bucket
+ * @param _playerSource - Source of the player
+ * @param user - User object to update
+ * @returns {IBucket | Error} Returns the user object updated with the bucket
+ */
+function setNewCharacterIntoBucket(_playerSource: string, userPutIntoBucket: IUser): IUser | Error {
   try {
-    const tspUser = tsv.users.getOnebyId(user.id) as IUser;
-    if (!tspUser) {
-      return null;
+    const user = tsv.users.getOnebyId(userPutIntoBucket.id) as IUser;
+    if (user instanceof Error) {
+      throw user;
     }
 
-    const bucket = tsv.buckets.addUserIntoBucket(tspUser, {
-      id: parseInt(Crypto.uuidv4(), 16),
-      name: `newCharacter-user-${tspUser.id}`,
-      host: tspUser.serverId,
-    }) as IBucket;
+    const bucket = tsv.buckets.addUserIntoBucket(user);
+    if (bucket instanceof Error) {
+      throw bucket;
+    }
 
-    tsv.users.updateOne({ id: user.id, currentBucket: bucket.id });
+    return tsv.users.updateOne({ id: user.id, currentBucket: bucket.id });
   } catch (error) {
     if (error instanceof AddOneUserBucketAlreadyExistError || error instanceof UserNotFoundError) {
-      global.DropPlayer(user.source, error.message);
+      global.DropPlayer(userPutIntoBucket.source, error.message);
     } else {
       return error;
     }

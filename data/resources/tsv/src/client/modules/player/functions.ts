@@ -1,35 +1,41 @@
-import { LogData, EnumLogContainer } from '../../../core/declares/log';
-import { IUser } from '../../../core/declares/user';
-import { UserCharacter } from '../../../core/declares/user';
-import { ClientEventNativeEnum } from '../../../core/declares/events';
-import { Player, Fading } from '../../../core/libs';
-import { selectCharacter } from '../character';
+// Native wrapper
+import { Player, Fading } from '@native//';
+// Declarations
+import { LogData, EnumLogContainer } from '@declares/log';
+import { UserCharacter, IUser } from '@declares/user';
+import { ClientEventNativeEnum } from '@declares/events';
+import { IBucket } from '@declares/bucket';
+// Module
+import { selectCharacter, spawnCharacter } from '../character';
 import moduleConfig from './config';
-import { tsv } from '../..';
+// Core
+import { tsv } from '@tsv';
 
+// Log variable
 const log: LogData = {
   namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,
   container: EnumLogContainer.Event,
   isModuleDisplay: moduleConfig.debug,
 };
 
-async function playerConnecting(
-  _: string,
-  user: IUser,
-  isNewPlayer: boolean,
-  characters: UserCharacter[],
-): Promise<void> {
-  const characterSelected = await selectCharacter(user, isNewPlayer, characters);
+/**
+ * Function behind the 'onResourceStart' event, creating the thread to check if the player is active
+ * @param {string} resourceName - Name of the resource that has just started
+ */
+function onResourceStart(resourceName: string): void {
+  log.location = ClientEventNativeEnum.onResourceStart;
 
-  if (characterSelected instanceof Error) {
-    tsv.log.error({
-      ...log,
-      message: characterSelected.message,
+  if (GetCurrentResourceName() === resourceName) {
+    tsv.threads.createThread({
+      name: 'is-network-player-active',
+      timer: 500,
+      callback: isNetworkPlayerActiveTick,
     });
-
-    return;
   }
 }
+/**
+ * Function behind the `CEventNetworkHostSession` event, directly triggering a server event
+ */
 function playerHostingSession(): void {
   log.location = ClientEventNativeEnum.CEventNetworkHostSession;
   const player = new Player();
@@ -48,6 +54,9 @@ function playerHostingSession(): void {
     onNet: true,
   });
 }
+/**
+ * Function behind the `CEventNetworkStartSession` event, directly triggering a server event
+ */
 function playerStartingSession(): void {
   log.location = ClientEventNativeEnum.CEventNetworkStartSession;
   const player = new Player();
@@ -59,9 +68,12 @@ function playerStartingSession(): void {
   });
   Fading.fadeOut(500);
 }
-
-async function setUserFromDB(): Promise<void> {
+/**
+ * Trigger the connection of the player to the server, and if in this case, the selection and spawn of a character
+ */
+async function playerConnecting(): Promise<void> {
   try {
+    // Retrieves player information from the database. Create new entries if necessary.
     const [user, isNewPlayer, userCharacters] = await (tsv.events.trigger({
       name: 'onPlayerJoined',
       module: 'player',
@@ -69,16 +81,48 @@ async function setUserFromDB(): Promise<void> {
       isCallback: true,
     }) as Promise<[IUser, boolean, UserCharacter[]]>);
 
-    const error = selectCharacter(user, isNewPlayer, userCharacters);
-    if (error !== undefined) {
+    // Put the player in a custom bucket during character selection / creation
+    const bucket = await (tsv.events.trigger({
+      name: 'setNewCharacterIntoBucket',
+      module: 'character',
+      onNet: true,
+      isCallback: true,
+      data: [user],
+    }) as Promise<IBucket | Error>);
+    if (bucket instanceof Error) {
+      throw bucket;
+    }
+
+    // If the player is new, we send him to the character creation screen
+    const userCharacter = await selectCharacter(user, isNewPlayer, userCharacters);
+    if (userCharacter instanceof Error) {
+      throw userCharacter;
+    }
+
+    // Send the character data to the server
+    const updatedUser = await (tsv.events.trigger({
+      name: 'setCharacter',
+      module: 'character',
+      onNet: true,
+      isCallback: true,
+      data: [user, userCharacter],
+    }) as Promise<IUser | Error>);
+    if (updatedUser instanceof Error) {
+      throw updatedUser;
+    }
+
+    // Spawn the character
+    const error = spawnCharacter(updatedUser);
+    if (error instanceof Error) {
       throw error;
     }
 
+    // Notify the server that the player is ready
     tsv.events.trigger({
       name: 'onPlayerSpawn',
       module: 'player',
       onNet: true,
-      data: [user],
+      data: [updatedUser],
     });
   } catch (error) {
     if (error instanceof Error) {
@@ -89,6 +133,10 @@ async function setUserFromDB(): Promise<void> {
     }
   }
 }
+/**
+ * Tick function to check if the player is active and connect him to the server if it is the case
+ * @returns {boolean} Return false to stop the thread
+ */
 function isNetworkPlayerActiveTick(): boolean {
   try {
     const playerId = PlayerId();
@@ -101,10 +149,11 @@ function isNetworkPlayerActiveTick(): boolean {
         }),
       });
 
-      setUserFromDB();
+      playerConnecting();
       return false;
     }
 
+    // Player is not active, we wait 1 second before checking again
     return true;
   } catch (error) {
     if (error instanceof Error) {
@@ -118,4 +167,4 @@ function isNetworkPlayerActiveTick(): boolean {
   }
 }
 
-export { isNetworkPlayerActiveTick, playerConnecting, playerHostingSession, playerStartingSession };
+export { onResourceStart, playerHostingSession, playerStartingSession };

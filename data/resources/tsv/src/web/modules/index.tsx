@@ -1,14 +1,18 @@
-// DEPENDENCIES
+// Dependencies
 import React, { useEffect } from 'react';
-import { useSelector, shallowEqual, useDispatch } from "react-redux";
-// TYPES
-import { NUIModule } from '../../core/declares/nui';
-import { AppState } from '../stores';
-// MODULE
+import { useSelector, shallowEqual, useDispatch } from 'react-redux';
+// Declarations
+import { NUIModule } from '@declares/nui';
+// Stores
+import { AppState } from '@store';
+// Modules
 import modules from './modules';
 
 function Modules() {
-  const storeModules: AppState['modules'] = useSelector((state: AppState) => state.modules, shallowEqual);
+  const storeModules: AppState['modules'] = useSelector(
+    (state: AppState) => state.modules,
+    shallowEqual,
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -19,21 +23,21 @@ function Modules() {
           if (module.activate) {
             modules.push(module.name);
           }
-          return modules
-        }, [])
+          return modules;
+        }, []),
       });
     }
   }, [storeModules]);
-  
+
   return (
     <>
-      {storeModules.length > 0
-        && modules.map((module: NUIModule) => storeModules.includes(module.name) && (
-          <module.render key={module.name}/>
-        ))
-      }
+      {storeModules.length > 0 &&
+        modules.map(
+          (module: NUIModule) =>
+            storeModules.includes(module.name) && <module.render key={module.name} />,
+        )}
     </>
   );
 }
 
-export default Modules
+export default Modules;

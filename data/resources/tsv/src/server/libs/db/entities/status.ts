@@ -1,6 +1,8 @@
+// Dependencies
 import { Column, Entity, ObjectID, ObjectIdColumn } from 'typeorm';
 import { ObjectID as ObjectId } from 'mongodb';
-import { PlayerStatus } from '../../../../core/declares/status';
+// Declarations
+import { PlayerStatus } from '@declares/status';
 
 @Entity()
 class Status {

@@ -1,4 +1,5 @@
-import { TypeButtonMenuEnum, IMenuButton } from '../../../../core/declares/menu';
+// Declarations
+import { TypeButtonMenuEnum, IMenuButton } from '@declares/menu';
 
 const ExitButton = (isChildrenMenu?: boolean): IMenuButton => ({
   type: TypeButtonMenuEnum.DEFAULT,

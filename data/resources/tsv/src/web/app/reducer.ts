@@ -3,8 +3,8 @@ import {
   AppReducerActionEnum,
   DnDContainerType,
   DnDItemType,
-} from '../../core/declares/nui/';
-import { IUser } from '../../core/declares/user';
+} from '@declares/nui/';
+import { IUser } from '@declares/user';
 
 type TTheme = 'light' | 'dark';
 

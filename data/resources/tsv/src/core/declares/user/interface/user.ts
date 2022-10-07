@@ -1,9 +1,12 @@
-import { CharacterDescription, UserIdentifier } from '../';
-import { StatusManager } from '../../../libs/status';
-import { InventoryManager } from '../../../libs/inventory';
-import { UserGroup } from '../../../declares/user';
-import { UserActivityType } from '../../activity';
-import { Vector4 } from '../../../libs/utils/Vector4';
+// Native wrapper
+import { Vector4 } from '@native/utils';
+// Declarations
+import { CharacterDescription, UserIdentifier } from '@declares/user';
+import { UserGroup } from '@declares/user';
+import { UserActivityType } from '@declares/activity';
+// Core libs
+import { StatusManager } from '@libs/status';
+import { InventoryManager } from '@libs/inventory';
 
 interface IUser {
   id: string;

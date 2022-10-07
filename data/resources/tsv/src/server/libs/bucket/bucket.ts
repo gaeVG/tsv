@@ -1,17 +1,21 @@
+// Native wrapper
+import { Crypto } from '@native//';
+// Declarations
 import {
   IBucket,
   BucketType,
   AddOneUserBucketAlreadyExistError,
   RemoveOneUserBucketError,
-} from '../../../core/declares/bucket';
-import { LogData } from '../../../core/declares/log';
-import { IUser } from '../../../core/declares/user';
-import { Crypto } from '../../../core/libs';
-import { EnumLogContainer } from '../../../core/declares/log';
-import config from '../../../config';
-import { Log } from '../../../core/libs/log';
-const _t = config.locale;
+} from '@declares/bucket';
+import { LogData } from '@declares/log';
+import { IUser } from '@declares/user';
+import { EnumLogContainer } from '@declares/log';
+// Core lib
+import { Log } from '@libs/log';
+// Locale import
+import _t from '@config/i18n';
 
+// Log variable
 const log: LogData = {
   namespace: 'Bucket',
   container: EnumLogContainer.Class,
@@ -29,7 +33,7 @@ class Bucket implements IBucket {
       message: 'Creating new bucket',
     });
 
-    this.id = bucket.id !== undefined ? bucket.id : parseInt(Crypto.uuidv4(), 16);
+    this.id = parseInt(Crypto.uuidv4(), 16);
     this.name = bucket.name !== undefined ? bucket.name : _t('global.default');
     this.host = bucket.host;
     this.users = [];

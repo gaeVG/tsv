@@ -1,5 +1,5 @@
-import { ActivityType } from '../../activity';
-import { SocietyBuildingType } from './building';
+import { ActivityType } from '@declares/activity';
+import { SocietyBuildingType } from '@declares/society';
 
 type SocietyType = {
   id?: string;

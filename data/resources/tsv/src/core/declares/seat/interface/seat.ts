@@ -1,4 +1,5 @@
-import { Vector3 } from '../../../libs';
+// Native wrapper
+import { Vector3 } from '@native/utils';
 
 interface ISeat {
   type: string;

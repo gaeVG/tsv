@@ -1,24 +1,29 @@
-import { IModule } from '../../../core/declares/module';
-import { LogData, EnumLogContainer } from '../../../core/declares/log';
+// Declarations
+import { IModule } from '@declares/module';
+import { LogData, EnumLogContainer } from '@declares/log';
+// Module
 import { activityEvents } from './events';
-import moduleConfig from './config';
-import { tsv } from '../../../client';
+import config from './config';
+// Core
+import { tsv } from '@tsv';
 
+// Log variable
 const log: LogData = {
-  namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,
+  namespace: `Module${config.moduleName.charAt(0).toUpperCase() + config.moduleName.slice(1)}`,
   container: EnumLogContainer.Module,
-  isModuleDisplay: moduleConfig.debug,
+  isModuleDisplay: config.debug,
 };
 
+// Activity module description
 const ActivityModule: IModule = {
-  name: moduleConfig.name,
+  name: config.moduleName,
   init(): Error {
     log.location = 'init()';
 
     try {
       tsv.log.debug({
         ...log,
-        message: tsv.locale('module.global.init', { moduleName: moduleConfig.name }),
+        message: tsv.locale('module.global.init', { moduleName: config.moduleName }),
       });
 
       activityEvents.forEach((event) => tsv.events.listen(event));
@@ -27,7 +32,7 @@ const ActivityModule: IModule = {
     } finally {
       tsv.log.debug({
         ...log,
-        message: tsv.locale('module.global.init.complete', { moduleName: moduleConfig.name }),
+        message: tsv.locale('module.global.init.complete', { moduleName: config.moduleName }),
         isLast: true,
       });
     }

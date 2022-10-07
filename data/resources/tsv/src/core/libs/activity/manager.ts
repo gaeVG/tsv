@@ -1,12 +1,18 @@
+// Declarations
+import { EnumLogContainer, LogData } from '@declares/log';
+import { IActivity, ActivityType } from '@declares/activity';
+// Core libs
+import { SocietiesManager } from '@libs/society';
+import { Log } from '@libs/log';
+// Activity library
 import { Activity } from './activity';
-import { EnumLogContainer, LogData } from '../../declares/log';
-import { SocietiesManager } from '../society';
-import { Log } from '../log';
-import config from '../../../config';
-import { IActivity, ActivityType } from '../../declares/activity';
+// Application config
+import i18n from '@config/i18n';
 
-const _t = config.locale;
+// Locale function
+const _t = i18n;
 
+// Log variable
 const log: LogData = {
   namespace: 'CoreUser',
   container: EnumLogContainer.Manager,

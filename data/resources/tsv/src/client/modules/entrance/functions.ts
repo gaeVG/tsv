@@ -1,6 +1,12 @@
-import { DoorType } from '../../../core/declares/entrance';
-import { World, Model, Vector3, Prop } from '../../../core/libs';
-import { tsv } from '../..';
+// Native wrapper
+import { Model } from '@native/Model';
+import { World } from '@native/World';
+import { Prop } from '@native/models';
+import { Vector3 } from '@native/utils';
+// Declarations
+import { DoorType } from '@declares/entrance';
+// Core
+import { tsv } from '@tsv';
 
 function getEntranceDoors(_source: string, doors: DoorType | DoorType[]) {
   let target: Prop | Prop[];

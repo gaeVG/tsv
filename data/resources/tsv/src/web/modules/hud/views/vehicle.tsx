@@ -1,17 +1,15 @@
-// DEPENDENCIES
+// Dependencies
 import React from 'react';
-import { useSelector, shallowEqual, useDispatch } from "react-redux";
-// TYPES
-import { AppState } from '../../../stores';
-// COMPONENT
+import { useSelector, shallowEqual, useDispatch } from 'react-redux';
+// Components
 import { SpeedoMeter } from '../components/vehicle';
 import { Minimap } from '../components/minimap';
-
-// HOOKS
-import { useNuiEvent } from '../../../hooks'
+// Stores
+import { AppState } from '@store';
+// Hooks
+import { useNuiEvent } from '@hooks';
 
 function Vehicle() {
-  
   const { vehicle }: AppState['hud'] = useSelector((state: AppState) => state.hud, shallowEqual);
   const dispatch = useDispatch();
 
@@ -48,20 +46,13 @@ function Vehicle() {
       },
     });
   });
-  
 
   return (
     <>
-      <section id="vehicle">
-        {vehicle.speedometer.display && (
-          <SpeedoMeter />
-        )}
-      </section>
-      {vehicle.minimap.display && (
-        <Minimap />
-      )}
+      <section id="vehicle">{vehicle.speedometer.display && <SpeedoMeter />}</section>
+      {vehicle.minimap.display && <Minimap />}
     </>
-  )
+  );
 }
 
 export { Vehicle };

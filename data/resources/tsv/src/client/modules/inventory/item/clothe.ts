@@ -1,5 +1,7 @@
-import { InventoryFromType } from '../../../../core/declares/inventory';
-import { ItemType, IItem } from '../../../../core/declares/item';
+// Declarations
+import { InventoryFromType } from '@declares/inventory';
+import { ItemType, IItem } from '@declares/item';
+// Abstract class
 import { UsableItem } from './usableItem';
 
 class Clothe extends UsableItem {

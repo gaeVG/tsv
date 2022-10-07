@@ -1,5 +1,6 @@
-import { UserGroup } from '../../user';
-import { CommandArgumentType } from '.';
+// Declarations
+import { UserGroup } from '@declares/user';
+import { CommandArgumentType } from '@declares/command';
 
 type CommandType = {
   name: string;

@@ -1,11 +1,14 @@
-import { IEventListener } from '../../../core/declares/events';
+// Declarations
+import { IEventListener } from '@declares/events';
+// Module
 import { getEntranceDoors } from './functions';
-import moduleConfig from './config';
+import config from './config';
 
+// Entrance events descriptions
 const entranceEvents: IEventListener[] = [
   {
     name: 'getEntranceDoors',
-    module: moduleConfig.name,
+    module: config.moduleName,
     onNet: true,
     isCallback: true,
     handler: getEntranceDoors,

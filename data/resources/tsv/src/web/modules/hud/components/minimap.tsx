@@ -1,10 +1,16 @@
+// Dependencies
 import React from 'react';
-import { useSelector, shallowEqual, useDispatch } from "react-redux";
-import { useNuiEvent } from '../../../hooks';
-import { AppState } from '../../../stores';
+// Hooks
+import { useSelector, shallowEqual, useDispatch } from 'react-redux';
+import { useNuiEvent } from '@hooks';
+// Stores
+import { AppState } from '@store';
 
 function Minimap() {
-  const { minimap } : AppState['hud']['vehicle'] = useSelector((state: AppState) => state.hud.vehicle, shallowEqual);
+  const { minimap }: AppState['hud']['vehicle'] = useSelector(
+    (state: AppState) => state.hud.vehicle,
+    shallowEqual,
+  );
   const dispatch = useDispatch();
 
   if (minimap.display) {
@@ -16,15 +22,18 @@ function Minimap() {
         },
       });
     });
-    useNuiEvent('update-minimap-streetname', ({ streetName, zone } : { streetName: string, zone: string }) => {
-      dispatch({
-        type: 'SET_MINIMAP_STREETNAME',
-        minimap: {
-          streetName,
-          zone,
-        },
-      });
-    });
+    useNuiEvent(
+      'update-minimap-streetname',
+      ({ streetName, zone }: { streetName: string; zone: string }) => {
+        dispatch({
+          type: 'SET_MINIMAP_STREETNAME',
+          minimap: {
+            streetName,
+            zone,
+          },
+        });
+      },
+    );
   }
 
   return (
@@ -35,12 +44,15 @@ function Minimap() {
         <p>{minimap.zone !== undefined && minimap.zone.split(',')[1]}</p>
       </article>
       <article className="compass">
-        <div className="needle" style={{
-          transform: `translate(-50%,-50%) rotate(${(minimap.compass ? minimap.compass : 0)}deg)`
-        }}></div>
+        <div
+          className="needle"
+          style={{
+            transform: `translate(-50%,-50%) rotate(${minimap.compass ? minimap.compass : 0}deg)`,
+          }}
+        ></div>
       </article>
     </>
-  )
+  );
 }
 
-export { Minimap}
+export { Minimap };

@@ -1,6 +1,8 @@
-import { Vector3, Color } from '../../../libs';
-import { User } from '../../../libs/user';
-import { IBucket } from '../../bucket';
+// Native wrapper
+import { Vector3, Color } from '@native/utils';
+// Declarations
+import { IUser } from '@declares/user';
+import { IBucket } from '@declares/bucket';
 
 type ZoneType = {
   name: string;
@@ -23,8 +25,8 @@ type ZoneType = {
 
   bucket?: IBucket;
 
-  onEnter?: (user: User) => void;
-  onLeave?: (user: User) => void;
+  onEnter?: (user: IUser) => void;
+  onLeave?: (user: IUser) => void;
 };
 
 export { ZoneType };

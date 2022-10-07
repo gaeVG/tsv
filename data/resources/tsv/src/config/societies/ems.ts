@@ -1,11 +1,15 @@
-import { Vector3 } from '../../core/libs/utils/Vector3';
-import { CompagnyEnum, SocietyEnum, SocietyType } from '../../core/declares/society';
+// Native wrapper
+import { Vector3 } from '@native/utils/Vector3';
+// Declarations
+import { CompagnyEnum, SocietyEnum, SocietyType } from '@declares/society';
+// Activities config
 import {
   ems as emsActivity,
   mechanic as mechanicActivity,
   security as securityActivity,
 } from './activities';
 
+// EMS compagny description
 const ems = {
   name: CompagnyEnum.EMS,
   owner: CompagnyEnum.EMS,

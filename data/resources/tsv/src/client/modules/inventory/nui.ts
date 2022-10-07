@@ -1,7 +1,10 @@
+// Declarations
+import { NUIListener } from '@declares/nui';
+// Module
 import { useItem } from './functions';
 import moduleConfig from './config';
-import { NUIListener } from '../../../core/declares/nui';
 
+// Inventory module NUI descriptions
 const inventoryNui: NUIListener[] = [
   {
     name: 'dropCurrentDrag',

@@ -1,19 +1,25 @@
-import { EnumLogContainer, LogData } from '../../../core/declares/log';
-import { IEventListener, ClientEventNativeEnum } from '../../../core/declares/events';
-import { Wait } from '../../../core/libs';
-import moduleConfig from './config';
-import { tsv } from '../../index';
+// Native wrapper
+import { Wait } from '@native//';
+// Declarations
+import { EnumLogContainer, LogData } from '@declares/log';
+import { IEventListener, ClientEventNativeEnum } from '@declares/events';
+// Module
+import config from './config';
+// Core
+import { tsv } from '@tsv';
 
+// Log variable
 const log: LogData = {
-  namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,
+  namespace: `Module${config.moduleName.charAt(0).toUpperCase() + config.moduleName.slice(1)}`,
   container: EnumLogContainer.Event,
-  isModuleDisplay: moduleConfig.debug,
+  isModuleDisplay: config.debug,
 };
 
+// HUD module events descriptions
 const hudEvents: IEventListener[] = [
   {
     name: 'setRadarCircular',
-    module: 'hud',
+    module: config.moduleName,
     handler: () => {
       log.location = 'setRadarCircular()';
 
@@ -92,7 +98,7 @@ const hudEvents: IEventListener[] = [
   {
     // Listen game native events
     name: ClientEventNativeEnum.onResourceStop,
-    module: moduleConfig.name,
+    module: config.moduleName,
     handler: (): void => {
       global.SetNuiFocus(false, false);
     },

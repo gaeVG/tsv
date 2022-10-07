@@ -1,11 +1,18 @@
+// Dependencies
 import { REST } from '@discordjs/rest';
 import { Client, PartialTypes, Intents } from 'discord.js';
 import { Routes } from 'discord-api-types/v9';
-import { EnumLogContainer } from '../../../core/declares/log';
-import { LogData } from '../../../core/declares/log';
-import { Log } from '../../../core/libs/log';
-import config from '../../../config';
+// Declarations
+import { EnumLogContainer } from '@declares/log';
+import { LogData } from '@declares/log';
+// Core libs
+import { Log } from '@libs/log';
+// Locale import
+import _t from '@config/i18n';
+// Discord configuration
+import configDiscord from '@config/discord';
 
+// Log variable
 const log: LogData = {
   namespace: 'DiscordBot',
   container: EnumLogContainer.Class,
@@ -36,7 +43,7 @@ class DiscordApp {
   }
 
   constructor() {
-    log.location = config.locale('global.location.constructor');
+    log.location = _t('global.location.constructor');
     try {
       if (process.env.DISCORD_TOKEN === undefined) {
         throw new DiscordTokenError();
@@ -51,8 +58,8 @@ class DiscordApp {
     }
 
     this.token = process.env.DISCORD_TOKEN;
-    this.partials = config.discord.partials as PartialTypes[];
-    this.intents = config.discord.intents.reduce((intents, intent) => {
+    this.partials = configDiscord.partials as PartialTypes[];
+    this.intents = configDiscord.intents.reduce((intents, intent) => {
       Object.entries(Intents.FLAGS).forEach(([intentFlag, intentValue]) => {
         if (intentFlag === intent) {
           intents.push(intentValue);

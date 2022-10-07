@@ -1,13 +1,17 @@
-import { tsv } from '../../';
-import { IUser } from '../../../core/declares/user';
-import { EnumLogContainer } from '../../../core/declares/log';
-import { LogData } from '../../../core/declares/log';
-import moduleConfig from './config';
+// Declarations
+import { IUser } from '@declares/user';
+import { EnumLogContainer } from '@declares/log';
+import { LogData } from '@declares/log';
+// Module
+import config from './config';
+// Core
+import { tsv } from '@tsv';
 
+// Log variable
 const log: LogData = {
-  namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,
+  namespace: `Module${config.name.charAt(0).toUpperCase() + config.name.slice(1)}`,
   container: EnumLogContainer.Function,
-  isModuleDisplay: moduleConfig.debug,
+  isModuleDisplay: config.debug,
 };
 
 function basicNeeds(user: IUser) {

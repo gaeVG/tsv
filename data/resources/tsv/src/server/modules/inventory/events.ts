@@ -1,4 +1,6 @@
-import { IEventListener } from '../../../core/declares/events';
+// Declarations
+import { IEventListener } from '@declares/events';
+// Module
 import {
   getInventory,
   getAllInventories,
@@ -6,40 +8,41 @@ import {
   canUseItem,
   consumeItem,
 } from './functions';
-import moduleConfig from './config';
+import config from './config';
 
+// Inventory module events descriptions
 const inventoryEvents: IEventListener[] = [
   {
     name: 'getInventory',
-    module: moduleConfig.name,
+    module: config.moduleName,
     onNet: true,
     isCallback: true,
     handler: getInventory,
   },
   {
     name: 'getItemCount',
-    module: moduleConfig.name,
+    module: config.moduleName,
     onNet: true,
     isCallback: true,
     handler: getItemCount,
   },
   {
     name: 'getAllInventories',
-    module: moduleConfig.name,
+    module: config.moduleName,
     onNet: true,
     isCallback: true,
     handler: getAllInventories,
   },
   {
     name: 'canUseItem',
-    module: moduleConfig.name,
+    module: config.moduleName,
     onNet: true,
     isCallback: true,
     handler: canUseItem,
   },
   {
     name: 'consumeItem',
-    module: moduleConfig.name,
+    module: config.moduleName,
     onNet: true,
     isCallback: true,
     handler: consumeItem,

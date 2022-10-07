@@ -1,4 +1,6 @@
-import { ItemType } from '../../../../core/declares/item';
+// Declarations
+import { ItemType } from '@declares/item';
+// Abstract
 import { UsableItem } from './usableItem';
 
 class Weapon extends UsableItem {

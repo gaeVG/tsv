@@ -1,4 +1,5 @@
-import { ModuleReducerActionType, ModuleReducerActionEnum } from '../../core/declares/nui';
+// Declarations
+import { ModuleReducerActionType, ModuleReducerActionEnum } from '@declares/nui';
 
 const initialState: string[] = [];
 

@@ -1,9 +1,11 @@
-import { ActivityEnum } from '../../../../core/declares/activity';
-import { IEventListener } from '../../../../core/declares/events';
-import { ClientEventNativeEnum } from '../../../../core/declares/events';
-
+// Declarations
+import { ActivityEnum } from '@declares/activity';
+import { IEventListener } from '@declares/events';
+import { ClientEventNativeEnum } from '@declares/events';
+// Module
 import { populationPedCreating } from './functions';
 
+// Activity events descriptions
 const driverEvents: IEventListener[] = [
   {
     name: ClientEventNativeEnum.populationPedCreating,

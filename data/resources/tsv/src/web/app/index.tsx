@@ -1,18 +1,22 @@
-// DEPENDENCIES
+// Dependencies
 import React from 'react';
 import { useDispatch } from 'react-redux';
-// DECLARES
-import { AppReducerActionEnum } from '../../core/declares/nui';
-import { IUser } from '../../core/declares/user';
-// HOOKS
+// Declarations
+import { AppReducerActionEnum } from '@declares/nui';
+import { IUser } from '@declares/user';
+// Hooks
 import { useNuiEvent } from '../hooks';
-// COMPONENTS
+// Components
 import Modules from '../modules';
 
-
+/**
+ * Main application component
+ * @returns
+ */
 function App() {
   const dispatch = useDispatch();
 
+  // Listen for data from the server when user is logged in
   useNuiEvent('DOMContentLoaded', (user: IUser) => {
     dispatch({
       type: AppReducerActionEnum.SET_USER,
@@ -27,11 +31,12 @@ function App() {
       loading: true,
     });
   });
+  // Dispatch loading user data to the store
   useNuiEvent('setUser', (user: IUser) => {
     dispatch({
       type: AppReducerActionEnum.SET_USER,
-      user: user
-    })
+      user: user,
+    });
   });
 
   return (

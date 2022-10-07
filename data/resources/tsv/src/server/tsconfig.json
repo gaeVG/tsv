@@ -2,7 +2,13 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "*": ["types/*"]
+      "@libs*": ["../core/libs*"],
+      "@native*": ["../core/libs/native*"],
+      "@declares*": ["../core/declares*"],
+      "@utils": ["../core/utils"],
+      "@entities": ["./libs/db/entities"], 
+      "@config*": ["../config*"],
+      "@tsv": ["./index.ts"]
     },
     "outDir": "../../dist",
     "sourceMap": true,
@@ -12,7 +18,7 @@
     "target": "es6",
     "allowSyntheticDefaultImports": true,
     "lib": ["esnext", "es2017", "dom"],
-    "types": ["@types/node", "@citizenfx/server"],
+    "types": ["@types/node", "@citizenfx/server", "@citizenfx/client"],
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,

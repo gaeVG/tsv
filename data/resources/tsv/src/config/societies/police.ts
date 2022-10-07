@@ -1,8 +1,12 @@
-import { Vector3 } from '../../core/libs/utils/Vector3';
-import { Vector4 } from '../../core/libs/utils/Vector4';
-import { CompagnyEnum, SocietyEnum, SocietyType } from '../../core/declares/society';
+// Native wrapper
+import { Vector3 } from '@native/utils/Vector3';
+import { Vector4 } from '@native/utils/Vector4';
+// Declarations
+import { CompagnyEnum, SocietyEnum, SocietyType } from '@declares/society';
+// Activities config
 import { security as securityActivity, ems as emsActivity } from './activities';
 
+// Police compagny description
 const police = {
   name: CompagnyEnum.POLICE,
   owner: CompagnyEnum.POLICE,

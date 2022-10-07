@@ -1,6 +1,7 @@
-import { Color } from '../../../libs/utils/Color';
-import { Vector3 } from '../../../libs/utils/Vector3';
-import { User } from '../../../libs/user';
+// Native wrapper
+import { Color, Vector3 } from '@native/utils';
+// Declarations
+import { IUser } from '@declares/user';
 
 type PointZoneType = {
   name: string;
@@ -12,8 +13,8 @@ type PointZoneType = {
   point: Vector3;
   radius: boolean;
 
-  onEnter?: (user: User) => void;
-  onLeave?: (user: User) => void;
+  onEnter?: (user: IUser) => void;
+  onLeave?: (user: IUser) => void;
 };
 
 export { PointZoneType };

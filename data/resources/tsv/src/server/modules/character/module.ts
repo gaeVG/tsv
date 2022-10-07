@@ -1,18 +1,23 @@
-import { IModule } from '../../../core/declares/module';
-import { EnumLogContainer, LogData } from '../../../core/declares/log';
+// Declarations
+import { IModule } from '@declares/module';
+import { EnumLogContainer, LogData } from '@declares/log';
+// Module
 import { characterEvents } from './events';
 import { characterThreads } from './threads';
-import moduleConfig from './config';
-import { tsv } from '../../../server';
+import config from './config';
+// Core
+import { tsv } from '@tsv';
 
+// Log variable
 const log: LogData = {
-  namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,
+  namespace: `Module${config.moduleName.charAt(0).toUpperCase() + config.moduleName.slice(1)}`,
   container: EnumLogContainer.Module,
-  isModuleDisplay: moduleConfig.debug,
+  isModuleDisplay: config.debug,
 };
 
+// Character module description
 const CharacterModule: IModule = {
-  name: moduleConfig.name,
+  name: config.moduleName,
   init(): Error {
     log.location = tsv.locale('module.global.init.location');
 

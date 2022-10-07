@@ -1,21 +1,22 @@
-// DECLARES
-import { EnumLogContainer, LogData } from '../../../core/declares/log';
-import { IModule } from '../../../core/declares/module';
-// CONFIG
-import moduleConfig from './config';
-// EVENTS
+// Declarations
+import { EnumLogContainer, LogData } from '@declares/log';
+import { IModule } from '@declares/module';
+// Module
 import { entranceEvents } from './events';
-// CORE
-import { tsv } from '../..';
+import config from './config';
+// Core
+import { tsv } from '@tsv';
 
+// Log variable
 const log: LogData = {
-  namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,
+  namespace: `Module${config.moduleName.charAt(0).toUpperCase() + config.moduleName.slice(1)}`,
   container: EnumLogContainer.Module,
-  isModuleDisplay: moduleConfig.debug,
+  isModuleDisplay: config.debug,
 };
 
+// Entrance module description
 const EntranceModule: IModule = {
-  name: moduleConfig.name,
+  name: config.moduleName,
   init(): Error {
     log.location = 'init()';
 
@@ -27,7 +28,7 @@ const EntranceModule: IModule = {
       tsv.log.safemode({
         ...log,
         message: tsv.locale('module.global.init.complete', {
-          moduleName: moduleConfig.name,
+          moduleName: config.moduleName,
         }),
         isLast: true,
       });

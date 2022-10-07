@@ -1,7 +1,13 @@
-import { ErrorCodeEnum } from '../../errors';
-import { DoorType, EntranceType } from '../types';
+// Declarations
+import { ErrorCodeEnum } from '@declares/errors';
+import { DoorType, EntranceType } from '@declares/entrance';
 
-function getEntranceDoors(doors: DoorType[] | DoorType) {
+/**
+ * Get the number of doors of the entrance
+ * @param doors
+ * @returns {number} The number of doors
+ */
+function getTotalNumberEntranceDoor(doors: DoorType[] | DoorType): number {
   if (doors instanceof Array) {
     return doors.length;
   } else {
@@ -11,7 +17,7 @@ function getEntranceDoors(doors: DoorType[] | DoorType) {
 
 class DoorsMustBeTwoError extends Error {
   constructor(entrance: EntranceType) {
-    super(`A double door cannot have (${getEntranceDoors(entrance.doors)})`, {
+    super(`A double door cannot have (${getTotalNumberEntranceDoor(entrance.doors)})`, {
       cause: { code: ErrorCodeEnum.DoorsMustBeTwoError },
     });
     this.name = 'DoorsMustBeTwoError';

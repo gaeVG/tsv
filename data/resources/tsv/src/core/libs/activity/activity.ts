@@ -1,5 +1,7 @@
-import { Crypto } from '..';
-import { ActivityProductionType, IActivity } from '../../declares/activity';
+// Native wrapper
+import { Crypto } from '@native/utils';
+// Declarations
+import { ActivityProductionType, IActivity } from '@declares/activity';
 
 class Activity implements IActivity {
   id: string;

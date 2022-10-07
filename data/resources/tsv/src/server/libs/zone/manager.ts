@@ -1,6 +1,8 @@
+// Declarations
+import { CircleZoneType, IZone } from '@declares/zone';
+import { EntityZoneType, PolyZoneType } from '@declares/zone';
+// Zone classes
 import { CircleZone, EntityZone, PolyZone, Zone } from './zone';
-import { CircleZoneType, IZone } from '../../../core/declares/zone';
-import { EntityZoneType, PolyZoneType } from '../../../core/declares/zone';
 
 class ZoneManager {
   manager: Zone[];

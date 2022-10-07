@@ -1,5 +1,7 @@
-import { InventoryContainerEnum } from '../core/declares/inventory';
+// Declarations
+import { InventoryContainerEnum } from '@declares/inventory';
 
+// Inventory containers descriptions
 export default {
   [InventoryContainerEnum.BAG]: {
     max: 12,

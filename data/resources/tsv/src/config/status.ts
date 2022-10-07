@@ -1,5 +1,7 @@
-import { StatusEnum } from '../core/declares/status';
+// Declarations
+import { StatusEnum } from '@declares/status';
 
+// Statuses descriptions
 export default {
   [StatusEnum.HEALTH]: {
     max: 200,

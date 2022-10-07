@@ -1,7 +1,10 @@
-import { CommandType } from '../../../core/declares/command';
+// Declarations
+import { CommandType } from '@declares/command';
+// Module
 import { openInventory } from './functions';
 import moduleConfig from './config';
 
+// Inventory module commands descriptions
 const inventoryCommands = [
   {
     name: 'openInventory',

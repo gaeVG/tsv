@@ -1,4 +1,5 @@
-import { Player } from '../../../libs';
+// Declarations
+import { Player } from '@native/models/Player';
 
 class UserMissingIdentifierError extends Error {
   constructor(player: Player) {

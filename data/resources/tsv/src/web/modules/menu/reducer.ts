@@ -1,4 +1,5 @@
-import { IMenu } from '../../../core/declares/menu';
+// Declarations
+import { IMenu } from '@declares/menu';
 
 const initialState: {
   currentMenu: IMenu;

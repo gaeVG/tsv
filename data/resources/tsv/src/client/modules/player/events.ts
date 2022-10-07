@@ -1,14 +1,18 @@
-import { IEventListener, ClientEventNativeEnum } from '../../../core/declares/events';
-import { LogData, EnumLogContainer } from '../../../core/declares/log';
-import { playerConnecting, playerHostingSession, playerStartingSession } from './functions';
+// Declarations
+import { IEventListener, ClientEventNativeEnum } from '@declares/events';
+import { LogData, EnumLogContainer } from '@declares/log';
+// Module
+import { onResourceStart, playerHostingSession, playerStartingSession } from './functions';
 import moduleConfig from './config';
 
+// Log variable
 const log: LogData = {
   namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,
   container: EnumLogContainer.Event,
   isModuleDisplay: moduleConfig.debug,
 };
 
+// Player module events descriptions
 const playerEvents: IEventListener[] = [
   {
     // Listen game native events
@@ -31,10 +35,9 @@ const playerEvents: IEventListener[] = [
     },
   },
   {
-    name: 'playerConnecting',
-    module: 'player',
-    onNet: true,
-    handler: playerConnecting,
+    name: ClientEventNativeEnum.onResourceStart,
+    module: moduleConfig.name,
+    handler: onResourceStart,
   },
 ];
 

@@ -1,9 +1,10 @@
+// Declarations
 import {
   ClientEventNativeEnum,
   IEventListener,
   ServerEventNativeEnum,
   SharedEventNativeEnum,
-} from '../../../core/declares/events';
+} from '@declares/events';
 import {
   playerHosting,
   onPlayerJoined,
@@ -12,6 +13,7 @@ import {
   onPlayerSpawn,
 } from './functions';
 
+// Module events description
 const playerEvents: IEventListener[] = [
   {
     // onPlayerConnecting event : native event when player connect to server!

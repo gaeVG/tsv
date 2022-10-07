@@ -1,7 +1,9 @@
-import { AccountType } from '../../account';
-import { SkinCharacter } from '.';
-import { Vec4 } from '../../../libs/utils/Vector4';
-import { InventoryType } from '../../inventory';
+// Native wrapper
+import { Vec4 } from '@native/utils/Vector4';
+// Declarations
+import { AccountType } from '@declares/account';
+import { SkinCharacter } from '@declares/user';
+import { InventoryType } from '@declares/inventory';
 
 type CharacterDescription = {
   skin?: SkinCharacter;

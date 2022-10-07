@@ -1,8 +1,12 @@
-import { SkinCharacter } from '../../../core/declares/user';
-import { EnumLogContainer, LogData } from '../../../core/declares/log';
-import { Log } from '../../../core/libs/log';
-import { tsv } from '../../index';
+// Declarations
+import { SkinCharacter } from '@declares/user';
+import { EnumLogContainer, LogData } from '@declares/log';
+// Core libs
+import { Log } from '@libs/log';
+// Core
+import { tsv } from '@tsv';
 
+// Log variable
 const log: LogData = {
   namespace: 'ModulePlayer',
   container: EnumLogContainer.Module,

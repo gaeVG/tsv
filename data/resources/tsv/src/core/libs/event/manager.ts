@@ -1,4 +1,4 @@
-import { Event } from './event';
+// Declarations
 import {
   IEventListener,
   EnumEventTarget,
@@ -6,19 +6,27 @@ import {
   SharedEventNativeEnum,
   ServerEventNativeEnum,
   ClientEventNativeEnum,
-} from '../../declares/events';
-import { Log } from '../log';
-import { AES } from '../aes';
-import { EnumLogContainer, LogData } from '../../declares/log';
-import { Env } from '../../utils/env';
-import { uuid } from '../../utils/uuid';
-import _t from '../../../config/i18n';
+} from '@declares/events';
+import { EnumLogContainer, LogData } from '@declares/log';
+// Libs
+import { Log } from '@libs/log';
+import { AES } from '@libs/aes';
+// Utils
+import { Env, uuid } from '@utils';
+// Locale import
+import _t from '@config/i18n';
+// Event class
+import { Event } from './event';
 
+// Log variable
 const log: LogData = {
   namespace: 'CoreEvent',
   container: EnumLogContainer.Manager,
 };
 
+/**
+ * The system's event manager allowing to record or transmit an event through the network
+ */
 class EventManager {
   private manager: Event[];
 

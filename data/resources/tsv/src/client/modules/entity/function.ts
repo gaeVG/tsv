@@ -1,14 +1,10 @@
-import {
-  Ped,
-  World,
-  Entity,
-  Pickup,
-  Rope,
-  Model,
-  Vector3,
-  Prop,
-  Vector4,
-} from '../../../core/libs';
+// Native wrapper
+import { Model } from '@native/Model';
+import { Pickup } from '@native/Pickup';
+import { Rope } from '@native/Rope';
+import { World } from '@native/World';
+import { Ped, Prop, Entity } from '@native/models';
+import { Vector3, Vector4 } from '@native/utils';
 
 interface IEntity {
   handle: number;

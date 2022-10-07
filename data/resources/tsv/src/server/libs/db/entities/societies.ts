@@ -1,11 +1,14 @@
+// Dependencies
 import { Column, Entity, ObjectIdColumn, ObjectID } from 'typeorm';
+// Declarations
+import { SocietyType } from '@declares/society';
+import { ActivityType } from '@declares/activity';
+import { PolyZoneType } from '@declares/zone';
+import { EntranceType } from '@declares/entrance';
+// Acitivities entity
 import { Activities } from './activities';
 import { Accounts } from './accounts';
 
-import { SocietyType } from '../../../../core/declares/society';
-import { ActivityType } from '../../../../core/declares/activity';
-import { PolyZoneType } from '../../../../core/declares/zone';
-import { EntranceType } from '../../../../core/declares/entrance';
 @Entity()
 class Societies {
   @ObjectIdColumn()

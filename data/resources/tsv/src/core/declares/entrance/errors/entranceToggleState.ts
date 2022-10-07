@@ -1,5 +1,6 @@
-import { ErrorCodeEnum } from '../../errors';
-import { IEntrance, EntranceStateEnum } from '..';
+// Declarations
+import { ErrorCodeEnum } from '@declares/errors';
+import { IEntrance, EntranceStateEnum } from '@declares/entrance';
 
 class EntranceToogleStateError extends Error {
   constructor(entrance: IEntrance) {

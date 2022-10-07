@@ -1,4 +1,4 @@
 export default {
-  name: 'HUD',
+  moduleName: 'HUD',
   debug: process.env.DEBUG_MODULES.split(', ').includes('hud'),
 };

@@ -1,5 +1,7 @@
+// Declarations
 import { ItemType, ItemLocksmithEnum } from '../../core/declares/item';
-import _t from '../i18n';
+// Config
+import _t from '@config/i18n';
 
 export default [
   // Locksmith items

@@ -1,5 +1,6 @@
+// Dependencies
 import { configureStore } from '@reduxjs/toolkit';
-
+// Reducers
 import { appReducer } from '../app/reducer';
 import { moduleReducer } from '../modules/reducer';
 import { hudReducer } from '../modules/hud/reducer';

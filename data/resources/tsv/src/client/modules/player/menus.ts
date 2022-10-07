@@ -1,6 +1,8 @@
-import { TypeMenuEnum, TypeButtonMenuEnum, MenuType } from '../../../core/declares/menu';
-import { IconLibraryEnum } from '../../../core/declares/nui';
+// Declarations
+import { TypeMenuEnum, TypeButtonMenuEnum, MenuType } from '@declares/menu';
+import { IconLibraryEnum } from '@declares/nui';
 
+// Player module menus descriptions
 const playerMenus: MenuType[] = [
   {
     type: TypeMenuEnum.CIRCULAR,

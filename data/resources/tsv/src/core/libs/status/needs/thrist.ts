@@ -1,14 +1,17 @@
+// Declarations
 import { IStatus, StatusEnum } from '../../../declares/status';
+// Status abstract class
 import { Status } from '../status';
-import config from '../../../../config';
+// Status config
+import configStatus from '@config/status';
 
 class Thrist extends Status {
   constructor(value?: number) {
     super({
-      value: value || config.status[StatusEnum.THRIST].max / 1.5,
+      value: value || configStatus[StatusEnum.THRIST].max / 1.5,
       name: StatusEnum.THRIST,
-      max: config.status[StatusEnum.THRIST].max,
-      consume: config.status[StatusEnum.THRIST].consume,
+      max: configStatus[StatusEnum.THRIST].max,
+      consume: configStatus[StatusEnum.THRIST].consume,
     } as IStatus);
   }
 }

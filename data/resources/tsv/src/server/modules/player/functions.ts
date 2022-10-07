@@ -1,3 +1,6 @@
+// Dependencies
+import { Player } from '@native/models';
+// Declarations
 import {
   UserCharacter,
   IUser,
@@ -7,30 +10,34 @@ import {
   UserNotFoundError,
   UserMissingIdentifierError,
   UserGroupEnum,
-} from '../../../core/declares/user';
-import { LogData, EnumLogContainer } from '../../../core/declares/log';
-import { IAdaptativeCard } from '../../../core/declares/cards';
-import { BucketDimension } from '../../../core/declares/bucket';
-import { User } from '../../../core/libs/user';
-import {
-  Users as UsersEntity,
-  UserCharacters as CharactersEntity,
-  Accounts,
-} from '../../libs/db/entities';
-import { Player } from '../../../core/libs';
-import moduleConfig from './config';
-import { tsv } from '../../../server';
-import { AccountType } from '../../../core/declares/account';
+} from '@declares/user';
+import { AccountType } from '@declares/account';
+import { LogData, EnumLogContainer } from '@declares/log';
+import { IAdaptativeCard } from '@declares/cards';
+import { BucketDimension } from '@declares/bucket';
+// ORM entities
+import { Users as UsersEntity, UserCharacters as CharactersEntity, Accounts } from '@entities';
+// User class
+import { User } from '@libs/user';
+// Module
+import config from './config';
+// Core
+import { tsv } from '@tsv';
 
+// Log variable
 const log: LogData = {
-  namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,
+  namespace: `Module${config.moduleName.charAt(0).toUpperCase() + config.moduleName.slice(1)}`,
   container: EnumLogContainer.Function,
-  isModuleDisplay: moduleConfig.debug,
+  isModuleDisplay: config.debug,
 };
 
+/**
+ * Create a new player on the database
+ * @param source - Player source
+ * @returns {Promise<UsersEntity>} User entity
+ */
 async function createPlayerOnDB(source: string): Promise<UsersEntity> {
   log.location = 'createPlayerOnDB()';
-  const characterDefault = moduleConfig.userCharacterDefault;
 
   try {
     tsv.log.safemode({
@@ -38,29 +45,34 @@ async function createPlayerOnDB(source: string): Promise<UsersEntity> {
       message: tsv.locale('module.player.createPlayerOnDB.creatingUser'),
     });
 
+    // Get character default data
+    const characterDefault = config.userCharacterDefault;
+
+    // Create a new user entity
     const user = new UsersEntity();
-    // Set up user global data
+    // Setting up user global data
     user.auth = getIdentifiers(source) as UserIdentifier;
     user.group = UserGroupEnum.USER;
     const character = new CharactersEntity();
-    // Set up character global data
+    // Setting up character global data
     character.description = characterDefault.description;
     character.position = characterDefault.position;
     character.isDead = false;
-    // Set up character status
+    // Setting up character status
     character.status = characterDefault.status;
-    // Set up character inventories
+    // Setting up character inventories
     character.inventories = characterDefault.inventories;
-    // Set up character accounts
+    // Setting up character accounts
     character.accounts = characterDefault.accounts.map((account) => {
       const newAccount = new Accounts();
       newAccount.from = 'mzb';
       newAccount.amount = account.amount;
       return newAccount;
     });
-
+    // Pushing character data to user
     user.characters = [character];
 
+    // Save user on database and return it
     return tsv.orm.dataSource.manager.save(user);
   } catch (error) {
     tsv.log.error({
@@ -69,7 +81,13 @@ async function createPlayerOnDB(source: string): Promise<UsersEntity> {
     });
   }
 }
+/**
+ * Get user from database
+ * @param playerSource - Player source
+ * @returns {Promise<[UsersEntity, boolean]>} User entity and boolean if user is new
+ */
 async function getUserFromDB(playerSource: string): Promise<[UsersEntity, boolean]> {
+  // Get identifiers from player identifier setting up in env file `IDENTIFIER_TYPE`
   let userFromDB = await tsv.orm.dataSource.getMongoRepository(UsersEntity).findOneBy({
     [`auth.${process.env.IDENTIFIER_TYPE}`]: (getIdentifiers(playerSource) as UserIdentifier)[
       process.env.IDENTIFIER_TYPE
@@ -77,6 +95,7 @@ async function getUserFromDB(playerSource: string): Promise<[UsersEntity, boolea
   });
 
   if (!userFromDB) {
+    // User not found, creating a new one
     tsv.log.safemode({
       ...log,
       message: tsv.locale('module.player.onPlayerJoined.newUser', {
@@ -90,6 +109,11 @@ async function getUserFromDB(playerSource: string): Promise<[UsersEntity, boolea
 
   return [userFromDB, false];
 }
+/**
+ * Function behind the event `onPlayerJoined`, triggered when a player client is connected
+ * @param source - Player source
+ * @returns {Promise<IUser, boolean, UserCharacter} User from DB, boolean if user is new, and user characters from DB
+ */
 async function onPlayerJoined(source: string): Promise<[IUser, boolean, UserCharacter[]]> {
   log.location = 'onPlayerJoined()';
   tsv.log.debug({
@@ -151,6 +175,13 @@ async function onPlayerJoined(source: string): Promise<[IUser, boolean, UserChar
     }
   }
 }
+/**
+ * Function behind the event `playerConnecting`, triggered when a player is connecting on the server
+ * @param source - Player source
+ * @param playerName - Player name
+ * @param setKickReason - Function to set kick reason
+ * @param deferrals - Function to set deferrals
+ */
 async function playerConnecting(
   source: string,
   playerName: string,
@@ -264,6 +295,10 @@ async function playerConnecting(
     deferrals.done(error.message);
   }
 }
+/**
+ * Function behind the event `playerDropped`, triggered when a player is dropped from the server
+ * @param source - Player source
+ */
 async function playerDropped(source: string): Promise<void> {
   log.location = 'playerDropped()';
   tsv.log.debug({
@@ -293,6 +328,10 @@ async function playerDropped(source: string): Promise<void> {
     }
   }
 }
+/**
+ * Function behind the event `CEventNetworkHostSession`, triggered when a player is connecting and is the only one on the server
+ * @param source - Player source
+ */
 async function playerHosting(source: string): Promise<void> {
   log.location = 'playerHosting()';
   let user: IUser;
@@ -318,7 +357,12 @@ async function playerHosting(source: string): Promise<void> {
     });
   }
 }
-
+/**
+ * Function behind the event `onPlayerSpawn`, triggered when a player is spawned
+ * @param _
+ * @param user
+ * @returns
+ */
 function onPlayerSpawn(_: any, user: IUser): IUser | Error {
   try {
     tsv.buckets.addUserIntoBucket(user, { id: BucketDimension.MAIN });
@@ -338,6 +382,11 @@ function onPlayerSpawn(_: any, user: IUser): IUser | Error {
     return error;
   }
 }
+/**
+ * Get user identifiers from source
+ * @param source - Player source
+ * @returns {UserIdentifier | Error} User identifiers
+ */
 function getIdentifiers(source: string): UserIdentifier | Error {
   log.location = 'getIdentifiers()';
   tsv.log.safemode({

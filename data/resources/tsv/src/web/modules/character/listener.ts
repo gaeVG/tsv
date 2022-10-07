@@ -1,5 +1,7 @@
-import { NUIListener } from '../../../core/declares/nui';
+// Declarations
+import { NUIListener } from '@declares/nui';
 
+// Character module events listener
 const characterListeners: NUIListener[] = [
   {
     name: 'select-character',

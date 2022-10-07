@@ -1,7 +1,8 @@
-import { Vector3 } from '../../../libs/utils/Vector3';
-import { Color } from '../../../libs/utils/Color';
-import { IBucket } from '../../bucket';
-import { User } from '../../../libs/user';
+// Native wrapper
+import { Color, Vector3 } from '@native/utils';
+// Declarations
+import { IBucket } from '@declares/bucket';
+import { IUser } from '@declares/user';
 
 type PolyZoneType = {
   name?: string;
@@ -27,8 +28,8 @@ type PolyZoneType = {
   };
   bucket?: IBucket;
 
-  onEnter?: (user: User) => void;
-  onLeave?: (user: User) => void;
+  onEnter?: (user: IUser) => void;
+  onLeave?: (user: IUser) => void;
 };
 
 export { PolyZoneType };

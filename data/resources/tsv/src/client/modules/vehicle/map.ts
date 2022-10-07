@@ -1,4 +1,5 @@
-import { Scaleform, Vehicle } from '../../../core/libs';
+// Native wrapper
+import { Scaleform, Vehicle } from '@native//';
 
 enum MinimapNavigationEnum {
   NONE = 0,

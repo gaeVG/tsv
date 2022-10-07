@@ -1,4 +1,5 @@
-import React from 'react'
+// Dependencies
+import React from 'react';
 
 function Logs() {
   return (
@@ -10,4 +11,4 @@ function Logs() {
   );
 }
 
-export { Logs }
+export { Logs };

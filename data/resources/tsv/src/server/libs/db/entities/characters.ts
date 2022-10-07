@@ -1,8 +1,12 @@
+// Native wrapper
+import { Vec4 } from '@native/utils/Vector4';
+// Dependencies
 import { Column, Entity } from 'typeorm';
-import { Vec4 } from '../../../../core/libs/utils/Vector4';
-import { CharacterDescription, PlayerData, SkinCharacter } from '../../../../core/declares/user';
+// Entities
 import { Accounts } from './accounts';
-import { UserCharacter } from '../../../../core/declares/user';
+// Declarations
+import { CharacterDescription, SkinCharacter, UserCharacter } from '@declares/user';
+
 @Entity()
 class UserCharacters {
   @Column()

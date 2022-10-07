@@ -1,15 +1,20 @@
-import { EnumLogContainer, LogData } from '../../../core/declares/log';
-import { IModule } from '../../../core/declares/module';
+// Declarations
+import { EnumLogContainer, LogData } from '@declares/log';
+import { IModule } from '@declares/module';
+// Module
 import { zoneThreads } from './threads';
 import moduleConfig from './config';
-import { tsv } from '../..';
+// Core
+import { tsv } from '@tsv';
 
+// Log variable
 const log: LogData = {
   namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,
   container: EnumLogContainer.Module,
   isModuleDisplay: moduleConfig.debug,
 };
 
+// Zone module description
 const ZoneModule: IModule = {
   name: 'zone',
   init(): Error {

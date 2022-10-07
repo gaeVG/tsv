@@ -1,5 +1,7 @@
-import { ActivityEnum } from '../../../core/declares/activity';
+// Declarations
+import { ActivityEnum } from '@declares/activity';
 
+// Taxi transporter activity description
 const taxi = {
   name: ActivityEnum.DRIVER,
   roles: [

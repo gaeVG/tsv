@@ -1,5 +1,5 @@
-import { DoorType } from '.';
-import { EntranceStateEnum } from '../enums';
+// Declarations
+import { DoorType, EntranceStateEnum } from '@declares/entrance';
 
 type EntranceStateStype = EntranceStateEnum.CLOSE | EntranceStateEnum.OPEN;
 

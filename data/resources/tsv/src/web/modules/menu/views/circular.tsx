@@ -1,11 +1,12 @@
-  // DEPENDENCIES
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-// DECLARES
-import { MenuProps } from '../../../../core/declares/nui';
-// HOOKS
+// Dependencies
+import React from 'react';
+// Declarations
+import { MenuProps } from '@declares/nui';
+// Hooks
 import { useId } from '@mantine/hooks';
-// COMPONENTS
+// Components
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { IconDynamic } from '../../../components';
 
 function MenuCircular({ buttons }: MenuProps) {
@@ -14,8 +15,8 @@ function MenuCircular({ buttons }: MenuProps) {
   const [isChecked, setIsChecked] = useState(false);
 
   window.addEventListener('keyup', (e) => {
-    console.log(e.key)
-    console.log(isChecked)
+    console.log(e.key);
+    console.log(isChecked);
     if (!isChecked) {
       fetch('https://tsv/listener', {
         method: 'POST',
@@ -34,9 +35,9 @@ function MenuCircular({ buttons }: MenuProps) {
     }
   });
 
-  return ( 
+  return (
     <div className="menu-circular__container">
-      <input 
+      <input
         className="menu-circular__button"
         id="menu-circular"
         type="checkbox"
@@ -48,20 +49,14 @@ function MenuCircular({ buttons }: MenuProps) {
         <div key="second" className="hamburger hamburger-bar"></div>
         <div key="third" className="hamburger hamburger-bar"></div>
       </label>
-      
+
       {buttons.map((button) => (
-        <a
-          key={`menu-${menuId}-link-${useId()}`}
-          className="menu-circular__item" href="#"
-        >
-          <IconDynamic
-            icon={button.icon}
-            key={`menu-${menuId}- icon-${menuId}`}
-          />
+        <a key={`menu-${menuId}-link-${useId()}`} className="menu-circular__item" href="#">
+          <IconDynamic icon={button.icon} key={`menu-${menuId}- icon-${menuId}`} />
         </a>
       ))}
     </div>
   );
-};
+}
 
 export { MenuCircular };

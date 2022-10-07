@@ -1,17 +1,21 @@
-import { Model, Vector3, World } from '../../../../core/libs';
-import { ItemType } from '../../../../core/declares/item';
-import { EnumLogContainer, LogData } from '../../../../core/declares/log';
-import {
-  DoorType,
-  EntranceStateEnum,
-  EntranceStateStype,
-} from '../../../../core/declares/entrance';
+// Native wrapper
+import { Model } from '@native/Model';
+import { World } from '@native/World';
+import { Vector3 } from '@native/utils';
+// Declarations
+import { ItemType } from '@declares/item';
+import { EnumLogContainer, LogData } from '@declares/log';
+import { DoorType, EntranceStateEnum, EntranceStateStype } from '@declares/entrance';
+// Abstract class
 import { UsableItem } from './usableItem';
+// Module
 import moduleConfig from '../config';
-import { tsv } from '../../..';
+// Core
+import { tsv } from '@tsv';
 
+// Log variable
 const log: LogData = {
-  namespace: moduleConfig.name,
+  namespace: moduleConfig.moduleName,
   container: EnumLogContainer.Class,
   isModuleDisplay: moduleConfig.debug,
 };

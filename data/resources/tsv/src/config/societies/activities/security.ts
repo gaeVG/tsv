@@ -1,5 +1,7 @@
-import { ActivityEnum } from '../../../core/declares/activity';
+// Declarations
+import { ActivityEnum } from '@declares/activity';
 
+// Security activity description
 const security = {
   name: ActivityEnum.SECURITY,
   roles: [

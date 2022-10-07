@@ -1,6 +1,8 @@
-import { ItemType } from '../../core/declares/item';
-import { ItemWeaponMeleeEnum, ItemWeaponPistolEnum } from '../../core/declares/item/enum';
-import _t from '../i18n';
+// Declaration
+import { ItemType } from '@declares/item';
+import { ItemWeaponMeleeEnum, ItemWeaponPistolEnum } from '@declares/item/enum';
+// Config
+import _t from '@config/i18n';
 
 export default [
   {

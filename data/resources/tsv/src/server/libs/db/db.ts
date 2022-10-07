@@ -1,12 +1,16 @@
+// Dependencies
 import { DataSource } from 'typeorm';
 import { MongoConnectionOptions } from 'typeorm/driver/mongodb/MongoConnectionOptions';
+// Declarations
+import { EnumLogContainer, LogData } from '@declares/log';
+// Core lib
 import { Log } from '../../../core/libs/log';
-import { EnumLogContainer, LogData } from '../../../core/declares/log';
+// Database entities
 import { Invoices, Parkings, Users, Vehicles } from './entities';
-import config from '../../../config';
+// Locale import
+import _t from '@config/i18n';
 
-const _t = config.locale;
-
+// Log variable
 const log: LogData = {
   namespace: 'Database',
   container: EnumLogContainer.Class,

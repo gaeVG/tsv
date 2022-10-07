@@ -1,8 +1,13 @@
-import { CommandType, ICommand, CommandConsoleNotAllowedError } from '../../declares/command';
-import { Crypto } from '../';
-import { UserGroup } from '../../declares/user';
-import { Env } from '../../libs/env';
-import _t from '../../../config/i18n';
+// Native wrapper
+import { Crypto } from '@native/utils';
+// Declarations
+import { CommandType, ICommand, CommandConsoleNotAllowedError } from '@declares/command';
+import { UserGroup } from '@declares/user';
+// Core libs
+import { Env } from '@libs/env';
+// Locale import
+import _t from '@config/i18n';
+
 class Command implements ICommand {
   id: string;
   name: string;

@@ -1,5 +1,7 @@
-import { IEventListener } from '../../../core/declares/events';
+// Declarations
+import { IEventListener } from '@declares/events';
 
+// Status module events descriptions
 const statusEvent: IEventListener[] = [
   {
     name: 'statusUpdate',
@@ -7,7 +9,7 @@ const statusEvent: IEventListener[] = [
     onNet: true,
     isCallback: true,
     handler: () => {
-      console.log('statusUpdate');
+      // TODO: Complete the status update event
     },
   },
 ];

@@ -1,10 +1,15 @@
+// Declarations
+import { IStatus, PlayerStatus, StatusEnum } from '@declares/status';
+import { LogData, EnumLogContainer } from '@declares/log';
+// Status abstract class
 import { Status } from './status';
-import { IStatus, PlayerStatus, StatusEnum } from '../../declares/status';
-import { LogData, EnumLogContainer } from '../../declares/log';
+// Status classes
 import { Feed, Thrist, Health } from './needs';
-import { tsv } from '../../../server';
-import { Log } from '../log';
+// Core libs
+import { Log } from '@libs/log';
+import _t from '@config/i18n';
 
+// Log variables
 const log: LogData = {
   namespace: 'CoreStatus',
   container: EnumLogContainer.Manager,
@@ -15,7 +20,7 @@ class StatusManager {
 
   private newStatus(): void {
     log.location = 'newStatus()';
-    tsv.log.debug({
+    Log.debug({
       ...log,
       message: 'Création du nouveau statut',
     });
@@ -25,12 +30,12 @@ class StatusManager {
   }
 
   constructor(status: PlayerStatus[]) {
-    log.location = tsv.locale('global.location.constructor');
+    log.location = _t('global.location.constructor');
     this.manager = [];
     status.length > 0
       ? status.map((status) => {
           this.addOne(status) === null &&
-            tsv.log.error({
+            Log.error({
               ...log,
               message: `StatusManager: status ${status.name} not found`,
             });
@@ -100,7 +105,7 @@ class StatusManager {
         return currentStatus;
       });
     } catch (error) {
-      tsv.log.error({
+      Log.error({
         ...log,
         message: error instanceof Error ? error.message : (error as string),
         isLast: true,
@@ -109,7 +114,7 @@ class StatusManager {
     }
 
     if (!statusFound) {
-      tsv.log.error({
+      Log.error({
         ...log,
         message: `StatusManager: status ${status.name} not found`,
         isLast: true,

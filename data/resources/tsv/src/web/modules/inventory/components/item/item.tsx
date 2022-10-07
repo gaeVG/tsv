@@ -1,16 +1,21 @@
-// DEPENDENCIES
-import React, { useEffect, useState } from 'react';
-import { useId } from '@mantine/hooks'
-import { Menu } from '@mantine/core';
+// Dependencies
+import React from 'react';
+// Declarations
+import {
+  /*ItemCategoryEnum,*/ ItemType,
+  IItem,
+  ItemShouldNoLongerExistError,
+} from '@declares/item';
+import { InventoryFromType } from '@declares/inventory';
+// Hooks
+import { useEffect, useState } from 'react';
+import { useId } from '@mantine/hooks';
 import { showNotification } from '@mantine/notifications';
-// DECLARES
-import { /*ItemCategoryEnum,*/ ItemType, IItem, ItemShouldNoLongerExistError } from '../../../../../core/declares/item';
-import { InventoryFromType } from '../../../../../core/declares/inventory';
-// HOOKS
-import { fetchNui } from '../../../../hooks';
+import { fetchNui } from '@hooks';
+// Components
+import { Menu } from '@mantine/core';
 // CONFIG
-import config from '../../../../../config';
-
+import config from '@config/index';
 
 // function getItemDnDCategory (item: ItemType): string {
 //   let itemDnDCategory: string
@@ -26,9 +31,17 @@ import config from '../../../../../config';
 //   return itemDnDCategory
 // }
 
-function Item({ item, from, isSelected } : { item: ItemType, from: InventoryFromType, isSelected?: boolean }) {
+function Item({
+  item,
+  from,
+  isSelected,
+}: {
+  item: ItemType;
+  from: InventoryFromType;
+  isSelected?: boolean;
+}) {
   const itemID = useId();
-  const itemLabel = config.locale(`module.inventory.items.${item.name}`)
+  const itemLabel = config.locale(`module.inventory.items.${item.name}`);
 
   const [onUseItem, setOnUseItem] = useState(false);
 
@@ -37,7 +50,7 @@ function Item({ item, from, isSelected } : { item: ItemType, from: InventoryFrom
       const usedItem: IItem = await fetchNui({
         name: 'useItem',
         module: 'inventory',
-        payload: [from, item]
+        payload: [from, item],
       });
 
       if (usedItem.name === 'ItemShouldNoLongerExistError') {
@@ -64,7 +77,7 @@ function Item({ item, from, isSelected } : { item: ItemType, from: InventoryFrom
               '&:hover': { backgroundColor: theme.colors.blue[7] },
             },
           }),
-        })
+        });
         // dispatch({
         //   type: AppReducerActionEnum.,
         //   from: from,
@@ -91,7 +104,7 @@ function Item({ item, from, isSelected } : { item: ItemType, from: InventoryFrom
               '&:hover': { backgroundColor: theme.colors.blue[7] },
             },
           }),
-        })
+        });
 
         if (error.name === 'ItemShouldNoLongerExistError') {
           // TODO: Supprimer l'item du store
@@ -100,12 +113,12 @@ function Item({ item, from, isSelected } : { item: ItemType, from: InventoryFrom
     } finally {
       setOnUseItem(false);
     }
-  }
+  };
 
   // TODO: Complete Drag and Drop
   // const onMouseDown = (event: MouseEvent<HTMLDivElement>) => {
   //   event.preventDefault();
-    
+
   //   if (!app.currentDrag) {
   //     dispatch({
   //       type: AppReducerActionEnum.SET_CURRENT_DRAG,
@@ -129,7 +142,7 @@ function Item({ item, from, isSelected } : { item: ItemType, from: InventoryFrom
     if (onUseItem) {
       useItem(from, item);
     }
-  }, [onUseItem])
+  }, [onUseItem]);
 
   return (
     <Menu>
@@ -138,13 +151,12 @@ function Item({ item, from, isSelected } : { item: ItemType, from: InventoryFrom
           id={`item-${item.name}-${itemID}`}
           className={`item ${isSelected ? 'selected' : ''}`}
           onClick={() => !onUseItem && setOnUseItem(true)}
-          
         >
           {item.count} {itemLabel}
         </div>
       </Menu.Target>
     </Menu>
-  )
+  );
 }
 
-export { Item }
+export { Item };

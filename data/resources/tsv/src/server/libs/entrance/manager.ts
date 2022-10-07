@@ -1,13 +1,17 @@
-import { EnumLogContainer, LogData } from '../../../core/declares/log';
-import { Entrance, Door, DoubleDoor, Gate } from './entrance';
+// Declarations
+import { EnumLogContainer, LogData } from '@declares/log';
 import {
   EntranceNotFoundError,
   DoorsMustBeTwoError,
   EntranceType,
   IEntrance,
-} from '../../../core/declares/entrance';
-import { tsv } from '../..';
+} from '@declares/entrance';
+// Entrance classes
+import { Entrance, Door, DoubleDoor, Gate } from './entrance';
+// Core
+import { tsv } from '@tsv';
 
+// Log variable
 const log: LogData = {
   namespace: 'CoreEntrance',
   container: EnumLogContainer.Manager,

@@ -1,4 +1,6 @@
-import { NUIListener, NUIMessage } from '../../../core/declares/nui';
+// Declarations
+import { NUIListener, NUIMessage } from '@declares/nui';
+
 class NUIManager {
   private manager: NUIListener[];
 

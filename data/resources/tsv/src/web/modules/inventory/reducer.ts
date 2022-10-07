@@ -1,6 +1,8 @@
-import { fetchNui } from '../../hooks';
-import { InventoryType } from '../../../core/declares/inventory';
-import { ItemType } from '../../../core/declares/item';
+// Declarations
+import { InventoryType } from '@declares/inventory';
+import { ItemType } from '@declares/item';
+// Hooks
+import { fetchNui } from '@hooks';
 
 const initialState: {
   display: {

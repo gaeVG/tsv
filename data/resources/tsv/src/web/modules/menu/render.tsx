@@ -1,13 +1,15 @@
-// DEPENDENCIES
-import React, { useEffect, useState } from "react"
-import { useDispatch, useSelector, shallowEqual } from "react-redux";
-// DECLARES
-import { IMenu, TypeMenuEnum, TypeMenuType } from '../../../core/declares/menu';
-import { AppState } from '../../stores';
-// HOOKS
-import { useNuiEvent } from "../../hooks";
-// COMPONENTS
-import { MenuDefault, MenuCircular } from "./views";
+// Dependencies
+import React from 'react';
+// Declarations
+import { IMenu, TypeMenuEnum, TypeMenuType } from '@declares/menu';
+// Hooks
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { useNuiEvent } from '@hooks';
+// Components
+import { MenuDefault, MenuCircular } from './views';
+// Stores
+import { AppState } from '@store';
 
 function Menu() {
   const [currentMenu, setCurrentMenu] = useState<JSX.Element>();
@@ -18,18 +20,18 @@ function Menu() {
   useNuiEvent('openMenu', (menu: IMenu) => {
     dispatch({
       type: 'SET_CURRENT_MENU',
-      currentMenu: menu
-    })
-  })
+      currentMenu: menu,
+    });
+  });
   useNuiEvent('closeMenu', () => {
-    dispatch({ type: 'CLOSE_CURRENT_MENU' })
-  })
+    dispatch({ type: 'CLOSE_CURRENT_MENU' });
+  });
   useNuiEvent('updateMenu', (menu: IMenu) => {
     dispatch({
       type: 'UPDATE_CURRENT_MENU',
-      currentMenu: menu
-    })
-  })
+      currentMenu: menu,
+    });
+  });
 
   useEffect(() => {
     if (menu.currentMenu) {
@@ -41,7 +43,7 @@ function Menu() {
               name={menu.currentMenu.name}
               title={menu.currentMenu.title}
               buttons={menu.currentMenu.buttons}
-            />
+            />,
           );
           break;
         default:
@@ -51,20 +53,20 @@ function Menu() {
               name="personnal"
               title="Menu personnel"
               buttons={menu.currentMenu.buttons}
-            />
+            />,
           );
       }
 
-      setCurrentMenuType(menu.currentMenu.type)
+      setCurrentMenuType(menu.currentMenu.type);
     } else if (menu.currentMenu === null) {
       setCurrentMenu(null);
       setCurrentMenuType(null);
       dispatch({
         type: 'SET_CURRENT_MENU',
-        currentMenu: undefined
-      })
+        currentMenu: undefined,
+      });
     }
-  }, [menu.currentMenu])
+  }, [menu.currentMenu]);
 
   return (
     currentMenu !== undefined && (
@@ -75,4 +77,4 @@ function Menu() {
   );
 }
 
-export { Menu }
+export { Menu };

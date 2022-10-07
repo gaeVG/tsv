@@ -1,4 +1,6 @@
-import { UserActivityType } from '../../../../core/declares/activity';
+// Declarations
+import { UserActivityType } from '@declares/activity';
+// Module
 import { Activity } from '..';
 
 class Security extends Activity {
