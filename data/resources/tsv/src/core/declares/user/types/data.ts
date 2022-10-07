@@ -2,17 +2,18 @@
 import { Vec4 } from '@native/utils/Vector4';
 // Declarations
 import { InventoryType } from '@declares/inventory';
-import { PlayerStatus } from '@declares/status';
+import { PlayerStatusType } from '@declares/status';
 import { IZone } from '@declares/zone';
 import { SkinCharacter } from '@declares/user';
+//import { AccountType } from '@declares/account';
 
 type PlayerData = {
   isDead: boolean;
   skin?: SkinCharacter;
   inventories?: Array<InventoryType>;
-  accounts?: [];
+  //accounts?: Array<AccountType>;
   activities?: { for: string; job: string; role: string }[];
-  status?: PlayerStatus[];
+  status?: PlayerStatusType[];
   position: Vec4;
   currentZone?: IZone;
   licenses?: [];
