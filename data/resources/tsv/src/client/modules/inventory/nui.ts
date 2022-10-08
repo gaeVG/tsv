@@ -2,7 +2,7 @@
 import { NUIListener } from '@declares/nui';
 // Module
 import { useItem } from './functions';
-import moduleConfig from './config';
+import config from './config';
 
 // Inventory module NUI descriptions
 const inventoryNui: NUIListener[] = [
@@ -17,7 +17,7 @@ const inventoryNui: NUIListener[] = [
   },
   {
     name: 'useItem',
-    module: moduleConfig.name,
+    module: config.moduleName,
     handler: useItem,
   },
 ];
