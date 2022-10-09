@@ -1,7 +1,7 @@
 // import { default as config } from '../../../config';
-import { ColorClientConsoleEnum, ColorServerConsoleEnum } from '../../declares/colors';
-import { LogData } from '../../declares/log';
-import { Env } from '../env';
+import { ColorClientConsoleEnum, ColorServerConsoleEnum } from '@declares/colors';
+import { LogData } from '@declares/log';
+import { Env } from '@utils';
 
 const formatMessage = (log: LogData): string => {
   let sepEnv = '';

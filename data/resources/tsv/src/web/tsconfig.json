@@ -1,27 +1,27 @@
 {
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": ".",
+    "target": "es6",
+    "module": "es6",
     "paths": {
-      "@libs*": ["../core/libs*"],
       "@native*": ["../core/libs/native*"],
+      "@libs*": ["../core/libs*"],
       "@declares*": ["../core/declares*"],
       "@utils": ["../core/utils"],
       "@config*": ["../config*"],
-      "@store": ["./stores"],
       "@hooks": ["./hooks"],
+      "@store": ["./stores"],
     },
-    "module": "commonjs",
     "moduleResolution": "node",
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": false,
-    "target": "es6",
     "lib": ["esnext", "dom"],
     "types": ["@types/node", "@citizenfx/client"],
     "jsx": "react",
     "resolveJsonModule": true,
     "experimentalDecorators": true
   },
-  "include": ["./**/*", "../core/**/*"],
+  "include": ["./**/*"],
   "exclude": ["**/node_modules", "**/__tests__/*"]
 }

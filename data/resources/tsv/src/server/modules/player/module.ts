@@ -5,24 +5,24 @@ import { LogData, EnumLogContainer } from '@declares/log';
 import { playerEvents } from './events';
 import config from './config';
 // Core
-import { tsv } from '../../../server';
+import { tsv } from '@tsv';
 
 // Log variable
 const log: LogData = {
-  namespace: `Module${config.name.charAt(0).toUpperCase() + config.name.slice(1)}`,
+  namespace: `Module${config.moduleName.charAt(0).toUpperCase() + config.moduleName.slice(1)}`,
   container: EnumLogContainer.Event,
   isModuleDisplay: config.debug,
 };
 
 // Player module description
 const PlayerModule: IModule = {
-  name: config.name,
+  name: config.moduleName,
   init(): Error {
     log.location = tsv.locale('global.location.init');
     try {
       tsv.log.debug({
         ...log,
-        message: tsv.locale('global.message.init', { moduleName: config.name }),
+        message: tsv.locale('global.message.init', { moduleName: config.moduleName }),
       });
 
       playerEvents.forEach((event) => tsv.events.listen(event));
@@ -31,7 +31,7 @@ const PlayerModule: IModule = {
     } finally {
       tsv.log.debug({
         ...log,
-        message: tsv.locale('global.location.initComplete', { moduleName: config.name }),
+        message: tsv.locale('global.location.initComplete', { moduleName: config.moduleName }),
       });
     }
   },

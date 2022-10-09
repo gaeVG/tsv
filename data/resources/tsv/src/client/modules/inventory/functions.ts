@@ -15,15 +15,15 @@ import {
 import { IInventory, InventoryFromType } from '@declares/inventory';
 // Module
 import { Clothe, Drink, Food, Weapon, Key } from './item';
-import moduleConfig from './config';
+import config from './config';
 // Core
 import { tsv } from '@tsv';
 
 // Log variable
 const log: LogData = {
-  namespace: `Module${moduleConfig.name.charAt(0).toUpperCase() + moduleConfig.name.slice(1)}`,
+  namespace: `Module${config.moduleName.charAt(0).toUpperCase() + config.moduleName.slice(1)}`,
   container: EnumLogContainer.Function,
-  isModuleDisplay: moduleConfig.debug,
+  isModuleDisplay: config.debug,
 };
 
 async function createPedOverlay(player: Player): Promise<Ped> {
@@ -70,7 +70,7 @@ async function openInventory() {
   });
   tsv.nui.listen({
     name: 'display-character',
-    module: moduleConfig.name,
+    module: config.moduleName,
     handler: async () => {
       global.SetFrontendActive(true);
       global.ActivateFrontendMenu('FE_MENU_VERSION_EMPTY', false, -1);
@@ -81,7 +81,7 @@ async function openInventory() {
   });
   tsv.nui.listen({
     name: 'hide-character',
-    module: moduleConfig.name,
+    module: config.moduleName,
     handler: () => {
       playerOverlay.delete();
       global.SetFrontendActive(false);

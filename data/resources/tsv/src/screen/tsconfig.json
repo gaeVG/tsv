@@ -1,10 +1,15 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "target": "es5",
+    "target": "es6",
     "module": "es6",
     "paths": {
-      "*": ["types/*"]
+      "@native*": ["../core/libs/native*"],
+      "@libs*": ["../core/libs*"],
+      "@declares*": ["../core/declares*"],
+      "@utils": ["../core/utils"],
+      "@config*": ["../config*"],
+
     },
     "moduleResolution": "node",
     "allowJs": true,

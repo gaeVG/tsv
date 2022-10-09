@@ -5,8 +5,8 @@ import { useDispatch } from 'react-redux';
 import { AppReducerActionEnum } from '@declares/nui';
 import { IUser } from '@declares/user';
 // Hooks
-import { useNuiEvent } from '../hooks';
-// Components
+import { useNuiEvent } from '@hooks';
+// Modules
 import Modules from '../modules';
 
 /**

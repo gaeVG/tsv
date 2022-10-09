@@ -138,20 +138,8 @@ async function spawnCharacter(user: IUser, isRecursive?: boolean): Promise<Error
       throw player;
     }
 
-    const updatedUser = await (tsv.events.trigger({
-      name: 'onPlayerSpawn',
-      module: 'player',
-      onNet: true,
-      isCallback: true,
-      data: [user],
-    }) as Promise<IUser | Error>);
-
-    if (updatedUser instanceof Error) {
-      throw updatedUser;
-    }
-
     tsv.nui.trigger({ name: 'setUser', module: 'app', payload: user });
-    tsv.activities.addActivity(updatedUser.activities);
+    tsv.activities.addActivity(user.activities);
 
     // Exit the loading screen
     global.ShutdownLoadingScreen();

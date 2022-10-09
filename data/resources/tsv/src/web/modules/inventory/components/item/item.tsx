@@ -15,7 +15,7 @@ import { fetchNui } from '@hooks';
 // Components
 import { Menu } from '@mantine/core';
 // CONFIG
-import config from '@config/index';
+import _t from '@config/i18n';
 
 // function getItemDnDCategory (item: ItemType): string {
 //   let itemDnDCategory: string
@@ -41,7 +41,7 @@ function Item({
   isSelected?: boolean;
 }) {
   const itemID = useId();
-  const itemLabel = config.locale(`module.inventory.items.${item.name}`);
+  const itemLabel = _t(`module.inventory.items.${item.name}`);
 
   const [onUseItem, setOnUseItem] = useState(false);
 

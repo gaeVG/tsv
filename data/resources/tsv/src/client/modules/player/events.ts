@@ -35,7 +35,7 @@ const playerEvents: IEventListener[] = [
     },
   },
   {
-    name: ClientEventNativeEnum.onResourceStart,
+    name: ClientEventNativeEnum.onClientResourceStart,
     module: moduleConfig.name,
     handler: onResourceStart,
   },

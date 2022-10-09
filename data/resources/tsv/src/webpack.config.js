@@ -242,4 +242,4 @@ const loadscreen = {
   ],
 };
 
-module.exports = [server, client, web /*loadscreen*/];
+module.exports = [server, client, web, loadscreen];

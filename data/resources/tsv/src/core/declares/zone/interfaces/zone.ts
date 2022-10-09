@@ -3,7 +3,6 @@ import { Color, Vector3 } from '@native/utils';
 // Declarations
 import { IBucket } from '@declares/bucket';
 import { IUser } from '@declares/user';
-import { User } from '@libs/user';
 
 interface IZone {
   id: string;
@@ -26,8 +25,8 @@ interface IZone {
   bucket?: IBucket;
   users?: IUser[];
 
-  onEnter?: (user: User) => void;
-  onLeave?: (user: User) => void;
+  onEnter?: (user: IUser) => void;
+  onLeave?: (user: IUser) => void;
 }
 
 export { IZone };

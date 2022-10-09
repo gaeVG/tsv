@@ -1,2 +1,2 @@
 export { CharacterModule } from './module';
-export { selectCharacter } from './functions';
+export { selectCharacter, spawnCharacter } from './functions';
