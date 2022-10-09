@@ -1,13 +1,13 @@
 // Dependencies
-import { MutableRefObject, useEffect, useRef, useState } from 'react';
+import { MutableRefObject, useEffect, useRef } from 'react';
 // Declarations
 import { NuiMessageData } from '@declares/nui';
-// Hooks
-import { useDebouncedValue } from '@mantine/hooks';
+// Utils
+import debounce from '../../core/utils/debounce';
 
 /**
  * A hook that manage events listeners for receiving data from the client scripts
- * @param eventName The specific `action` that should be listened for.
+ * @param action The specific `action` that should be listened for.
  * @param handler The callback function that will handle data relayed by this hook
  *
  * @example
@@ -20,8 +20,6 @@ import { useDebouncedValue } from '@mantine/hooks';
 export const useNuiEvent = <T = any>(eventName: string, handler: (data: T) => void) => {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const savedHandler: MutableRefObject<(data: T) => void> = useRef(() => {});
-  const [listener, setListener] = useState<() => void>();
-  const [debouncedHandler] = useDebouncedValue(listener, 100);
   // When handler value changes set mutable ref to handler val
   useEffect(() => {
     savedHandler.current = handler;
@@ -37,10 +35,6 @@ export const useNuiEvent = <T = any>(eventName: string, handler: (data: T) => vo
 
     window.addEventListener('message', eventListener);
     // Remove Event Listener on component cleanup
-    setListener(() => window.removeEventListener('message', eventListener));
+    return debounce(() => window.removeEventListener('message', eventListener));
   }, [eventName]);
-
-  useEffect(() => {
-    debouncedHandler();
-  }, [listener]);
 };

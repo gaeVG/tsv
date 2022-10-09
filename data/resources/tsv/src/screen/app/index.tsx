@@ -1,16 +1,9 @@
-// DEPENDENCIES
+// Dependencies
 import React from 'react';
-// DECLARES
-
+// Declarations
 
 function App() {
-
-
-  return (
-    <>
-      Coucou
-    </>
-  );
+  return <>Coucou</>;
 }
 
 export default App;
