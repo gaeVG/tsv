@@ -22,7 +22,7 @@ class BucketManager {
     return this.manager;
   }
 
-  addUserIntoBucket(user: IUser, userBucket: BucketType): IBucket | Error {
+  addUserIntoBucket(user: IUser, userBucket?: BucketType): IBucket | Error {
     log.location = 'addUserIntoBucket()';
     Log.safemode({
       ...log,
