@@ -1,5 +1,5 @@
 // Native wrapper
-import { Player } from '@native/models';
+import { Player } from '@native/models/Player';
 // Declarations
 import {
   CharacterDescription,
@@ -27,7 +27,7 @@ class User extends Player implements IUser {
   isReady: boolean;
 
   constructor(user: IUser) {
-    super(GetGameName() === 'fxserver' ? parseInt(user.source) : -1);
+    super(global.IsDuplicityVersion() ? parseInt(user.source) : -1);
     this.id = user.id;
     this.source = user.source;
 
