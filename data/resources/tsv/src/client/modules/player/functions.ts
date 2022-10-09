@@ -22,10 +22,15 @@ const log: LogData = {
  * Function behind the 'onResourceStart' event, creating the thread to check if the player is active
  * @param {string} resourceName - Name of the resource that has just started
  */
-function onResourceStart(resourceName: string): void {
+function onResourceStart(_: any, name: string): void {
   log.location = ClientEventNativeEnum.onResourceStart;
 
-  if (GetCurrentResourceName() === resourceName) {
+  tsv.log.debug({
+    ...log,
+    message: `Resource ${name} started`,
+  });
+
+  if (global.GetCurrentResourceName() === name) {
     tsv.threads.createThread({
       name: 'is-network-player-active',
       timer: 500,
@@ -118,12 +123,16 @@ async function playerConnecting(): Promise<void> {
     }
 
     // Notify the server that the player is ready
-    tsv.events.trigger({
+    const playerSpawned = await (tsv.events.trigger({
       name: 'onPlayerSpawn',
       module: 'player',
       onNet: true,
-      data: [updatedUser],
-    });
+      isCallback: true,
+      data: [user],
+    }) as Promise<IUser | Error>);
+    if (playerSpawned instanceof Error) {
+      throw updatedUser;
+    }
   } catch (error) {
     if (error instanceof Error) {
       tsv.log.error({
@@ -140,8 +149,7 @@ async function playerConnecting(): Promise<void> {
 function isNetworkPlayerActiveTick(): boolean {
   try {
     const playerId = PlayerId();
-
-    if (NetworkIsPlayerActive(playerId)) {
+    if (global.NetworkIsPlayerActive(playerId)) {
       tsv.log.safemode({
         ...log,
         message: tsv.locale('module.player.events.startSession.clientActive', {
