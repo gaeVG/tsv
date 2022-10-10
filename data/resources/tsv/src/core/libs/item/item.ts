@@ -17,7 +17,6 @@ class Item implements IItem {
     this.metadata = item.metadata;
     Object.entries(config.items).every(([category, items]) => {
       const itemConfig = items.find((item: ItemType) => item.name === this.name);
-
       if (itemConfig !== undefined) {
         this.category = category as ItemCategoryType;
         this.weight = itemConfig.weight;

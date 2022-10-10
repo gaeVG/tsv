@@ -1,5 +1,5 @@
 enum ItemCardEnum {
-  BANK = 'bankcard',
+  BANK = 'bank_card',
   LOYALTY = 'loyalty',
 }
 

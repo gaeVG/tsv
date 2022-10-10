@@ -14,7 +14,7 @@ import {
 } from '@declares/item';
 import { IInventory, InventoryFromType } from '@declares/inventory';
 // Module
-import { Clothe, Drink, Food, Weapon, Key } from './item';
+import { Clothe, Drink, Food, Weapon, Key, BankCard, Money } from './item';
 import config from './config';
 // Core
 import { tsv } from '@tsv';
@@ -89,6 +89,11 @@ async function openInventory() {
   });
 }
 
+/**
+ * Get item class from item category
+ * @param {IItem} item - Item to get class from
+ * @returns {IUsableItem} - Usable item interface
+ */
 function getItemClass(item: IItem): IUsableItem | Error {
   log.location = 'getItemClass()';
 
@@ -112,11 +117,21 @@ function getItemClass(item: IItem): IUsableItem | Error {
 
         throw new UnknownItemError(item);
       case ItemCategoryEnum.HARDWARE:
-        if (item.name === 'key') {
-          return new Key(item);
+        switch (item.name) {
+          case 'key':
+            return new Key(item);
+          default:
+            throw new UnknownItemError(item);
         }
-
-        throw new UnknownItemError(item);
+      case ItemCategoryEnum.CARD:
+        switch (item.name) {
+          case 'bank_card':
+            return new BankCard(item);
+          default:
+            throw new UnknownItemError(item);
+        }
+      case ItemCategoryEnum.MONEY:
+        return new Money(item);
       default:
         throw new UnknownItemError(item);
     }
@@ -128,6 +143,7 @@ function getItemClass(item: IItem): IUsableItem | Error {
 }
 async function useItem([container, usingItem]: [InventoryFromType, IItem]): Promise<IItem | Error> {
   log.location = 'useItem()';
+  // Polymporphic usable item depending on item category
   const item = getItemClass(usingItem) as IUsableItem;
   if (item instanceof Error) return item;
   tsv.log.debug({ ...log, message: `Using item ${item.name}` });

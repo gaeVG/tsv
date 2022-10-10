@@ -64,7 +64,8 @@
           "beer": "Beer",
           "bread": "Bread",
           "hamburger": "Hamburger",
-          "key": "Key"
+          "key": "Key",
+          "bank_card": "Bank card"
         }
       }
     }

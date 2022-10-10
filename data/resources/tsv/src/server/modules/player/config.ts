@@ -4,6 +4,7 @@ import { Vector4 } from '@native/utils';
 import { SkinCharacter, UserCharacter } from '@declares/user';
 import { InventoryContainerEnum } from '@declares/inventory';
 import { StatusEnum } from '@declares/status';
+import { AccountStateEnum } from '@declares/account';
 
 export default {
   moduleName: 'player',
@@ -35,8 +36,9 @@ export default {
     ],
     accounts: [
       {
-        name: 'mzb',
+        from: 'mzb',
         amount: 1500,
+        state: AccountStateEnum.INACTIVE,
       },
     ],
     status: [

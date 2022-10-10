@@ -1,7 +1,7 @@
 // Native wrapper
 import { Vec4 } from '@native/utils/Vector4';
 // Declarations
-import { AccountType } from '@declares/account';
+import { IAccount } from '@declares/account';
 import { SkinCharacter } from '@declares/user';
 import { InventoryType } from '@declares/inventory';
 
@@ -21,7 +21,7 @@ type UserCharacter = {
   isDead: boolean;
   status?: { name: string; value: unknown }[];
   inventories?: Array<InventoryType>;
-  accounts: Array<AccountType>;
+  accounts: Array<IAccount>;
   licenses?: [];
   activities?: { for: string; job: string; role: string }[];
   experiences?: { name: string; total: number }[];

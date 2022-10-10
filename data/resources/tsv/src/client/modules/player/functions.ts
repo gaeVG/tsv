@@ -10,6 +10,7 @@ import { selectCharacter, spawnCharacter } from '../character';
 import moduleConfig from './config';
 // Core
 import { tsv } from '@tsv';
+import { User } from '@libs/user';
 
 // Log variable
 const log: LogData = {
@@ -115,6 +116,8 @@ async function playerConnecting(): Promise<void> {
     if (updatedUser instanceof Error) {
       throw updatedUser;
     }
+
+    tsv.user = new User(updatedUser);
 
     // Spawn the character
     const error = spawnCharacter(updatedUser);

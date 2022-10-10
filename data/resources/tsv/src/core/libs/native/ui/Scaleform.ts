@@ -87,7 +87,7 @@ export class Scaleform {
    * @param name Name of the function
    * @param args Additional arguments
    */
-  public callFunction(name: string, ...args: unknown[]) {
+  public callFunction(name: string, ...args: unknown[]): number {
     const returnResult = args[args.length -1] === 'returnResult';
 
     BeginScaleformMovieMethod(this.handle, name);

@@ -6,7 +6,7 @@ import { EnumLogContainer, LogData } from '@declares/log';
 // Core lib
 import { Log } from '../../../core/libs/log';
 // Database entities
-import { Invoices, Parkings, Users, Vehicles } from './entities';
+import { Users, Vehicles, Accounts } from './entities';
 // Locale import
 import _t from '@config/i18n';
 
@@ -36,7 +36,7 @@ class DBManager {
       database: process.env.DB_NAME || 'fivem',
       synchronize: true,
       logging: process.env.EXECUTION_MODE === 'safemode',
-      entities: [Users, Vehicles, Parkings, Invoices],
+      entities: [Users, Vehicles, Accounts],
       subscribers: [],
       migrations: [],
       useUnifiedTopology: true,

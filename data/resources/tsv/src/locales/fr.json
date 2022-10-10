@@ -261,7 +261,8 @@
           "beer": "Bière",
           "bread": "Pain",
           "hamburger": "Hamburger",
-          "key": "Clé"
+          "key": "Clé",
+          "bank_card": "Carte banquaire"
         }
       }
     },

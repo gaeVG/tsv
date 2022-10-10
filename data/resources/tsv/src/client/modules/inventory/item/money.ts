@@ -1,12 +1,16 @@
-import { ItemType, IItem } from '../../../../core/declares/item';
+// Declarations
+import { ItemType, IItem } from '@declares/item';
+import { EnumLogContainer, LogData } from '@declares/log';
+// Usable item abstract class
 import { UsableItem } from './usableItem';
-import moduleConfig from '../config';
-import { EnumLogContainer, LogData } from '../../../../core/declares/log';
+// Module
+import config from '../config';
 
+// Log variable
 const log: LogData = {
-  namespace: moduleConfig.name,
+  namespace: config.moduleName,
   container: EnumLogContainer.Class,
-  isModuleDisplay: moduleConfig.debug,
+  isModuleDisplay: config.debug,
 };
 
 type MoneyData = {

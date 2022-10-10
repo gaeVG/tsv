@@ -11,7 +11,7 @@ import {
   UserMissingIdentifierError,
   UserGroupEnum,
 } from '@declares/user';
-import { AccountType } from '@declares/account';
+import { IAccount } from '@declares/account';
 import { LogData, EnumLogContainer } from '@declares/log';
 import { IAdaptativeCard } from '@declares/cards';
 import { BucketDimension } from '@declares/bucket';
@@ -63,12 +63,7 @@ async function createPlayerOnDB(source: string): Promise<UsersEntity> {
     // Setting up character inventories
     character.inventories = characterDefault.inventories;
     // Setting up character accounts
-    character.accounts = characterDefault.accounts.map((account) => {
-      const newAccount = new Accounts();
-      newAccount.from = 'mzb';
-      newAccount.amount = account.amount;
-      return newAccount;
-    });
+    character.accounts = characterDefault.accounts.map((account) => new Accounts(account));
     // Pushing character data to user
     user.characters = [character];
 
@@ -87,27 +82,39 @@ async function createPlayerOnDB(source: string): Promise<UsersEntity> {
  * @returns {Promise<[UsersEntity, boolean]>} User entity and boolean if user is new
  */
 async function getUserFromDB(playerSource: string): Promise<[UsersEntity, boolean]> {
-  // Get identifiers from player identifier setting up in env file `IDENTIFIER_TYPE`
-  let userFromDB = await tsv.orm.dataSource.getMongoRepository(UsersEntity).findOneBy({
-    [`auth.${process.env.IDENTIFIER_TYPE}`]: (getIdentifiers(playerSource) as UserIdentifier)[
-      process.env.IDENTIFIER_TYPE
-    ],
-  });
-
-  if (!userFromDB) {
-    // User not found, creating a new one
-    tsv.log.safemode({
-      ...log,
-      message: tsv.locale('module.player.onPlayerJoined.newUser', {
-        userName: Player.fromServerId(parseInt(playerSource)).Name,
-      }),
+  log.location = 'getUserFromDB()';
+  try {
+    // Get identifiers from player identifier setting up in env file `IDENTIFIER_TYPE`
+    const userIdentifier = getIdentifiers(playerSource) as UserIdentifier;
+    let userFromDB = await tsv.orm.dataSource.getMongoRepository(UsersEntity).findOne({
+      [`auth.${process.env.IDENTIFIER_TYPE}`]: userIdentifier[process.env.IDENTIFIER_TYPE],
     });
 
-    userFromDB = await createPlayerOnDB(playerSource);
-    return [userFromDB, true];
-  }
+    if (!userFromDB) {
+      // User not found, creating a new one
+      tsv.log.safemode({
+        ...log,
+        message: tsv.locale('module.player.onPlayerJoined.newUser', {
+          userName: global.GetPlayerName(playerSource),
+        }),
+      });
 
-  return [userFromDB, false];
+      userFromDB = await createPlayerOnDB(playerSource);
+      return [userFromDB, true];
+    }
+    return [userFromDB, false];
+  } catch (error) {
+    log.location = 'getUserFromDB()';
+
+    if (error instanceof Error) {
+      tsv.log.error({
+        ...log,
+        message: error instanceof Error ? error.message : error,
+      });
+    }
+
+    return error;
+  }
 }
 /**
  * Function behind the event `onPlayerJoined`, triggered when a player client is connected
@@ -148,21 +155,24 @@ async function onPlayerJoined(source: string): Promise<[IUser, boolean, UserChar
         ...characters,
         {
           ...character,
-          accounts: character.accounts.reduce((accounts, account) => {
-            return [
-              ...accounts,
-              {
-                name: account.from,
+          accounts: character.accounts.map(
+            (account) =>
+              ({
+                id: account._id,
+                from: account.from,
                 amount: account.amount,
-              },
-            ];
-          }, [] as AccountType[]),
+                createdAt: account.createdAt,
+                updatedAt: account.updatedAt,
+                state: account.state,
+              } as IAccount),
+          ),
         },
       ];
     }, [] as UserCharacter[]);
 
     return [user, isNewPlayer, userCharacters];
   } catch (error) {
+    log.location = 'onPlayerJoined()';
     if (error instanceof Error) {
       if (process.env.EXECUTION_MODE !== 'production') {
         tsv.log.error({
@@ -427,7 +437,7 @@ function getIdentifiers(source: string): UserIdentifier | Error {
     });
   });
 
-  if (Object.entries.length === 0) {
+  if (Object.entries(playerIdentifiers).length === 0) {
     return new UserMissingIdentifierError(new Player(parseInt(source)));
   } else {
     return playerIdentifiers;
