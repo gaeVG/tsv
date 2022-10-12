@@ -1,5 +1,6 @@
 // Native wrapper
-import { Player, Fading } from '@native//';
+import { Player } from '@native/models';
+import { Fading } from '@native/ui';
 // Declarations
 import { LogData, EnumLogContainer } from '@declares/log';
 import { UserCharacter, IUser } from '@declares/user';
@@ -116,8 +117,6 @@ async function playerConnecting(): Promise<void> {
     if (updatedUser instanceof Error) {
       throw updatedUser;
     }
-
-    tsv.user = new User(updatedUser);
 
     // Spawn the character
     const error = spawnCharacter(updatedUser);
