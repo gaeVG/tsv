@@ -13,16 +13,13 @@ class InventoryManager {
   private manager: Inventory[];
 
   constructor(inventories: InventoryType[]) {
-    this.manager = [];
-    inventories.forEach((inventory) => {
-      this.manager.push(new Inventory(inventory));
-    });
+    this.manager = inventories.map((inventory) => new Inventory(inventory));
   }
 
-  get Manager(): IInventory[] {
-    return this.getAll().map((i) => i as IInventory);
+  get Containers(): IInventory[] {
+    return this.manager;
   }
-  set Manager(inventories: IInventory[]) {
+  set Containers(inventories: IInventory[]) {
     inventories.forEach((inventory) => {
       const inventoryManager = this.getOne(inventory.container);
       if (inventoryManager !== undefined) {
@@ -33,9 +30,6 @@ class InventoryManager {
     });
   }
 
-  private getAll(): Inventory[] {
-    return this.manager;
-  }
   private updateOne(updateInventory: Inventory) {
     try {
       if (!this.manager.find((i) => i.container === updateInventory.container)) {

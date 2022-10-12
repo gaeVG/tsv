@@ -24,14 +24,14 @@ const log: LogData = {
  */
 function getAllInventories(source: string, target?: string): IInventory[] | Error {
   try {
-    let tspUser: IUser;
-    if (target !== undefined) {
-      tspUser = tsv.users.getOnebyId(target) as IUser;
-    } else {
-      tspUser = tsv.users.getOneBySource(source) as IUser;
-    }
+    let user: IUser;
 
-    return tspUser.inventories.Manager;
+    if (target !== undefined) {
+      user = tsv.users.getOnebyId(target) as IUser;
+    } else {
+      user = tsv.users.getOneBySource(source) as IUser;
+    }
+    return user.inventories.Containers;
   } catch (error) {
     tsv.log.error({
       ...log,
@@ -53,14 +53,14 @@ function getInventory(
   target?: string,
 ): IInventory | undefined {
   try {
-    let tspUser: IUser;
+    let user: IUser;
 
     if (target !== undefined) {
-      tspUser = tsv.users.getOnebyId(target) as IUser;
+      user = tsv.users.getOnebyId(target) as IUser;
     } else {
-      tspUser = tsv.users.getOneBySource(source) as IUser;
+      user = tsv.users.getOneBySource(source) as IUser;
     }
-    return tspUser.inventories.Manager.find((inventory) => inventory.container === container);
+    return user.inventories.Containers.find((inventory) => inventory.container === container);
   } catch (error) {
     tsv.log.error({
       ...log,
@@ -126,9 +126,10 @@ function consumeItem(source: string, inventoryItem: IItem, from: InventoryFromTy
       return error;
     }
 
-    target.inventories.Manager = [targetInventory];
+    target.inventories.Containers = [targetInventory];
+
     tsv.users.updateOne(target);
-    console.log(targetInventory.getItem(inventoryItem));
+
     return targetInventory.getItem(inventoryItem);
   } catch (error) {
     tsv.log.error({

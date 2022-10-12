@@ -29,7 +29,7 @@ const InventoryModule: IModule = {
       });
       log.isChild = true;
 
-      inventoryEvents.map((event) => tsv.events.listen(event));
+      inventoryEvents.forEach((event) => tsv.events.listen(event));
     } catch (error) {
       return error;
     } finally {
