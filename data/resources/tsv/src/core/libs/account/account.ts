@@ -4,7 +4,7 @@ import { Crypto } from '@native/utils';
 import { AccountType, IAccount } from '@declares/account';
 
 class Account implements IAccount {
-  id: string;
+  id: unknown;
   from: "mzb" | "flc" | "pcf";
   amount: number;
   state: number;
@@ -18,11 +18,6 @@ class Account implements IAccount {
     this.state = account.state;
     this.createdAt = new Date();
     this.updatedAt = new Date();
-  }
-
-  get Amount(): number {
-
-    return this.amount;
   }
 }
 export { Account };

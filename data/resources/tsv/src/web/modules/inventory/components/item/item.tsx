@@ -5,6 +5,7 @@ import {
   /*ItemCategoryEnum,*/ ItemType,
   IItem,
   ItemShouldNoLongerExistError,
+  ItemCategoryEnum,
 } from '@declares/item';
 import { InventoryFromType } from '@declares/inventory';
 // Hooks
@@ -16,6 +17,7 @@ import { fetchNui } from '@hooks';
 import { Menu } from '@mantine/core';
 // CONFIG
 import _t from '@config/i18n';
+import { useDispatch } from 'react-redux';
 
 // function getItemDnDCategory (item: ItemType): string {
 //   let itemDnDCategory: string
@@ -45,6 +47,8 @@ function Item({
 
   const [onUseItem, setOnUseItem] = useState(false);
 
+  const dispatch = useDispatch();
+
   const useItem = async (from: InventoryFromType, item: ItemType) => {
     try {
       const usedItem: IItem = await fetchNui({
@@ -53,7 +57,12 @@ function Item({
         payload: [from, item],
       });
 
-      console.log(usedItem);
+      if ([ItemCategoryEnum.CARD].includes(usedItem.category)) {
+        dispatch({
+          type: 'SET_DISPLAY_INVENTORY',
+          display: { module: false },
+        });
+      }
 
       if (usedItem.name === 'ItemShouldNoLongerExistError') {
         throw new ItemShouldNoLongerExistError(item as IItem);

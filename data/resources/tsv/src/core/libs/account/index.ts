@@ -1,2 +1,2 @@
-export { ActivitiesManager } from './manager';
-export { Activity } from './account';
+export { AccountManager } from './manager';
+export { Account } from './account';

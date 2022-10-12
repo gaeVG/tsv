@@ -53,7 +53,7 @@ const initialState: {
 const inventoryReducer = (
   state = initialState,
   action: {
-    type: 'SET_DISPLAY' | 'SET_PLAYER_INVENTORIES' | 'SET_TARGET_INVENTORY';
+    type: 'SET_DISPLAY_INVENTORY' | 'SET_PLAYER_INVENTORIES' | 'SET_TARGET_INVENTORY';
     display?: {
       module?: boolean;
       playerInventories?: boolean;
@@ -79,7 +79,7 @@ const inventoryReducer = (
         ...state,
         targetInventory: action.targetInventory,
       };
-    case 'SET_DISPLAY':
+    case 'SET_DISPLAY_INVENTORY':
       if (action.display.playerComponents !== undefined) {
         action.display.playerComponents
           ? fetchNui({

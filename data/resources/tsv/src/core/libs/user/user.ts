@@ -12,6 +12,7 @@ import { UserActivityType } from '@declares/activity';
 // Managers
 import { StatusManager } from '@libs/status';
 import { InventoryManager } from '@libs/inventory';
+import { AccountManager } from '@libs/account';
 
 class User extends Player implements IUser {
   id: string;
@@ -21,6 +22,7 @@ class User extends Player implements IUser {
   characterDescription: CharacterDescription;
   status?: StatusManager;
   inventories?: InventoryManager;
+  accounts: AccountManager;
   activities?: UserActivityType[];
   currentBucket?: number;
   currentZone?: string;
@@ -44,14 +46,14 @@ class User extends Player implements IUser {
     }, {} as UserIdentifier);
 
     this.group = user.group;
-    this.characterDescription = user.characterDescription;
-    this.isReady = false;
-
     global.ExecuteCommand(
       `add_principal identifier.${process.env.IDENTIFIER_TYPE}:${
         this.identifiers[process.env.IDENTIFIER_TYPE]
       } group.${this.group}`,
     );
+    
+    this.characterDescription = user.characterDescription;
+    this.isReady = false;
   }
 
   isAdmin(): boolean {

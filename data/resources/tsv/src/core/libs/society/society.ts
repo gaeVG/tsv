@@ -4,14 +4,16 @@ import { Crypto } from '@native/utils';
 import { SocietyBuildingType, SocietyType } from '@declares/society';
 // Locale import
 import _t from '@config/i18n';
-// Activities manager
-import { ActivitiesManager } from '../activity';
+// Managers
+import { ActivitiesManager } from '@libs/activity';
+import { AccountManager } from '@libs/account';
 
 class Society {
   id: string;
   name: string;
   label?: string;
   owner: string;
+  accounts: AccountManager;
   building: SocietyBuildingType;
   activities?: ActivitiesManager;
   isCompagny: boolean;

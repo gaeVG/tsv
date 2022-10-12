@@ -64,6 +64,7 @@ async function createPlayerOnDB(source: string): Promise<UsersEntity> {
     character.inventories = characterDefault.inventories;
     // Setting up character accounts
     character.accounts = characterDefault.accounts.map((account) => new Accounts(account));
+    tsv.orm.dataSource.manager.save(character.accounts);
     // Pushing character data to user
     user.characters = [character];
 
@@ -158,7 +159,7 @@ async function onPlayerJoined(source: string): Promise<[IUser, boolean, UserChar
           accounts: character.accounts.map(
             (account) =>
               ({
-                id: account._id,
+                id: account.id,
                 from: account.from,
                 amount: account.amount,
                 createdAt: account.createdAt,
@@ -443,6 +444,22 @@ function getIdentifiers(source: string): UserIdentifier | Error {
     return playerIdentifiers;
   }
 }
+/**
+ * Get user data from ID, or source
+ */
+function getUserData(source: string, id?: string): IUser | Error {
+  log.location = 'getUserData()';
+  tsv.log.safemode({
+    ...log,
+    message: `Recherche des données pour la source ${source}`,
+  });
+  log.isChild = true;
+
+  if (id !== undefined) {
+    return tsv.users.getOnebyId(id);
+  }
+  return tsv.users.getOneBySource(source);
+}
 
 export {
   createPlayerOnDB,
@@ -452,4 +469,5 @@ export {
   playerHosting,
   getIdentifiers,
   onPlayerSpawn,
+  getUserData,
 };

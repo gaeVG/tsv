@@ -125,8 +125,16 @@ export class Scaleform {
    *
    * @param name Name of the function
    */
-  public callVoidMethod(name: string): void {
+  public callVoidMethod(name: string, returnResult?: boolean): number {
     global.CallScaleformMovieMethod(this.handle, name);
+
+    if (returnResult) {
+      while (!this.IsLoaded) {
+        Wait(0);
+      }
+
+      return EndScaleformMovieMethodReturnValue();
+    }
   }
 
   /**

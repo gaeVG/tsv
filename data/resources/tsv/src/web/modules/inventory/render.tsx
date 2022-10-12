@@ -31,7 +31,7 @@ function inventoryRender() {
     'toggle-shortcurt-player-items',
     (toggleShortcut: { toggle: boolean; ms?: number }) => {
       dispatch({
-        type: 'SET_DISPLAY_MODULE',
+        type: 'SET_DISPLAY_INVENTORY',
         display: {
           playerItemsShorts: toggleShortcut.toggle,
         },
@@ -40,7 +40,7 @@ function inventoryRender() {
       if (toggleShortcut.ms !== undefined) {
         setTimeout(() => {
           dispatch({
-            type: 'SET_DISPLAY_MODULE',
+            type: 'SET_DISPLAY_INVENTORY',
             display: {
               playerItemsShorts: false,
             },
@@ -55,7 +55,7 @@ function inventoryRender() {
       playerInventories: playerInventories,
     });
     dispatch({
-      type: 'SET_DISPLAY',
+      type: 'SET_DISPLAY_INVENTORY',
       display: {
         module: true,
         playerInventories: true,
@@ -67,7 +67,7 @@ function inventoryRender() {
 
   useNuiKey('Escape', () =>
     dispatch({
-      type: 'SET_DISPLAY',
+      type: 'SET_DISPLAY_INVENTORY',
       display: {
         module: false,
         playerInventories: false,

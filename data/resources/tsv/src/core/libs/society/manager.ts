@@ -42,8 +42,17 @@ class SocietiesManager {
 
     return society;
   }
-  getOnebyId(id: string): Society | undefined {
-    return this.manager.find((user) => user.id === id);
+  getOnebyId(id: string): Society | Error {
+    try {
+      const society = this.manager.find((societyManager) => id === societyManager.id);
+      if (society === undefined) {
+        throw new Error('Society not found');
+      }
+
+      return society;
+    } catch (error) {
+      return error;
+    }
   }
   getOneByName(societyName: string): Society | undefined {
     return this.manager.find((society) => societyName === society.name);
@@ -61,13 +70,14 @@ class SocietiesManager {
   updateOne(updateSociety: ISociety): [ISociety, number] | Error {
     try {
       const societyManager = this.getOnebyId(updateSociety.id);
-      if (societyManager === undefined) {
-        throw Error(_t('core.user.manager.updateOne.userNotFound', { userId: updateSociety.id }));
+      if (societyManager instanceof Error) {
+        throw societyManager;
       }
 
       Object.entries(updateSociety).forEach(
         ([activityKey, activityVal]) => (societyManager[activityKey] = activityVal),
       );
+
       this.manager = this.manager.reduce((manager, activity) => {
         if (updateSociety.id === activity.id) {
           manager.push(societyManager);

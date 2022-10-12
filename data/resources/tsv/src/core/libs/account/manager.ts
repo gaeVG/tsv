@@ -4,7 +4,7 @@ import { IActivity } from '@declares/activity';
 import { AccountType, IAccount } from '@declares/account';
 // Log class
 import { Log } from '@libs/log';
-// Activity library
+// Account library
 import { Account } from './account';
 // Application config
 import i18n from '@config/i18n';
@@ -21,26 +21,15 @@ const log: LogData = {
 class AccountManager {
   private manager: Account[];
 
-  constructor(activities: AccountType[]) {
+  constructor() {
     log.location = 'constructor()';
+
     Log.safemode({
       ...log,
       message: _t('core.user.manager.constructor.creating'),
     });
-    this.manager = [];
 
-    try {
-      activities.map((activities) => this.addOne(activities));
-    } catch (error) {
-      Log.debug({
-        ...log,
-        message: _t('core.user.manager.constructor.error', { error: error.message }),
-      });
-    }
-    Log.safemode({
-      ...log,
-      message: _t('core.user.manager.constructor.complete'),
-    });
+    this.manager = [];
   }
 
   get All(): Account[] {

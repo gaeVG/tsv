@@ -4,9 +4,10 @@ import { Vector4 } from '@native/utils';
 import { CharacterDescription, UserIdentifier } from '@declares/user';
 import { UserGroup } from '@declares/user';
 import { UserActivityType } from '@declares/activity';
-// Core libs
+// Managers
 import { StatusManager } from '@libs/status';
 import { InventoryManager } from '@libs/inventory';
+import { AccountManager } from '@libs/account';
 
 interface IUser {
   id: string;
@@ -19,6 +20,7 @@ interface IUser {
   characterDescription?: CharacterDescription;
   status?: StatusManager;
   inventories?: InventoryManager;
+  accounts?: AccountManager;
   activities?: UserActivityType[];
   isReady?: boolean;
   currentBucket?: number;

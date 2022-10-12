@@ -2,6 +2,7 @@ import { PlayerModule } from './player';
 import { CharacterModule } from './character';
 import { StatusModule } from './status';
 import { InventoryModule } from './inventory';
+import { AccountModule } from './account';
 import { ActivityModule } from './activity';
 import { ZoneModule } from './zone';
 import { EntranceModule } from './entrance';
@@ -11,6 +12,7 @@ export default [
   CharacterModule,
   StatusModule,
   InventoryModule,
+  AccountModule,
   ActivityModule,
   ZoneModule,
   EntranceModule,
